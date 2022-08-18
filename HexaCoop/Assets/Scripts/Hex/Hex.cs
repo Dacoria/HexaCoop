@@ -57,6 +57,10 @@ public class Hex : MonoBehaviour
     public void SetFogOnHex(bool fogEnabled)
     {
         fogOnHex.SetFog(fogEnabled);
+        if(GetPlayerOnHex() != null)
+        {
+            GetPlayerOnHex().PlayerModel.gameObject.SetActive(!fogEnabled);
+        }
     }   
    
     public bool IsObstacle() => HexSurfaceType.IsObstacle() || HexStructureType.IsObstacle();

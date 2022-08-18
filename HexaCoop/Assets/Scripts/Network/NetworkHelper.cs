@@ -89,9 +89,9 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         RefreshPlayerGos();
     }      
 
-    public List<PlayerScript> GetMyAlivePlayers(bool includeAi, bool? areAlive = null)
+    public List<PlayerScript> GetMyAlivePlayers(bool includeAi)
     {
-        var players = GetAllPlayers(areAlive: areAlive);
+        var players = GetAllPlayers(areAlive: true);
         var res = players
             .Where(player => player != null)
             .Where(player => includeAi || !player.IsAi)
@@ -103,7 +103,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     public PlayerScript GetMyPlayer()
     {
-        return GetMyAlivePlayers(false).FirstOrDefault();
+        return GetMyAlivePlayers(includeAi: false).FirstOrDefault();
     }
 
     public void SetGameText(string gameText, PlayerScript playerFilter)

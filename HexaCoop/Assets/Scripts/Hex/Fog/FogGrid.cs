@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,6 +44,14 @@ public class FogGrid : HexaEventCallback
         {
             // voor als je beweegt binnen de bestaande range ve andere speler!
             UpdatePlayersVisibleNow();
+        }
+    }
+
+    private void UpdatePlayersVisibleNow()
+    {
+        foreach (var player in GameHandler.instance.AllPlayers)
+        {
+            player.PlayerModel.gameObject.SetActive(!player.CurrentHexTile.FogIsActive());
         }
     }
 
@@ -95,14 +102,6 @@ public class FogGrid : HexaEventCallback
             });            
         }
 
-        UpdatePlayersVisibleNow();
-    }
-
-    private void UpdatePlayersVisibleNow()
-    {
-        foreach (var player in GameHandler.instance.AllPlayers)
-        {            
-            player.PlayerModel.gameObject.SetActive(!player.CurrentHexTile.FogIsActive());            
-        }
+        //UpdatePlayersVisibleNow();
     }
 }

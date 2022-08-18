@@ -9,7 +9,6 @@ public static class StaticHelper
 {
     private static System.Random rng = new System.Random();
 
-    public static bool IsWideScreen => Screen.height * 1.2f < Screen.width;
     public static void Shuffle<T>(this IList<T> list)
     {
         int n = list.Count;
@@ -51,40 +50,11 @@ public static class StaticHelper
         }      
     }
 
-    public static bool In<T>(this T val, params T[] values) where T : struct
-    {
-        return values.Contains(val);
-    }
-
-    public static PlayerScript GetPlayer(this int id)
-    {
-        return NetworkHelper.instance.GetAllPlayers().FirstOrDefault(p => p.PlayerId == id);
-    }
-
-    public static EnemyScript GetEnemy(this int id)
-    {
-        return ObjectNetworkInit.instance.SpawnedNetworkObjects[id].GetComponent<EnemyScript>();
-    }
-
-    public static Hex GetHex(this Vector3Int coordinates)
-    {
-        return HexGrid.instance.GetTileAt(coordinates);
-    }
-
-    public static Hex GetHex(this Vector3 coordinates)
-    {
-        return HexGrid.instance.GetTileAt(new Vector3Int((int)coordinates.x, (int)coordinates.y, (int)coordinates.z));
-    }
-
-    public static int GetPunOwnerActorNr(this GameObject go)
-    {
-        var photonView = go.GetComponent<PhotonView>();
-        if (photonView != null)
-        {
-            return photonView.OwnerActorNr;
-        }
-        return -1;
-    }
+    public static bool In<T>(this T val, params T[] values) where T : struct => values.Contains(val);
+    public static PlayerScript GetPlayer(this int id) => NetworkHelper.instance.GetAllPlayers().FirstOrDefault(p => p.PlayerId == id);    
+    public static EnemyScript GetEnemy(this int id) => ObjectNetworkInit.instance.SpawnedNetworkObjects[id].GetComponent<EnemyScript>();
+    public static Hex GetHex(this Vector3Int coordinates) => HexGrid.instance.GetTileAt(coordinates); 
+    public static Hex GetHex(this Vector3 coordinates) => HexGrid.instance.GetTileAt(new Vector3Int((int)coordinates.x, (int)coordinates.y, (int)coordinates.z));
 
     public static bool IsOnEdgeOfGrid(this Vector3Int vector) => HexGrid.instance.IsOnEdgeOfGrid(vector);
     public static bool IsOnCornerOfGrid(this Vector3Int vector) => HexGrid.instance.IsOnCornerOfGrid(vector);
