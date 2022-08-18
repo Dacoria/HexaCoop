@@ -8,7 +8,7 @@ public class NetwHandleVisionAbility : HexaEventCallback, IAbilityNetworkHandler
 {
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
     {        
-        if (playerDoingAbility.IsMyTurn())
+        if (playerDoingAbility.IsOnMyNetwork())
         {
             target.SetFogOnHex(false); // local!
         }
