@@ -102,6 +102,6 @@ public class FogGrid : HexaEventCallback
             });            
         }
 
-        //UpdatePlayersVisibleNow();
+        UpdatePlayersVisibleNow();
     }
 }
