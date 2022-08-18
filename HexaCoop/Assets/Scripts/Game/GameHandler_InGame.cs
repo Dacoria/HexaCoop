@@ -13,7 +13,7 @@ public partial class GameHandler : HexaEventCallback
         // 1 iemand bepaalt de volgene stap --> masterclient
         if(PhotonNetwork.IsMasterClient)
         {
-            if (NetworkHelper.instance.GetAllPlayers(areAlive: true).Any(x => x.TurnCount < CurrentTurn))
+            if (NetworkHelper.instance.GetAllPlayers(isAlive: true).Any(x => x.TurnCount < CurrentTurn))
             {
                 NextPlayerTurn();
             }

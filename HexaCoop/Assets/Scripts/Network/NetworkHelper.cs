@@ -14,11 +14,11 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     private List<PlayerScript> allPlayers;
 
-    public List<PlayerScript> GetAllPlayers(bool? areAlive = null)
+    public List<PlayerScript> GetAllPlayers(bool? isAlive = null)
     {
-        if(areAlive.HasValue)
+        if(isAlive.HasValue)
         {
-            if(areAlive.Value)
+            if(isAlive.Value)
             {
                 return allPlayers.Where(x => x.PlayerIsAlive).ToList();
             }
@@ -72,7 +72,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     public PlayerScript ClosestPlayer(Vector3 positionToCompareDistance, PlayerScript playerToExclude = null)
     {
-        return GetAllPlayers(areAlive: true).Where(x => playerToExclude == null ? true : x != playerToExclude)
+        return GetAllPlayers(isAlive: true).Where(x => playerToExclude == null ? true : x != playerToExclude)
             .OrderBy(x => Vector3.Distance(x.transform.position, positionToCompareDistance))
             .FirstOrDefault();
     }
@@ -89,9 +89,9 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         RefreshPlayerGos();
     }      
 
-    public List<PlayerScript> GetMyAlivePlayers(bool includeAi)
+    public List<PlayerScript> GetMyPlayers(bool includeAi, bool? isAlive = null)
     {
-        var players = GetAllPlayers(areAlive: true);
+        var players = GetAllPlayers(isAlive: isAlive);
         var res = players
             .Where(player => player != null)
             .Where(player => includeAi || !player.IsAi)
@@ -103,7 +103,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     public PlayerScript GetMyPlayer()
     {
-        return GetMyAlivePlayers(includeAi: false).FirstOrDefault();
+        return GetMyPlayers(includeAi: false).FirstOrDefault();
     }
 
     public void SetGameText(string gameText, PlayerScript playerFilter)

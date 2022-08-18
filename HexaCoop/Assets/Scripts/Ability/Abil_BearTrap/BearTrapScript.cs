@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BearTrapScript : HexaEventCallback
@@ -35,35 +34,28 @@ public class BearTrapScript : HexaEventCallback
 
     protected override void OnMovingFinished(PlayerScript playerMoved)
     {
-        base.OnMovingFinished(playerMoved);
-        if(playerMoved == PlayerOfTrap)
-        {
-            return;
-        }
-
-        if(playerMoved.CurrentHexTile.HexCoordinates == Hex.HexCoordinates)
+        if(playerMoved.IsOnMyNetwork() && playerMoved.CurrentHexTile.HexCoordinates == Hex.HexCoordinates)
         {
             ActivateBearTrap(playerMoved);
         }
-    }
-
-    protected override void OnEndPlayerTurn(PlayerScript player)
-    {
-        if(player == PlayerOfTrap)
-        {
-            if(GameHandler.instance.CurrentTurn >= turnPlaced + destroyAfterXTurns)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
+    }    
 
     private void ActivateBearTrap(PlayerScript playerOnBeartrap)
     {
         Model.gameObject.SetActive(true);
         Model.GetComponent<Animator>().SetTrigger(Statics.ANIMATION_TRIGGER_ACTIVATE);
 
-        // TODO? -> via animatie laten lopen? Nu: Direct damage via event (goed genoeg)
         NetworkActionEvents.instance.PlayerBeartrapHitPlayer(PlayerOfTrap, Hex, playerOnBeartrap);
+    }
+
+    protected override void OnEndPlayerTurn(PlayerScript player)
+    {
+        if (player == PlayerOfTrap)
+        {
+            if (GameHandler.instance.CurrentTurn >= turnPlaced + destroyAfterXTurns)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }

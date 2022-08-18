@@ -21,7 +21,7 @@ public class ActivePlayersCountDisplayScript : HexaEventCallback
     {
         textNetwCountPlayers.text = "Active real players: " + NetworkHelper.instance.PlayerList.Count();
         textCountAllPlayers.text = "All active players: " + NetworkHelper.instance.GetAllPlayers().Count();
-        textPlayersAlive.text = "Players Alive: " + NetworkHelper.instance.GetAllPlayers(areAlive: true).Count();
+        textPlayersAlive.text = "Players Alive: " + NetworkHelper.instance.GetAllPlayers(isAlive: true).Count();
 
     }
 }

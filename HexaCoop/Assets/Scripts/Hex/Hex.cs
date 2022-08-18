@@ -75,7 +75,7 @@ public class Hex : MonoBehaviour
 
     public PlayerScript GetPlayerOnHex()
     {
-        var players = NetworkHelper.instance.GetAllPlayers(areAlive: true);
+        var players = NetworkHelper.instance.GetAllPlayers(isAlive: true);
         return players.FirstOrDefault(x => x.CurrentHexTile.HexCoordinates == HexCoordinates);
     }
 
