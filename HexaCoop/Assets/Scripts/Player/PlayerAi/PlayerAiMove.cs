@@ -14,7 +14,7 @@ public class PlayerAiMove : HexaEventCallback
             return;
         }
 
-        if (player.CurrentActionPoints > 2)
+        if (player.CurrentAP > 2)
         {
             DoAction();
         }
@@ -60,7 +60,7 @@ public class PlayerAiMove : HexaEventCallback
         var tilesForTarget = HexGrid.instance.GetTiles(HighlightColorType.Blue);
         if(!tilesForTarget.Any())
         {
-            if(AbilityType.Rocket.Cost() + AbilityType.Radar.Cost() <= player.CurrentActionPoints)
+            if(AbilityType.Rocket.Cost() + AbilityType.Radar.Cost() <= player.CurrentAP)
             {
                 currentCallbackAfterAction = DoRocket;
                 DoRadar();

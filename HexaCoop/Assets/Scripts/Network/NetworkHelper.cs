@@ -1,12 +1,9 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NetworkHelper : MonoBehaviourPunCallbacks
 {
@@ -18,14 +15,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
     {
         if(isAlive.HasValue)
         {
-            if(isAlive.Value)
-            {
-                return allPlayers.Where(x => x.PlayerIsAlive).ToList();
-            }
-            else
-            {
-                return allPlayers.Where(x => !x.PlayerIsAlive).ToList();
-            }            
+            return allPlayers.Where(x => x.PlayerIsAlive == isAlive.Value).ToList();
         }
 
         return allPlayers;
@@ -48,25 +38,37 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     public void RefreshPlayerGos()
     {
-        // voor nu: alleen toevoegen (want door tags pak je niet inactieve obj)
-        var playersEnabledWithTag = GameObject.FindGameObjectsWithTag(Statics.TAG_PLAYER).Select(x => x.GetComponent<PlayerScript>()).ToList();
-
-        foreach(var player in playersEnabledWithTag)
-        {
-            if(!allPlayers.Any(x => x.PlayerId == player.PlayerId))
-            {
-                allPlayers.Add(player);
-            }
-        }
+        this.allPlayers = GameObject.FindGameObjectsWithTag(Statics.TAG_PLAYER).Select(x => x.GetComponent<PlayerScript>()).ToList();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
-        NetworkActionEvents.instance.EndGame();
-        Textt.GameLocal("A player has left the game! This is not supported. Reconnect for a new game");
+        
+        if(GameHandler.instance.GameStatus == GameStatus.ActiveRound)
+        {
+            if(GetAllPlayers(isAlive: true).Any(x => x.PlayerId == otherPlayer.ActorNumber))
+            {
+                Textt.GameLocal("An active player has left the game! Reset the current game?");
+            }
+            else
+            {
+                Textt.GameLocal("A non-active player has left the game");
+            }            
+        }
+        else
+        {
+            Textt.GameLocal("A player has left the game");
+        }        
 
         PlayerList = PhotonNetwork.PlayerList;
+        StartCoroutine(RefreshPlayerGosInXSeconds(0.1f)); // obj is niet direct weg; heel even wachten
+    }
+
+
+    private IEnumerator RefreshPlayerGosInXSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
         RefreshPlayerGos();
     }
 
@@ -101,16 +103,5 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         return res;
     }
 
-    public PlayerScript GetMyPlayer()
-    {
-        return GetMyPlayers(includeAi: false).FirstOrDefault();
-    }
-
-    public void SetGameText(string gameText, PlayerScript playerFilter)
-    {      
-        if (playerFilter == null || playerFilter.IsOnMyNetwork())
-        {
-            GameDialogScript.instance.AddText(gameText);
-        }        
-    } 
+    public PlayerScript GetMyPlayer() => GetMyPlayers(includeAi: false).FirstOrDefault();    
 }

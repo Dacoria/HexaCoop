@@ -39,7 +39,7 @@ public class NetwHandleMovementAbility : HexaEventCallback, IAbilityNetworkHandl
         {
             ActionEvents.PlayerAttackHit?.Invoke(movingPlayer, newHexTile, 1);
 
-            // TODO: Moet nog beter -> instant retaliate
+            // TODO: Moet nog beter -> instant retaliate (zonder animatie :S)
             if(newHexTile.GetPlayerOnHex()?.PlayerIsAlive == true)
             {
                 ActionEvents.PlayerAttackHit?.Invoke(newHexTile.GetPlayerOnHex(), movingPlayer.CurrentHexTile, 1);

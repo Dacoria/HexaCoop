@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Photon.Pun;
 
 public class ObjectNetworkInit : MonoBehaviourPunCallbacks
@@ -47,15 +46,9 @@ public class ObjectNetworkInit : MonoBehaviourPunCallbacks
         };
     }
 
-    private void Start()
-    {
-        ActionEvents.NewRoundStarted += OnNewRoundStarted;
-    }
+    private void Start() => ActionEvents.NewRoundStarted += OnNewRoundStarted;
 
-    private void OnDestroy()
-    {
-        ActionEvents.NewRoundStarted -= OnNewRoundStarted;
-    }
+    private void OnDestroy() => ActionEvents.NewRoundStarted -= OnNewRoundStarted;
 
     private void OnNewRoundStarted(List<PlayerScript> arg1, PlayerScript arg2)
     {

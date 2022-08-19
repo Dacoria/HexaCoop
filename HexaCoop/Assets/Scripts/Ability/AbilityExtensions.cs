@@ -18,11 +18,11 @@ public static class AbilityExtensions
 
 
     public static bool HaveEnoughPoints(this AbilityType abilityType, PlayerScript player) => 
-        abilityType == AbilityType.None ? true : player.CurrentActionPoints >= abilityType.Cost();
+        abilityType == AbilityType.None ? true : player.CurrentAP >= abilityType.Cost();
 
     public static bool HaveEnoughPoints(this AbilityType abilityType) => 
         GameHandler.instance.CurrentPlayer() != null ? 
-            GameHandler.instance.CurrentPlayer().CurrentActionPoints >= abilityType.Cost() : 
+            GameHandler.instance.CurrentPlayer().CurrentAP >= abilityType.Cost() : 
             false;
 
     public static bool IsAvailable(this AbilityType abilityType, PlayerScript player) => 

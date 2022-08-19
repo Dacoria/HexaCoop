@@ -1,9 +1,5 @@
 using Photon.Pun;
 using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
 
 public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback
 {
@@ -12,17 +8,13 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback
     public int PlayerId;
     public string PlayerName;
 
-    public bool PlayerIsAlive => CurrentHitPoints > 0;
+    private int baseVisionRange = 1;
+
+    public bool PlayerIsAlive => CurrentHP > 0;
     public int TurnCount => playerTurnCount?.TurnCount ?? 0;
-    public int CurrentActionPoints => playerActionPoints?.CurrentPlayerActionPoints ?? 0;
-    public int CurrentHitPoints => playerHealth?.CurrentHitPoints ?? 0;
-    public int GetVision() 
-    {
-        var visionResult = 1;
-        var visionScripts = GetComponents<PlayerVisionScript>().ToList();
-        visionScripts.ForEach(visionScript => visionResult += visionScript.AdditionalRange);
-        return visionResult;
-    }
+    public int CurrentAP => playerActionPoints?.CurrentPlayerAP ?? 0;
+    public int CurrentHP => playerHealth?.CurrentHitPoints ?? 0;
+    public int GetVision() => this.baseVisionRange + GetComponents<PlayerExtraVisionRangeScript>().Sum(x => x.AdditionalRange);
 
 
     [ComponentInject (SearchDirection=SearchDirection.CHILDREN)] public PlayerModel PlayerModel;

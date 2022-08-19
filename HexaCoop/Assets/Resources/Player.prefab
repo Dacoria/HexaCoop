@@ -169,7 +169,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionPointsLimit: 10
-  CurrentPlayerActionPoints: 0
 --- !u!114 &5532865816691086573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,7 +193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41db24daff644d2449bd51dcabff8e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHitPoints: 0
   InitHitPoints: 2
 --- !u!114 &-3695283073322087198
 MonoBehaviour:

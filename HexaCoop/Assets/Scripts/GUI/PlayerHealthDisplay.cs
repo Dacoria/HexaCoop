@@ -36,11 +36,11 @@ public class PlayerHealthDisplay : HexaEventCallback
         if (currPlayer.IsOnMyNetwork())
         {
             // voor AI netwerk check
-            Text.text = "Health: " + currPlayer.CurrentHitPoints;
+            Text.text = "Health: " + currPlayer.CurrentHP;
         }
         else
         {
-            Text.text = "Health: " + Netw.MyPlayer().CurrentHitPoints;
+            Text.text = "Health: " + Netw.MyPlayer().CurrentHP;
         }
     }
 }

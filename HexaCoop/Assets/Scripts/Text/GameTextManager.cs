@@ -31,7 +31,7 @@ public class GameTextManager : HexaEventCallback
                 Textt.GameLocal(player.PlayerName + " attacks " + playerOnHex.PlayerName + " (1 dmg)");
             }
 
-            if (playerOnHex.GetComponent<PlayerHealth>().CurrentHitPoints <= damage)
+            if (playerOnHex.GetComponent<PlayerHealth>()?.CurrentHitPoints <= damage)
             {
                 Textt.GameLocal(player.PlayerName + " killed another player! " + playerOnHex.gameObject.name);
             }            
@@ -68,7 +68,7 @@ public class GameTextManager : HexaEventCallback
 
     protected override void OnPlayerBeartrapHitPlayer(PlayerScript pOwnsTrap, Hex hex, PlayerScript playerHit)
     {
-        if (playerHit.GetComponent<PlayerHealth>().CurrentHitPoints <= 1)
+        if (playerHit.GetComponent<PlayerHealth>()?.CurrentHitPoints <= 1)
         {
             Textt.GameLocal(playerHit.PlayerName + " died by stepping on a beartrap. RIP");
         }

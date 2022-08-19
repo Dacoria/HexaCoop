@@ -7,13 +7,8 @@ public class PlayerHealth : HexaEventCallback
 {
     [ComponentInject] private PlayerScript playerScript;
 
-    public int CurrentHitPoints;
+    public int CurrentHitPoints { get; private set; }
     public int InitHitPoints = 20;
-
-    private new void Awake()
-    {
-        base.Awake();
-    }
 
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript currentPlayer)
     {
@@ -53,13 +48,15 @@ public class PlayerHealth : HexaEventCallback
         }
     }
 
-    private void TakeDamage(int damage)
+    public void IncreaseHp(int hpIncrease) => CurrentHitPoints += hpIncrease;
+
+    public void TakeDamage(int damage)
     {
         var forcefieldScript = GetComponent<PlayerForcefieldScript>();
         if(forcefieldScript != null)
         {
             var damageLeft = forcefieldScript.TakeDamage(damage);
-            damage = damageLeft;            
+            damage = damageLeft;
         }
 
 
@@ -72,7 +69,7 @@ public class PlayerHealth : HexaEventCallback
 
     private void Die()
     {
-        StartCoroutine(StartDyingInXSeconds(1));
+        StartCoroutine(StartDyingInXSeconds(0.5f));
     }
 
     private IEnumerator StartDyingInXSeconds(float seconds)

@@ -2,6 +2,6 @@ public class NetwHandleBinocularAbility : HexaEventCallback, IAbilityNetworkHand
 {
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
     {
-        playerDoingAbility.gameObject.AddComponent<PlayerVisionScript>();
+        playerDoingAbility.gameObject.AddComponent<PlayerExtraVisionRangeScript>();
     }
 }

@@ -44,16 +44,16 @@ public class HexStructureScript: HexaEventCallback
             switch(hex.HexStructureType)
             {
                 case HexStructureType.Well:
-                    player.GetComponent<PlayerHealth>().CurrentHitPoints += 1;
+                    player.GetComponent<PlayerHealth>()?.IncreaseHp(1);
                     Textt.GameLocal("Well: Gain 1 HP", playerFilter: player);
                     break;
                 case HexStructureType.Forest:
                     Textt.GameLocal("Forest: Lose 2 Actionpoints", playerFilter: player);
-                    player.GetComponent<PlayerActionPoints>().CurrentPlayerActionPoints -= 2;
+                    player.GetComponent<PlayerActionPoints>().DecreaseAP(2);
                     break;
                 case HexStructureType.Hill:
                     Textt.GameLocal("Hill: Lose 1 Actionpoint", playerFilter: player);
-                    player.GetComponent<PlayerActionPoints>().CurrentPlayerActionPoints -= 2;
+                    player.GetComponent<PlayerActionPoints>().DecreaseAP(1);
                     break;
                 case HexStructureType.Crystal:
 

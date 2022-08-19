@@ -7,12 +7,17 @@ public class HideGoOnPunClient : MonoBehaviour
 {
     public bool AlsoHideForPunMaster;
 
-    void Start()
+    void Update()
     {
-        if(!PhotonNetwork.IsMasterClient || AlsoHideForPunMaster)
+        var canvasGroup = GetComponent<CanvasGroup>();
+
+        if (AlsoHideForPunMaster)
         {
-            var canvasGroup = GetComponent<CanvasGroup>(); ;
             canvasGroup.alpha = 0;
         }
+        else
+        {
+            canvasGroup.alpha = PhotonNetwork.IsMasterClient && Settings.ShowPunMcButtons ? 1 : 0;
+        }     
     }
 }

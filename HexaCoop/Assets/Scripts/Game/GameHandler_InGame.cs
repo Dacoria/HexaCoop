@@ -70,7 +70,7 @@ public partial class GameHandler : HexaEventCallback
         {
             currentPlayer = NextPlayer();
         } 
-        while (currentPlayer.CurrentHitPoints == 0);
+        while (currentPlayer.CurrentHP == 0);
 
         NetworkActionEvents.instance.NewPlayerTurn(CurrentPlayer());
     }

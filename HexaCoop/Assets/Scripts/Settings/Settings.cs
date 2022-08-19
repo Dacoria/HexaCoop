@@ -7,4 +7,5 @@
     public static bool ShowEverything = false;
 
     public static string LevelName = Statics.SCENE_LEVEL2;
+    public static bool ShowPunMcButtons = false;
 }

@@ -38,8 +38,8 @@ public class AbilityPointsDisplayScript : HexaEventCallback
     private void UpdateActionPoints(PlayerScript player)
     {
         var playerAction = player.GetComponent<PlayerActionPoints>();
-        actionPointsText.text = player.CurrentActionPoints + "/" + playerAction.ActionPointsLimit;
-        targetBarFilledAmount = player.CurrentActionPoints / (float)playerAction.ActionPointsLimit;
+        actionPointsText.text = player.CurrentAP + "/" + playerAction.ActionPointsLimit;
+        targetBarFilledAmount = player.CurrentAP / (float)playerAction.ActionPointsLimit;
 
         BarFilled.fillAmount = Mathf.Lerp(BarFilled.fillAmount, targetBarFilledAmount, 3 * Time.deltaTime);
     }
