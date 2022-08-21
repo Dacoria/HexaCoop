@@ -18,7 +18,7 @@ public class PortalScript : HexaEventCallback
 
     private IEnumerator PortalToNewHex(PlayerScript player)
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return Wait4Seconds.Get(0.05f);
         if (ConnectedPortal.Hex.HasUnitOnHex())
         {
             MoveUnitAwayFromPortal(player, ConnectedPortal.Hex.GetUnitOnHex());

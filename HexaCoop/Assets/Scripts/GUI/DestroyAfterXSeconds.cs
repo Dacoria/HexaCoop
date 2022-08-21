@@ -15,7 +15,7 @@ public class DestroyAfterXSeconds : MonoBehaviour
 
     private IEnumerator DestroyGo()
     {
-        yield return new WaitForSeconds(SecondsTillDestroy);
+        yield return Wait4Seconds.Get(SecondsTillDestroy);
         Destroy(gameObject);
     }
 }

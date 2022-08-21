@@ -30,7 +30,7 @@ public class PlayerIdleFunStuffDisplay : HexaEventCallback
 
     private IEnumerator CheckEveryXSeconds(float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return Wait4Seconds.Get(seconds);
         CheckForIdleFunStuff();
         StartCoroutine(CheckEveryXSeconds(defaultWaitTimeForCheck));
     }

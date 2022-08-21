@@ -22,7 +22,7 @@ public partial class GameHandler : HexaEventCallback
 
     public IEnumerator CR_ResetGame()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return Wait4Seconds.Get(0.1f);
         if (HexGrid.IsLoaded() && NetworkHelper.instance.GetAllPlayers().Count > 0)
         {
             SetupNewGame();

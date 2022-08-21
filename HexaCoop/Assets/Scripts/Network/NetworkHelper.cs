@@ -68,7 +68,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     private IEnumerator RefreshPlayerGosInXSeconds(float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return Wait4Seconds.Get(seconds);
         RefreshPlayerGos();
     }
 

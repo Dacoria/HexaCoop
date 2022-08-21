@@ -56,7 +56,7 @@ public class LevelLoader : MonoBehaviour
     private IEnumerator CR_LoadAnimation(Action Callback)
     {
         Transition.SetTrigger(Statics.ANIMATION_TRIGGER_START_ANIMATION_SCENE);
-        yield return new WaitForSeconds(TransitionTime);
+        yield return Wait4Seconds.Get(TransitionTime);
         Callback();
     }
 }

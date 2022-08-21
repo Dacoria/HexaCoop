@@ -64,7 +64,7 @@ public class FogGrid : HexaEventCallback
 
     private IEnumerator UpdatePlayersFog(List<PlayerScript> players, float secondsToWait)
     {
-        yield return new WaitForSeconds(secondsToWait);
+        yield return Wait4Seconds.Get(secondsToWait);
         var noFogTiles = new List<Hex>();
 
         foreach(var player in players)

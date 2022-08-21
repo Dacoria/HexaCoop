@@ -14,7 +14,7 @@ public class SelectForcefieldAbility : MonoBehaviour, IAbilityAction
 
     private IEnumerator SetTileSelectionInXSeconds(float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return Wait4Seconds.Get(seconds);
         var highlightOneTileSelection = MonoHelper.instance.GetHighlightOneTileSelection(gameObject);
 
         highlightOneTileSelection.SetOnlyConfirmTileSelection(Netw.CurrPlayer().CurrentHexTile);

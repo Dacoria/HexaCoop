@@ -17,7 +17,7 @@ public class LerpRotation: HexaEventCallback
         float elapsedTime = 0f;
         var targetDirection = endPosition - transform.position;
 
-        yield return new WaitForSeconds(delayedStart);
+        yield return Wait4Seconds.Get(delayedStart);
 
         while (elapsedTime < 3)
         {
@@ -48,7 +48,7 @@ public class LerpRotation: HexaEventCallback
 
     private IEnumerator RotateTowardsAngleLerp(Quaternion endRotation, float duration, Quaternion? startRotation, float delayedStart, Action callbackOnFinished, bool destroyGoOnFinished)
     {        
-        yield return new WaitForSeconds(delayedStart);
+        yield return Wait4Seconds.Get(delayedStart);
 
         Quaternion startPos = startRotation.HasValue ? startRotation.Value : transform.rotation;
         transform.rotation = startPos;

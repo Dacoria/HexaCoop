@@ -23,7 +23,7 @@ public class ButtonEvents : HexaEventCallback
 
     private IEnumerator CR_UpdateEndTurnButton(bool? visible, bool? interactable, bool onlyInteractableOnMyNetwork, float waitForSeconds)
     {
-        yield return new WaitForSeconds(waitForSeconds);
+        yield return Wait4Seconds.Get(waitForSeconds);
         if (visible.HasValue)
         {
             endTurnButtonScript.GetComponent<CanvasGroup>().alpha = visible.Value ? 1 : 0;
@@ -103,7 +103,7 @@ public class ButtonEvents : HexaEventCallback
 
     private IEnumerator UpdatePlayerAbilityButtons()
     {
-        yield return new WaitForSeconds(0.1f); // wijziging moet verwerkt worden....
+        yield return Wait4Seconds.Get(0.1f); // wijziging moet verwerkt worden....
         if (Netw.CurrPlayer().IsOnMyNetwork())
         {
             UpdateAllAbilities(setToUnselected: true, checkAvailableInTurn: true);
@@ -157,7 +157,7 @@ public class ButtonEvents : HexaEventCallback
 
     private IEnumerator CheckEnableButtonsNewTurn(PlayerScript currentPlayer)
     {
-        yield return new WaitForSeconds(0.1f);// wacht tot wijziging is verwerkt
+        yield return Wait4Seconds.Get(0.1f);// wacht tot wijziging is verwerkt
 
         if (GameHandler.instance.GameStatus == GameStatus.ActiveRound) 
         {

@@ -25,7 +25,7 @@ public class ResetCameraPosition : HexaEventCallback
     private IEnumerator ResetCameraAfterXSeconds(float seconds)
     {
         // wacht op spel laden
-        yield return new WaitForSeconds(seconds);
+        yield return Wait4Seconds.Get(seconds);
         ResetCameraToPlayer();
     }
 

@@ -26,7 +26,7 @@ public partial class GameHandler : HexaEventCallback
 
     private IEnumerator AllPlayersFinishedTurnEventInXSeconds(float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return Wait4Seconds.Get(seconds);
         NetworkAE.instance.AllPlayersFinishedTurn();
     }
 

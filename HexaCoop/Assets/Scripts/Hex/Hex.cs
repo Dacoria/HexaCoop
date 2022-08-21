@@ -38,7 +38,7 @@ public class Hex : MonoBehaviour
     {
         while(fogOnHex == null)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return Wait4Seconds.Get(0.2f);
             fogOnHex = GetComponentInChildren<FogOnHex>();
         }
     }

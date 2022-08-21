@@ -61,7 +61,7 @@ public class MonoHelper : MonoBehaviour
 
     private IEnumerator CR_DestroyGoAfterXSeconds(GameObject go, float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return Wait4Seconds.Get(seconds);
         Destroy(go);
     }
 

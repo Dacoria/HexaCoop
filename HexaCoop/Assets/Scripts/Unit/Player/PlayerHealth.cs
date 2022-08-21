@@ -74,7 +74,7 @@ public class PlayerHealth : HexaEventCallback
 
     private IEnumerator StartDyingInXSeconds(float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return Wait4Seconds.Get(seconds);
         GetComponentInChildren<Animator>(true).SetTrigger(Statics.ANIMATION_TRIGGER_DIE);
 
         if (PhotonNetwork.IsMasterClient)
@@ -94,7 +94,7 @@ public class PlayerHealth : HexaEventCallback
 
     private IEnumerator HidePlayerModelInXSeconds(float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return Wait4Seconds.Get(seconds);
         playerScript.PlayerModel.gameObject.SetActive(false);
     }
 }

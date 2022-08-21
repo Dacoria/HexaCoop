@@ -55,7 +55,7 @@ public class EnemyHealth : HexaEventCallback
 
     private IEnumerator StartDyingInXSeconds(float seconds)
     {
-        yield return new WaitForSeconds(seconds);
+        yield return Wait4Seconds.Get(seconds);
         animator.SetTrigger(Statics.ANIMATION_TRIGGER_DIE);        
     }
 

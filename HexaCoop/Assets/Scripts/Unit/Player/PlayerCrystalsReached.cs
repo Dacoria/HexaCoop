@@ -41,7 +41,7 @@ public class PlayerCrystalsReached : HexaEventCallback
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            yield return new WaitForSeconds(seconds);
+            yield return Wait4Seconds.Get(seconds);
             NetworkAE.instance.RoundEnded(true, playerScript);
         }        
     }

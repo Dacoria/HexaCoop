@@ -30,7 +30,7 @@ public class LerpMovement : MonoBehaviour
         var startPos = startPosition.HasValue ? startPosition.Value : transform.position;
         transform.position = startPos;
 
-        yield return new WaitForSeconds(delayedStart);
+        yield return Wait4Seconds.Get(delayedStart);
 
         animator?.SetBool(Statics.ANIMATION_BOOL_RUN, true);
 

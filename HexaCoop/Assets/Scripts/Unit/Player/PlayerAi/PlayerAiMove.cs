@@ -82,7 +82,7 @@ public class PlayerAiMove : HexaEventCallback
 
     private IEnumerator WaitThenAction(float xSeconds)
     {
-        yield return new WaitForSeconds(xSeconds);
+        yield return Wait4Seconds.Get(xSeconds);
 
         if(currentCallbackAfterAction != null)
         {

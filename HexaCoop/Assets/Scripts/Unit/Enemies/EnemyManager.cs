@@ -26,7 +26,7 @@ public class EnemyManager : MonoBehaviour
     private IEnumerator Start()
     {
         
-        yield return new WaitForSeconds(0.15f); // wachten tot hexgrid geladen wordt -> nodig om huidige hex tile te krijgen....
+        yield return Wait4Seconds.Get(0.15f); // wachten tot hexgrid geladen wordt -> nodig om huidige hex tile te krijgen....
         if (PhotonNetwork.IsMasterClient)
         {
             ReplaceEnemiesWithPunEnemies();
