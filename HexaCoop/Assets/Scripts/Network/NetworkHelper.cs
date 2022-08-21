@@ -15,7 +15,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
     {
         if(isAlive.HasValue)
         {
-            return allPlayers.Where(x => x.PlayerIsAlive == isAlive.Value).ToList();
+            return allPlayers.Where(x => x.IsAlive == isAlive.Value).ToList();
         }
 
         return allPlayers;
@@ -47,7 +47,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         
         if(GameHandler.instance.GameStatus == GameStatus.ActiveRound)
         {
-            if(GetAllPlayers(isAlive: true).Any(x => x.PlayerId == otherPlayer.ActorNumber))
+            if(GetAllPlayers(isAlive: true).Any(x => x.Id == otherPlayer.ActorNumber))
             {
                 Textt.GameLocal("An active player has left the game! Reset the current game?");
             }

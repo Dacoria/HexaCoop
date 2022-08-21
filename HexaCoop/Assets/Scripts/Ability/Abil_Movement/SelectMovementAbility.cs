@@ -14,7 +14,6 @@ public class SelectMovementAbility : MonoBehaviour, IAbilityAction
     public void InitAbilityAction()
     {
         HexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(GameHandler.instance.CurrentPlayer());
-        //Textt.GameLocal("Select the tile to move to");
         movementAbilIsActive = true;
     }
 
@@ -39,7 +38,7 @@ public class SelectMovementAbility : MonoBehaviour, IAbilityAction
 
     private void OnMovementTileSelected(PlayerScript selectedPlayer, Hex hexSelected)
     {
-        NetworkActionEvents.instance.PlayerAbility(selectedPlayer, hexSelected, AbilityType);
+        NetworkAE.instance.PlayerAbility(selectedPlayer, hexSelected, AbilityType);
     }
 
     public bool CanDoAbility(PlayerScript player) => !player.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Meditate);

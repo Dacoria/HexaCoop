@@ -23,7 +23,7 @@ public class HexSurfaceScript : HexaEventCallback
 
     private GameObject GetMainGo() => Utils.GetChildGoByName(hex.gameObject, "Main");
 
-    protected override void OnMovingFinished(PlayerScript player)
+    protected override void OnPlayerMovingFinished(PlayerScript player)
     {
         if (player.CurrentHexTile == hex)
         {
@@ -64,7 +64,7 @@ public class HexSurfaceScript : HexaEventCallback
                     {
                         var neighbourtiles = HexGrid.instance.GetNeighboursFor(player.CurrentHexTile.HexCoordinates);
                         neighbourtiles.Shuffle();
-                        NetworkActionEvents.instance.PlayerAbility(player, neighbourtiles[0].GetHex(), AbilityType.Movement);
+                        NetworkAE.instance.PlayerAbility(player, neighbourtiles[0].GetHex(), AbilityType.Movement);
                     }
 
                     break;

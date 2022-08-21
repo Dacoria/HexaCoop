@@ -56,7 +56,7 @@ public static class HexEditorUtil
                 var enemyScript = go.GetComponent<EnemyScript>();
                 if(enemyScript != null)
                 {
-                    enemyScript.CurrentHexTile = hex;
+                    enemyScript.SetCurrentHexTile(hex);
                 }
             }
         }
@@ -70,7 +70,7 @@ public static class HexEditorUtil
         for (int i = structuresGo.transform.childCount - 1; i >= 0; i--)
         {
             var child = structuresGo.transform.GetChild(i);
-            UnityEngine.Object.DestroyImmediate(child.gameObject);
+            Object.DestroyImmediate(child.gameObject);
         }
     }
 
@@ -85,12 +85,13 @@ public static class HexEditorUtil
             case HexStructureType.Forest:
             case HexStructureType.Mountain:
             case HexStructureType.Crystal:
-            //case HexStructureType.GoldCoin:
-            //case HexStructureType.BottleBlue:
-            //case HexStructureType.BottleGreen:
-            //case HexStructureType.BottleRed:
-            //case HexStructureType.Coin:
-            //case HexStructureType.Box:
+            case HexStructureType.Portal:
+                //case HexStructureType.GoldCoin:
+                //case HexStructureType.BottleBlue:
+                //case HexStructureType.BottleGreen:
+                //case HexStructureType.BottleRed:
+                //case HexStructureType.Coin:
+                //case HexStructureType.Box:
                 return true;
             default:
                 return false;

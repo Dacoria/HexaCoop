@@ -27,7 +27,7 @@ public partial class GameHandler : HexaEventCallback
     private IEnumerator AllPlayersFinishedTurnEventInXSeconds(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        NetworkActionEvents.instance.AllPlayersFinishedTurn();
+        NetworkAE.instance.AllPlayersFinishedTurn();
     }
 
     protected override void OnAllPlayersFinishedTurn()
@@ -72,7 +72,7 @@ public partial class GameHandler : HexaEventCallback
         } 
         while (currentPlayer.CurrentHP == 0);
 
-        NetworkActionEvents.instance.NewPlayerTurn(CurrentPlayer());
+        NetworkAE.instance.NewPlayerTurn(CurrentPlayer());
     }
 
     private PlayerScript NextPlayer()
@@ -87,7 +87,7 @@ public partial class GameHandler : HexaEventCallback
                 return player;
             }
 
-            if (player.PlayerId == currentPlayer.PlayerId)
+            if (player.Id == currentPlayer.Id)
             {
                 foundCurrPlayer = true;
             }

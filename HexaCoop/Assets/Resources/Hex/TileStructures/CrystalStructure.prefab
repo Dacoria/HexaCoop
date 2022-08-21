@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 7058470068602872633}
   - component: {fileID: 7048188492544602243}
   - component: {fileID: 6976082930175466187}
+  - component: {fileID: 985965085}
   m_Layer: 0
   m_Name: CrystalModel
   m_TagString: Untagged
@@ -136,3 +137,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &985965085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7026189318806627791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38eaa8b8b37c40c4d86ead18e11bd53f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

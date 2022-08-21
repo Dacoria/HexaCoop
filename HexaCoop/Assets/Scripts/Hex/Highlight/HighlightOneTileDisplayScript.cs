@@ -83,6 +83,11 @@ public class HighlightOneTileDisplayScript : MonoBehaviour
 
     public void Reset()
     {
+        if (HighlightedHex != null)
+        {
+            HighlightedHex.DisableHighlight(HighlightColorType.White);
+        }
+
         HighlightedHex = null;
         DestroyOnCallbackSelection = false;
         DestroyOnCallbackSelectionConfirmed = true;

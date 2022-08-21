@@ -34,7 +34,10 @@ public class FogGrid : HexaEventCallback
         }
     }
 
-    protected override void OnMovingFinished(PlayerScript player)
+    protected override void OnPlayerMovingFinished(PlayerScript player) => UpdatePlayerAfterNewPosInTurn(player);
+    protected override void OnPlayerScriptHasTeleported(PlayerScript player, Hex hex) => UpdatePlayerAfterNewPosInTurn(player);
+
+    private void UpdatePlayerAfterNewPosInTurn(PlayerScript player)
     {
         if (player.IsOnMyNetwork())
         {
@@ -55,20 +58,9 @@ public class FogGrid : HexaEventCallback
         }
     }
 
-    protected override void OnEnemyFaseStarted()
-    {
-        UpdatePlayersFog(Netw.PlayersOnMyNetwork()); ;
-    }
-
-    public void UpdateVisibility(PlayerScript player)
-    {
-        UpdatePlayersFog(new List<PlayerScript> { player });
-    }
-
-    private void UpdatePlayersFog(List<PlayerScript> players)
-    {
-        StartCoroutine(UpdatePlayersFog(players, 0.1f)); // wachten op visuele verwerking
-    }      
+    protected override void OnEnemyFaseStarted() => UpdatePlayersFog(Netw.PlayersOnMyNetwork());
+    public void UpdateVisibility(PlayerScript player) => UpdatePlayersFog(new List<PlayerScript> { player });
+    private void UpdatePlayersFog(List<PlayerScript> players) => StartCoroutine(UpdatePlayersFog(players, 0.1f)); // wachten op visuele verwerking 
 
     private IEnumerator UpdatePlayersFog(List<PlayerScript> players, float secondsToWait)
     {

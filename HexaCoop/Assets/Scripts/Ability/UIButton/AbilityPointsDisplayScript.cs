@@ -18,8 +18,6 @@ public class AbilityPointsDisplayScript : HexaEventCallback
         BarFilled.fillAmount = 0;
     }
 
-    private int counter;
-
     private void Update()
     {
         var currPlayer = Netw.CurrPlayer();
@@ -29,7 +27,7 @@ public class AbilityPointsDisplayScript : HexaEventCallback
         }
         else
         {
-            actionPointsText.text = "";
+            //actionPointsText.text = "";
         }
     }
     

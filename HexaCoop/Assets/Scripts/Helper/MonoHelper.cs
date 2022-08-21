@@ -17,6 +17,9 @@ public class MonoHelper : MonoBehaviour
     }
 
     public AnimationCurve CurveGradual;
+    public AnimationCurve CurveLinear;
+    public AnimationCurve CurveSlowStart;
+    public AnimationCurve CurveSlowEnd;
 
     public HighlightOneTileDisplayScript GetHighlightOneTileSelection(GameObject gameObject)
     {
@@ -107,5 +110,18 @@ public class MonoHelper : MonoBehaviour
         });
         
         EnemyManager.instance.GetEnemies().ForEach(enemy => enemy.SetVisible(originalLayout));
+    }
+
+    public Vector3Int GetClosestFreeNeighbour(Vector3Int target1, Vector3Int referenceTarget2)
+    {
+        // deterministisch!
+        var neighbourClosest = HexGrid.instance.GetNeighboursFor(target1, range: 3, withUnitOnTile: false)
+            .OrderBy(neighbourTile => Vector3Int.Distance(target1, neighbourTile))
+            .ThenBy(neighbourTile => Vector3Int.Distance(referenceTarget2, neighbourTile))
+            .ThenBy(neighbourTile => neighbourTile.x)
+            .ThenBy(neighbourTile => neighbourTile.z)
+            .First();
+
+        return neighbourClosest;
     }
 }

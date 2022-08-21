@@ -39,3 +39,15 @@ public enum HexSurfaceType
     Blue_3D_Blocks,
     Rotation
 }
+
+public static class HexSurfaceExt
+{
+    public static bool IsObstacle(this HexSurfaceType surfaceType) => surfaceType switch
+    {
+        HexSurfaceType.Water_Deep => true,
+        HexSurfaceType.Water_Ice_Cracked => true,
+        HexSurfaceType.Simple_Water => true,
+
+        _ => false
+    };
+}

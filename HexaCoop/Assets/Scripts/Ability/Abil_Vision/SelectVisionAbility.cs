@@ -29,7 +29,7 @@ public class SelectVisionAbility : MonoBehaviour, IAbilityAction
 
     private void OnTileSelectionConfirmed(Hex hex)
     {
-        NetworkActionEvents.instance.PlayerAbility(GameHandler.instance.CurrentPlayer(), hex, AbilityType);
+        NetworkAE.instance.PlayerAbility(GameHandler.instance.CurrentPlayer(), hex, AbilityType);
     }
 
     public void DeselectAbility()

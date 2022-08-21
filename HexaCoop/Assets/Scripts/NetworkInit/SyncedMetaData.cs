@@ -18,9 +18,9 @@ public class SyncedMetaData : MonoBehaviourPunCallbacks, IPunInstantiateMagicCal
         var test = instantiationData[1];
         Vector3? hexCoordinates = string.IsNullOrEmpty(instantiationData[1].ToString()) ? null : instantiationData[1].ToString().ToVector3();
 
-        if (GetComponent<ICurrentHex>() != null  && hexCoordinates.HasValue)
+        if (GetComponent<IUnit>() != null  && hexCoordinates.HasValue)
         {
-            GetComponent<ICurrentHex>().SetCurrentHexTile(hexCoordinates.Value.GetHex());
+            GetComponent<IUnit>().SetCurrentHexTile(hexCoordinates.Value.GetHex());
             StartSpawnHex = hexCoordinates.Value.GetHex();
         }
 
@@ -34,9 +34,9 @@ public class SyncedMetaData : MonoBehaviourPunCallbacks, IPunInstantiateMagicCal
     public void ResetUnit()
     {
         gameObject.SetActive(true);
-        if (GetComponent<ICurrentHex>() != null)
+        if (GetComponent<IUnit>() != null)
         {
-            GetComponent<ICurrentHex>().SetCurrentHexTile(StartSpawnHex);
+            GetComponent<IUnit>().SetCurrentHexTile(StartSpawnHex);
         }
 
         transform.position = StartPos;

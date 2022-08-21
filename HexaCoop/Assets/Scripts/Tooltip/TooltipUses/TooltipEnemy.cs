@@ -17,7 +17,7 @@ public class TooltipEnemy : MonoBehaviour, ITooltipUIText
     {
         var content = new List<string>();
         content.Add("Current Health: " + enemyHealth.CurrentHitPoints);
-        content.Add("Attack damage: " + enemyAttack.GetAttackDamage());
+        content.Add("Attack damage: " + 1);
 
         return string.Join("\n", content);
     }

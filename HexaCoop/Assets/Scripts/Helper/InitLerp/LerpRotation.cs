@@ -6,13 +6,13 @@ public class LerpRotation: HexaEventCallback
 {
     private float previousAngleDiff = 0;
 
-    public void RotateTowardsDestination(Vector3 endPosition, float delayedStart = 0, Action callbackOnFinished = null, bool destroyOnFinished = false)
+    public void RotateTowardsDestination(Vector3 endPosition, float delayedStart = 0, Action callbackOnFinished = null, bool destroyGoOnFinished = false)
     {
         StopAllCoroutines();
-        StartCoroutine(RotateTowardsDestinationLerp(endPosition, delayedStart, callbackOnFinished, destroyOnFinished));
+        StartCoroutine(RotateTowardsDestinationLerp(endPosition, delayedStart, callbackOnFinished, destroyGoOnFinished));
     }
 
-    private IEnumerator RotateTowardsDestinationLerp(Vector3 endPosition, float delayedStart, Action callbackOnFinished, bool destroyOnFinished)
+    private IEnumerator RotateTowardsDestinationLerp(Vector3 endPosition, float delayedStart, Action callbackOnFinished, bool destroyGoOnFinished)
     {
         float elapsedTime = 0f;
         var targetDirection = endPosition - transform.position;
@@ -37,23 +37,16 @@ public class LerpRotation: HexaEventCallback
         }
 
         callbackOnFinished?.Invoke();
-        if (destroyOnFinished) { Destroy(this); }
+        if (destroyGoOnFinished) { Destroy(gameObject); }
     }
 
-    public void RotateTowardsAngle(Vector3 endPositionV3, float duration = 0, Vector3? startRotationV3 = null, float delayedStart = 0, Action callbackOnFinished = null, bool destroyOnFinished = false)
-    {
-        Quaternion? startRot = startRotationV3.HasValue ? Quaternion.Euler(startRotationV3.Value.x, startRotationV3.Value.y, startRotationV3.Value.z) : null;
-        Quaternion endRot = Quaternion.Euler(endPositionV3.x, endPositionV3.y, endPositionV3.z);
-        RotateTowardsAngle(endRot, duration, startRot, delayedStart, callbackOnFinished, destroyOnFinished);
-    }
-
-    public void RotateTowardsAngle(Quaternion endRotation, float duration, Quaternion? startRotation = null, float delayedStart = 0, Action callbackOnFinished = null, bool destroyOnFinished = false)
+    public void RotateTowardsAngle(Quaternion endRotation, float duration, Quaternion? startRotation = null, float delayedStart = 0, Action callbackOnFinished = null, bool destroyGoOnFinished = false)
     {
         StopAllCoroutines();
-        StartCoroutine(RotateTowardsAngleLerp(endRotation, duration, startRotation, delayedStart, callbackOnFinished, destroyOnFinished));
+        StartCoroutine(RotateTowardsAngleLerp(endRotation, duration, startRotation, delayedStart, callbackOnFinished, destroyGoOnFinished));
     }
 
-    private IEnumerator RotateTowardsAngleLerp(Quaternion endRotation, float duration, Quaternion? startRotation, float delayedStart, Action callbackOnFinished, bool destroyOnFinished)
+    private IEnumerator RotateTowardsAngleLerp(Quaternion endRotation, float duration, Quaternion? startRotation, float delayedStart, Action callbackOnFinished, bool destroyGoOnFinished)
     {        
         yield return new WaitForSeconds(delayedStart);
 
@@ -72,7 +65,7 @@ public class LerpRotation: HexaEventCallback
         }
 
         callbackOnFinished?.Invoke();
-        if (destroyOnFinished) { Destroy(this); }
+        if (destroyGoOnFinished) { Destroy(gameObject); }
     }
 }
 

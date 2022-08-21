@@ -174,7 +174,13 @@ public static class Utils
         return result;
     }
 
-    public static GameObject GetChildGoByName(GameObject go, string childname, bool containMatch = false)
+    public static GameObject GetStructureGoFromHex(this Hex hex)
+    {
+        var props = GetChildGoByName(hex.gameObject, "Props");
+        return props.transform.childCount > 0 ? props.transform.GetChild(0).gameObject : null;
+    }
+
+    public static GameObject GetChildGoByName(GameObject go, string childname, bool containMatch = false, bool checkAnotherChildLevel = false)
     {
         for (int i = 0; i < go.transform.childCount; i++)
         {
@@ -182,6 +188,15 @@ public static class Utils
             if (child.gameObject.name == childname || (containMatch && child.gameObject.name.Contains(childname)))
             {
                 return child.gameObject;
+            }
+
+            if(checkAnotherChildLevel)
+            {
+                var childGoByName = GetChildGoByName(child.gameObject, childname, containMatch, checkAnotherChildLevel: false);
+                if (childGoByName != null)
+                {
+                    return childGoByName;
+                }
             }
         }
 

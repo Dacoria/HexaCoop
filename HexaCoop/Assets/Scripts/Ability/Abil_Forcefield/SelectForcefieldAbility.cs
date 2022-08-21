@@ -23,7 +23,7 @@ public class SelectForcefieldAbility : MonoBehaviour, IAbilityAction
 
     private void OnTileSelectionConfirmed(Hex hex)
     {
-        NetworkActionEvents.instance.PlayerAbility(Netw.CurrPlayer(), hex, AbilityType);
+        NetworkAE.instance.PlayerAbility(Netw.CurrPlayer(), hex, AbilityType);
     }
 
     public void DeselectAbility()

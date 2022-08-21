@@ -30,6 +30,11 @@ public static class HierarchyMonitor
 
         if (Application.isPlaying)
         {
+            if (previousUseEditorGuiScripts)
+            {
+                SetAllHexToFlag(HideFlags.None);
+                previousUseEditorGuiScripts = false;
+            }
             return;
         }
 

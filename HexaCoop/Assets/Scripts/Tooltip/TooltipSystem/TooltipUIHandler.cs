@@ -48,7 +48,7 @@ public class TooltipUIHandler : MonoBehaviour
 
     private void SetOutline()
     {
-        OutlineComponent = gameObject.GetComponent<Outline>() ?? gameObject.AddComponent<Outline>();
+        OutlineComponent = gameObject.GetSet<Outline>();
         OutlineComponent.OutlineColor = new Color(23 / 255f, 171 / 255f, 178 / 255f);
         OutlineComponent.OutlineWidth = 6.5f;
     }

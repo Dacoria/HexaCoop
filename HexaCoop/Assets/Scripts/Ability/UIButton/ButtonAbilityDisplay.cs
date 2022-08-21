@@ -6,8 +6,10 @@ public class ButtonAbilityDisplay : MonoBehaviour
 {
     public AbilityType Type;
     [ComponentInject] private TMP_Text CostText;
-    [ComponentInject] public Button Button;
-    [ComponentInject] public Image ImageButton;    
+    [ComponentInject] private Image ImageButton;
+
+    [ComponentInject] public Button Button;// public, zodat andere klasses er makkelijk bij kunnen
+
     public ButtonUpdater buttonUpdater;
 
     public Image ImageAbility;
@@ -30,7 +32,8 @@ public class ButtonAbilityDisplay : MonoBehaviour
     private Color DisabledColor = new Color(1, 1, 1); // grey
 
     private bool _abilityIsActive;
-    public bool AbilityIsActive { 
+    public bool AbilityIsActive 
+    { 
         get => _abilityIsActive;
         set
         {

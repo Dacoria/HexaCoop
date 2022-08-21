@@ -30,7 +30,7 @@ public class SelectRadarAbility : MonoBehaviour, IAbilityAction
 
         var radarTarget = MonoHelper.instance.GetRandomTileAroundThisTile(otherPlayer.CurrentHexTile.HexCoordinates);
 
-        NetworkActionEvents.instance.PlayerAbility(GameHandler.instance.CurrentPlayer(), radarTarget, AbilityType);
+        NetworkAE.instance.PlayerAbility(GameHandler.instance.CurrentPlayer(), radarTarget, AbilityType);
     } 
 
     public void DeselectAbility()

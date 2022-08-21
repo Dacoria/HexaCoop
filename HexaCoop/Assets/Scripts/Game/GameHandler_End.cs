@@ -15,7 +15,7 @@ public partial class GameHandler : HexaEventCallback
     {
         if(NetworkHelper.instance.GetAllPlayers(isAlive: true).Count == 1)
         {
-            NetworkActionEvents.instance.RoundEnded(achievedTarget: false, NetworkHelper.instance.GetAllPlayers(isAlive: true)[0]);
+            NetworkAE.instance.RoundEnded(achievedTarget: false, NetworkHelper.instance.GetAllPlayers(isAlive: true)[0]);
         }
     }
 }

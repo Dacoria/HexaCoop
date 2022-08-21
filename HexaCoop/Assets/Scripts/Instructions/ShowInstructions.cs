@@ -11,7 +11,7 @@ public class ShowInstructions : HexaEventCallback
     {
         if (ShowInstructionOnGridLoad)
         {
-            ShowIntroDialog();
+            //ShowIntroDialog();
         }
     }
 

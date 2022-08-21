@@ -10,7 +10,7 @@ public partial class GameHandler : HexaEventCallback
 
     private void DoEnemyFase(float secondsToWait)
     {
-        NetworkActionEvents.instance.EnemyFaseStarted();
+        NetworkAE.instance.EnemyFaseStarted();
         EnemiesWithAction = EnemyManager.instance.GetEnemies();
         TryDoEnemyAction();
     }

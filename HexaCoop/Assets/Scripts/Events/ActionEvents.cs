@@ -15,14 +15,24 @@ public static class ActionEvents
     public static Action EnemyFaseStarted;
     public static Action<PlayerScript, Hex> PlayerRocketHitTile;
     public static Action<PlayerScript, Hex, PlayerScript> PlayerBeartrapHitPlayer;
-    public static Action<PlayerScript, Hex, int> PlayerAttackHit;
     public static Action<EnemyScript, Hex> EnemyMove;
     public static Action<EnemyScript, PlayerScript> EnemyAttack;
+     
 
     // local
     public static Action GridLoaded;
-    public static Action<PlayerScript> MovingFinished;
-    public static Action<EnemyScript, Hex, int> EnemyAttackHit; // momenteel local direct na enemy move -> logisch?
+
+    public static Action<IUnit> UnitMovingFinished;
+    public static Action<IUnit, Hex, int> UnitAttackHit;
+    public static Action<PlayerScript, Hex> PlayerScriptHasTeleported;
+
     public static Action<Animator> DieAnimationFinished;
     public static Action<GameObject> AttackAnimationFinished;
+
+    // afgeleiden
+    public static Action<PlayerScript> PlayerMovingFinished;
+    public static Action<EnemyScript> EnemyMovingFinished;
+    public static Action<PlayerScript, Hex, int> PlayerAttackHit;
+    public static Action<EnemyScript, Hex, int> EnemyAttackHit;
+
 }

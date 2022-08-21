@@ -32,7 +32,7 @@ public class BearTrapScript : HexaEventCallback
         turnPlaced = GameHandler.instance.CurrentTurn;
     }
 
-    protected override void OnMovingFinished(PlayerScript playerMoved)
+    protected override void OnPlayerMovingFinished(PlayerScript playerMoved)
     {
         if(playerMoved.IsOnMyNetwork() && playerMoved.CurrentHexTile.HexCoordinates == Hex.HexCoordinates)
         {
@@ -45,7 +45,7 @@ public class BearTrapScript : HexaEventCallback
         Model.gameObject.SetActive(true);
         Model.GetComponent<Animator>().SetTrigger(Statics.ANIMATION_TRIGGER_ACTIVATE);
 
-        NetworkActionEvents.instance.PlayerBeartrapHitPlayer(PlayerOfTrap, Hex, playerOnBeartrap);
+        NetworkAE.instance.PlayerBeartrapHitPlayer(PlayerOfTrap, Hex, playerOnBeartrap);
     }
 
     protected override void OnEndPlayerTurn(PlayerScript player)

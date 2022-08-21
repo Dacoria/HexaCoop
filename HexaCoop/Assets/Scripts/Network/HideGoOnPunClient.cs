@@ -17,7 +17,9 @@ public class HideGoOnPunClient : MonoBehaviour
         }
         else
         {
-            canvasGroup.alpha = PhotonNetwork.IsMasterClient && Settings.ShowPunMcButtons ? 1 : 0;
-        }     
+            canvasGroup.alpha = PhotonNetwork.IsMasterClient && Settings.ShowPunMcButtons ? 1 : 0;            
+        }
+
+        canvasGroup.interactable = canvasGroup.alpha == 1 ? true : false;
     }
 }

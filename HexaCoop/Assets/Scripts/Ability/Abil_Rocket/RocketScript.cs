@@ -65,6 +65,6 @@ public class RocketScript : MonoBehaviour
             }
         }
 
-        NetworkActionEvents.instance.PlayerRocketHitTile(playerWhoShotRocket, hexTileHit);       
+        NetworkAE.instance.PlayerRocketHitTile(playerWhoShotRocket, hexTileHit);       
     }
 }

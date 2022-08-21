@@ -10,9 +10,9 @@ public partial class GameHandler : HexaEventCallback
 
     private void SetupNewGame()
     {
-        var players = NetworkHelper.instance.GetAllPlayers().OrderBy(x => x.PlayerId).Take(GetStartTiles().Count).ToList();
+        var players = NetworkHelper.instance.GetAllPlayers().OrderBy(x => x.Id).Take(GetStartTiles().Count).ToList();
         currentPlayer = players[0];
-        NetworkActionEvents.instance.NewRoundStarted(players, CurrentPlayer());
+        NetworkAE.instance.NewRoundStarted(players, CurrentPlayer());
     }
 
     public void ResetGame()
@@ -41,7 +41,7 @@ public partial class GameHandler : HexaEventCallback
         AllPlayers = NetworkHelper.instance.GetAllPlayers().Take(GetStartTiles().Count).ToList();
 
         // check
-        var playersMatch = players.Select(x => x.PlayerId).All(AllPlayers.Select(x => x.PlayerId).Contains);
+        var playersMatch = players.Select(x => x.Id).All(AllPlayers.Select(x => x.Id).Contains);
         var sameSize = players.Count == AllPlayers.Count;
         if (!playersMatch || !sameSize) { throw new Exception(); }
 
@@ -49,7 +49,7 @@ public partial class GameHandler : HexaEventCallback
         var playersRes = new List<PlayerScript>();
         for (int i = 0; i < players.Count; i++)
         {
-            playersRes.Add(AllPlayers.Single(x => x.PlayerId == players[i].PlayerId));
+            playersRes.Add(AllPlayers.Single(x => x.Id == players[i].Id));
         }
         AllPlayers = playersRes;
 
@@ -66,7 +66,7 @@ public partial class GameHandler : HexaEventCallback
         {
             var startHexTile = HexGrid.GetTileAt(GetStartTiles()[i]);
             AllPlayers[i].transform.position = new Vector3(startHexTile.transform.position.x, 0, startHexTile.transform.position.z); // vanwege grids omhoog komen
-            AllPlayers[i].CurrentHexTile = startHexTile;
+            AllPlayers[i].SetCurrentHexTile(startHexTile);
         }
     }
 

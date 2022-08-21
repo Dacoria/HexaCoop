@@ -40,10 +40,10 @@ public class ResetCameraPosition : HexaEventCallback
             originalCameraPosition;
 
         // geleidelijk bewegen + draaien naar target plek+rot
-        var lerpMovement = gameObject.GetComponent<LerpMovement>() ?? gameObject.AddComponent<LerpMovement>();
-        lerpMovement.MoveToDestination(endPosition: targetPos, duration: 0.6f, destroyOnFinished: false);
+        var lerpMovement = gameObject.GetSet<LerpMovement>();
+        lerpMovement.MoveToDestination(endPosition: targetPos, duration: 0.6f, destroyGoOnFinished: false);
 
-        var lerpRotation = gameObject.GetComponent<LerpRotation>() ?? gameObject.AddComponent<LerpRotation>();
-        lerpRotation.RotateTowardsAngle(endRotation: originalCameraRotation, duration: 0.6f, destroyOnFinished: false);
+        var lerpRotation = gameObject.GetSet<LerpRotation>();
+        lerpRotation.RotateTowardsAngle(endRotation: originalCameraRotation, duration: 0.6f, destroyGoOnFinished: false);
     }
 }

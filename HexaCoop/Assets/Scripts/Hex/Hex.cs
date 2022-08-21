@@ -65,7 +65,8 @@ public class Hex : MonoBehaviour
    
     public bool IsObstacle() => HexSurfaceType.IsObstacle() || HexStructureType.IsObstacle();
 
-    public bool HasUnitOnHex() =>  GetEnemyOnHex() != null || GetPlayerOnHex() != null;    
+    public bool HasUnitOnHex() => GetUnitOnHex() != null;
+    public IUnit GetUnitOnHex() => GetPlayerOnHex() != null ? GetPlayerOnHex() : GetEnemyOnHex();
 
     public EnemyScript GetEnemyOnHex()
     {
@@ -91,11 +92,17 @@ public class Hex : MonoBehaviour
 
     public void ChangeHexStructureType(HexStructureType changeToType, bool alsoChangeType = true)
     {
-        hexStructureScript.HexStructureTypeChanged(changeToType);
-
         if (alsoChangeType)
         {
+            // daadwekelijk verwijderen
+            hexStructureScript.HexStructureTypeChanged(changeToType);
             HexStructureType = changeToType;
+        }
+        else
+        {
+            // alleen hiden/showen
+            var structureGoModel = Utils.GetStructureGoFromHex(this)?.GetComponentInChildren<StructureModel>(true)?.gameObject;
+            structureGoModel?.SetActive(changeToType != HexStructureType.None);
         }
     }
 }

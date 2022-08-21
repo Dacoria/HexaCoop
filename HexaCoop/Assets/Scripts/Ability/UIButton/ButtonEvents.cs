@@ -80,7 +80,7 @@ public class ButtonEvents : HexaEventCallback
         }
     }
 
-    protected override void OnPlayerAttackHit(PlayerScript player, Hex hexWithTargetHit, int damage)
+    protected override void OnUnitAttackHit(IUnit unit, Hex hexWithTargetHit, int damage)
     {        
         if (GameHandler.instance.GameStatus != GameStatus.ActiveRound) { return; }
         StartCoroutine(UpdatePlayerAbilityButtons());
@@ -94,7 +94,7 @@ public class ButtonEvents : HexaEventCallback
         UpdateEndTurnButton(interactable: true);
     }
 
-    protected override void OnMovingFinished(PlayerScript player)
+    protected override void OnUnitMovingFinished(IUnit unit)
     {
         if (GameHandler.instance.GameStatus != GameStatus.ActiveRound) { return; }
         StartCoroutine(UpdatePlayerAbilityButtons());
