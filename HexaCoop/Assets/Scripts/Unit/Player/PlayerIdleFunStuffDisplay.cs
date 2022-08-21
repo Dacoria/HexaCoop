@@ -37,6 +37,12 @@ public class PlayerIdleFunStuffDisplay : HexaEventCallback
 
     private Coroutine rotationCoroutine;
 
+    private void RotateTowardsCamera()
+    {
+        var lookDesination = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+        playerMovement.RotateTowardsDestination(lookDesination);
+    }
+
     private void CheckForIdleFunStuff()
     {
         var clipInfo = animator.GetCurrentAnimatorClipInfo(0);
@@ -45,16 +51,17 @@ public class PlayerIdleFunStuffDisplay : HexaEventCallback
             return;
         }
 
+        RotateTowardsCamera();
+
         var currAnimationName = clipInfo[0].clip.name;
 
         if(currAnimationName.Contains("Idle"))
-        {
-            playerMovement.RotateTowardsDestination(transform.position + Vector3.back);
+        {            
             TryNewWaitAnimation();            
         }
         else
         {
-            if(currAnimationName.Contains("Dance") || currAnimationName.Contains("Hop"))
+            if (currAnimationName.Contains("Dance") || currAnimationName.Contains("Hop"))
             {
                 TryNewWaitAnimation();
             }

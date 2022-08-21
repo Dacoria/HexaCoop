@@ -7,7 +7,12 @@ public class PlayerAbilityPickups : HexaEventCallback
 {
     [ComponentInject] private PlayerScript playerScript;
 
-    private List<AbilityType> AbilityPickups = new List<AbilityType>();
+    private List<AbilityType> AbilityPickups;
+
+    protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript currentPlayer)
+    {
+        AbilityPickups = new List<AbilityType>();
+    }
 
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType)
     {

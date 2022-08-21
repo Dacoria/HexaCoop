@@ -77,7 +77,12 @@ public class GameTextManager : HexaEventCallback
 
 
     protected override void OnNewRoundStarted(List<PlayerScript> players, PlayerScript currentPlayer)
-    {        
+    {      
+        if(GameHandler.instance.GameStatus != GameStatus.ActiveRound)
+        {
+            return;
+        }
+
         if(Netw.MyPlayer() == currentPlayer)
         {
             Textt.GameLocal("New round started! Your Turn");
@@ -103,7 +108,12 @@ public class GameTextManager : HexaEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript player)
     {
-        if(Netw.MyPlayer() == player)
+        if (GameHandler.instance.GameStatus != GameStatus.ActiveRound)
+        {
+            return;
+        }
+
+        if (Netw.MyPlayer() == player)
         {
             Textt.GameLocal("New turn, your move!");
         }

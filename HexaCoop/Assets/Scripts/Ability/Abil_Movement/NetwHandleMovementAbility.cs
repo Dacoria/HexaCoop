@@ -12,7 +12,7 @@ public class NetwHandleMovementAbility : HexaEventCallback, IAbilityNetworkHandl
         }
         else
         {
-            gameObject.GetSet<UnitMovement>().GoToDestination(target, 2f);
+            gameObject.GetSet<UnitMovement>().GoToDestination(target, 1.3f);
         }
     }   
 }

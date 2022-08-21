@@ -57,6 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsAi: 0
   PlayerName: 
+  Index: 0
   PlayerModel: {fileID: 0}
 --- !u!136 &3645293598411083036
 CapsuleCollider:

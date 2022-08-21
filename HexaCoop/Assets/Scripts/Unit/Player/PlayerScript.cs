@@ -19,6 +19,7 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUn
     public Hex CurrentHexTile { get; private set; }
     public int Id { get; private set; }
 
+    public int Index;
     public void SetCurrentHexTile(Hex hex) => CurrentHexTile = hex;
     public void MoveToNewDestination(Hex tile) => gameObject.GetSet<UnitMovement>().GoToDestination(tile, 2f);
     public int GetVision() => this.baseVisionRange + GetComponents<PlayerExtraVisionRangeScript>().Sum(x => x.AdditionalRange);

@@ -28,7 +28,7 @@ public class SpawnPlayerScript : MonoBehaviour
         }
         else if (!hasMaxAmountOfPlayers)
         {
-            hasMaxAmountOfPlayers = NetworkHelper.instance.GetAllPlayers().Count() >= GameHandler.instance.GetStartTiles().Count();
+            hasMaxAmountOfPlayers = NetworkHelper.instance.GetAllPlayers().Count() >= GameHandler.instance.GetStartTilesCount();
         }
         else
         {

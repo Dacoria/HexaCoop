@@ -64,7 +64,7 @@ public class PlayerHealth : HexaEventCallback
         if(CurrentHitPoints == 0)
         {
             Die();
-            if(Netw.IsMyNetwTurn())
+            if(Netw.CurrPlayer() == playerScript)
             {
                 NetworkAE.instance.EndPlayerTurn(playerScript);
             }
