@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class PortalScript : HexaEventCallback
+public class PortalScript : HexaEventCallback, IStructure
 {
     public PortalScript ConnectedPortal;
 
@@ -37,4 +37,7 @@ public class PortalScript : HexaEventCallback
             .GetHex()
         );
     }
+
+    // altijd visible lijk me
+    public void SetIsVisible(bool isVisible) { }
 }

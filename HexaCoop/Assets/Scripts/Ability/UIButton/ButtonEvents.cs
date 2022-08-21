@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -112,8 +111,6 @@ public class ButtonEvents : HexaEventCallback
 
     private void UpdateAllAbilities(bool setToUnselected, bool checkAvailableInTurn = true, bool checkEnoughPoints = true, bool? interactable = null)
     {
-        
-
         foreach (AbilityType abilityType in Utils.GetValues<AbilityType>().Where(x => x.IsAvailableInGame()))
         {
             if (setToUnselected)
@@ -145,15 +142,8 @@ public class ButtonEvents : HexaEventCallback
         }
     }
 
-    protected override void OnNewRoundStarted(List<PlayerScript> arg1, PlayerScript currentPlayer)
-    {
-        StartCoroutine(CheckEnableButtonsNewTurn(currentPlayer));
-    }
-
-    protected override void OnNewPlayerTurn(PlayerScript currentPlayer)
-    {
-        StartCoroutine(CheckEnableButtonsNewTurn(currentPlayer));
-    }
+    protected override void OnNewRoundStarted(List<PlayerScript> arg1, PlayerScript currentPlayer) => StartCoroutine(CheckEnableButtonsNewTurn(currentPlayer));
+    protected override void OnNewPlayerTurn(PlayerScript currentPlayer) => StartCoroutine(CheckEnableButtonsNewTurn(currentPlayer));
 
     private IEnumerator CheckEnableButtonsNewTurn(PlayerScript currentPlayer)
     {

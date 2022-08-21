@@ -1,19 +1,25 @@
 using UnityEngine;
 
-public class WellScript : HexaEventCallback
+public class WellScript : HexaEventCallback, IStructure
 {
     [ComponentInject] private MeshRenderer meshRenderer;
+    [ComponentInject] private Hex hex;
 
     private PlayerScript lastPlayerActivatedWell;
     private int turnLastPlayerActivatedWell;
 
-    private bool wellIsActive;   
+    private bool wellIsActive;
+    private Color originalWellColor;
+    private Color orange;
+
 
     private new void Awake()
     {
         base.Awake();
         wellIsActive = true;
-        SetWellColor(Color.green);
+        originalWellColor = meshRenderer.materials[5].color;
+        orange = new Color(214 / 255f, 122 / 255f, 27 / 255f);
+        UpdateWellDisplay();
     }
 
     public void PlayerSteppedOnStructure(PlayerScript player) => TryUseWell(player);
@@ -37,26 +43,46 @@ public class WellScript : HexaEventCallback
         if(!wellIsActive && player == lastPlayerActivatedWell)
         {
             var turnsLeftTillWellActive = turnLastPlayerActivatedWell + 2 - GameHandler.instance.CurrentTurn; // 2 beurten verder
-            if(turnsLeftTillWellActive >= 2)
+            if (turnsLeftTillWellActive <= 0)
             {
-                SetWellColor(Color.red);
+                wellIsActive = true;
             }
-            else if(turnsLeftTillWellActive == 1)
-            {
-                SetWellColor(Color.yellow);
-            }
-            else if (turnsLeftTillWellActive <= 0)
-            {
-                ActivateWell();                
-            }
+
+            UpdateWellDisplay();
         }
     }
 
-    private void ActivateWell()
+    private bool wellIsVisible;
+    public void SetIsVisible(bool isVisible) 
     {
-        wellIsActive = true;
-        SetWellColor(Color.green);
-    }    
+        wellIsVisible = isVisible;
+        UpdateWellDisplay();
+        Debug.Log("wellIsVisible -> " + isVisible);
+    }
+
+    private void UpdateWellDisplay()
+    {
+        if(!wellIsVisible)
+        {
+            SetWellColor(originalWellColor);
+            return;
+        }
+
+        var turnsLeftTillWellActive = turnLastPlayerActivatedWell + 2 - GameHandler.instance.CurrentTurn; // 2 beurten verder
+        if (turnsLeftTillWellActive >= 2)
+        {
+            SetWellColor(Color.red);
+        }
+        else if (turnsLeftTillWellActive >= 1)
+        {
+            SetWellColor(orange);
+        }
+        else
+        {
+            SetWellColor(wellIsActive ? Color.green : Color.yellow);
+        }        
+    } 
+      
 
     // onderkant vd well
     private void SetWellColor(Color color) => meshRenderer.materials[5].color = color;

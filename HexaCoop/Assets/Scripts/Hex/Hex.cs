@@ -61,6 +61,10 @@ public class Hex : MonoBehaviour
         {
             GetPlayerOnHex().PlayerModel.gameObject.SetActive(!fogEnabled);
         }
+
+        ChangeHexSurfaceType(Settings.ShowSurfacesInFog || !fogEnabled ? HexSurfaceType : HexSurfaceType.Simple_Plain, alsoChangeType: false);
+        ChangeHexStructureType(Settings.ShowStructuresInFog || !fogEnabled ? HexStructureType : HexStructureType.None, alsoChangeType: false);
+        UpdateHexStructureVisibilityStatus(!fogEnabled);
     }   
    
     public bool IsObstacle() => HexSurfaceType.IsObstacle() || HexStructureType.IsObstacle();
@@ -100,9 +104,24 @@ public class Hex : MonoBehaviour
         }
         else
         {
-            // alleen hiden/showen
-            var structureGoModel = Utils.GetStructureGoFromHex(this)?.GetComponentInChildren<StructureModel>(true)?.gameObject;
-            structureGoModel?.SetActive(changeToType != HexStructureType.None);
+            // alleen hiden/showen van model
+            var structureGo = Utils.GetStructureGoFromHex(this);
+            if (structureGo != null)
+            {
+                var structureGoModel = structureGo.GetComponentInChildren<StructureModel>(true)?.gameObject;
+                structureGoModel?.SetActive(changeToType != HexStructureType.None);
+            }
+        }
+    }
+
+    private void UpdateHexStructureVisibilityStatus(bool isVisible)
+    {
+        // alleen hiden/showen van model
+        var structureGo = Utils.GetStructureGoFromHex(this);
+        if (structureGo != null)
+        {
+            var structureScript = structureGo.GetComponentInChildren<IStructure>();
+            structureScript?.SetIsVisible(isVisible);
         }
     }
 }

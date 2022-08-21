@@ -83,10 +83,7 @@ public class FogGrid : HexaEventCallback
         foreach (var tile in allTiles)
         {
             var tileIsVisible = Settings.ShowEverything || visibleTiles.Contains(tile);
-            tile.SetFogOnHex(!tileIsVisible);
-            
-            tile.ChangeHexSurfaceType(Settings.ShowSurfacesInFog || tileIsVisible ? tile.HexSurfaceType : HexSurfaceType.Simple_Plain, alsoChangeType: false);
-            tile.ChangeHexStructureType(Settings.ShowStructuresInFog || tileIsVisible ? tile.HexStructureType : HexStructureType.None, alsoChangeType: false);
+            tile.SetFogOnHex(!tileIsVisible);           
                 
             EnemyManager.instance.GetEnemies().Where(x => x.CurrentHexTile == tile).ToList().ForEach(enemy =>
             {
