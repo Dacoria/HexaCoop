@@ -61,6 +61,7 @@ MonoBehaviour:
   - RPC_AE_EnemyAttackHit
   - RPC_AE_EndPlayerTurn
   - RPC_AE_UnitAttackHit
+  - RPC_AE_PlayerDamageObjectHitTile
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

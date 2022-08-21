@@ -37,6 +37,4 @@ public class SelectRadarAbility : MonoBehaviour, IAbilityAction
     {
         Utils.Destroy(GetComponents<HighlightOneTileDisplayScript>());
     }
-
-    public bool CanDoAbility(PlayerScript player) => true;
 }

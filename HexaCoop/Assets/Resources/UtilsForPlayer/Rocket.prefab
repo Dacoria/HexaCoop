@@ -125,9 +125,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2109403841698132331}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36a3cb64874c3d24a8408f350d17fa57, type: 3}
+  m_Script: {fileID: 11500000, guid: 9923575bd1a753b47807489c0d9cc354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Explosion: {fileID: 100004, guid: 6e8c7c425e5bc374daf95a774767b1e3, type: 3}
+  DamageObjectType: 1
+  Explosion: {fileID: 35838543421222934, guid: e910fe1226b015a42878dc47bb027fce, type: 3}
   Player: {fileID: 0}
   HexTarget: {fileID: 0}

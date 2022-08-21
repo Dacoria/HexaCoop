@@ -15,7 +15,8 @@ public enum HexObjectOnTileType
     Mummy,
     Bombie,
     BearTrap,
-    Artilery_Pickup
+    Artillery_Pickup,
+    MeteorStrike_Pickup,
 
     //BottleRed,
     //BottleGreen,

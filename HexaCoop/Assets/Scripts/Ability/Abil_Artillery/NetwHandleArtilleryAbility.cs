@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class NetwHandleArtilleryAbility : HexaEventCallback, IAbilityNetworkHandler
 {
-    [ComponentInject] private PlayerScript playerScript;
-
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
     {
         if (playerDoingAbility.IsOnMyNetwork())
@@ -20,7 +18,7 @@ public class NetwHandleArtilleryAbility : HexaEventCallback, IAbilityNetworkHand
         
         while(target != null)
         {
-            StartCoroutine(MonoHelper.instance.SummonRocket(waitTimeToSummonRocket, target, playerDoingAbility));
+            StartCoroutine(MonoHelper.instance.SummonFallingDamageObject(waitTimeToSummonRocket, target, playerDoingAbility, DamageObjectType.Rocket));
             waitTimeToSummonRocket += 0.2f;
 
             var newOffset = Direction.GetDirectionsList(target)[dirIndex];

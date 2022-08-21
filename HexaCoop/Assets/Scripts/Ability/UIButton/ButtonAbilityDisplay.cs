@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class ButtonAbilityDisplay : MonoBehaviour
 {
     public AbilityType Type;
-    [ComponentInject] private TMP_Text CostText;
-    [ComponentInject] private Image ImageButton;
+    [ComponentInject] private TMP_Text costText;
+    [ComponentInject] private Image imageButton;
+    [ComponentInject] private CanvasGroup canvasGroup;
 
     [ComponentInject] public Button Button;// public, zodat andere klasses er makkelijk bij kunnen
 
@@ -19,12 +20,12 @@ public class ButtonAbilityDisplay : MonoBehaviour
     {
         this.ComponentInject();
         ImageAbility = this.GetComponentOnlyInDirectChildren<Image>();
-        this.buttonNotPressed = ImageButton.sprite;
+        this.buttonNotPressed = imageButton.sprite;
     }
 
     private void Start()
     {
-        CostText.text = Type.Cost().ToString();        
+        costText.text = Type.Cost().ToString();        
     }
 
     private Color UnselectedColor = new Color(81 / 255f, 216 / 255f, 255 / 255f); // blue (on grey)
@@ -38,19 +39,27 @@ public class ButtonAbilityDisplay : MonoBehaviour
         set
         {
             _abilityIsActive = value;
-            ImageButton.sprite = _abilityIsActive ? buttonUpdater.ButtonPressedSprite : buttonNotPressed;
+            imageButton.sprite = _abilityIsActive ? buttonUpdater.ButtonPressedSprite : buttonNotPressed;
         }
     }
 
     private void Update()
     {
-        if(!Button.interactable)
+        if(Type.IsPickup() && !Button.interactable)
         {
-            ImageButton.color = DisabledColor;
+            canvasGroup.alpha = 0;
+            return;
+        }
+
+        canvasGroup.alpha = 1;
+
+        if (!Button.interactable)
+        {
+            imageButton.color = DisabledColor;
         }
         else 
         {
-            ImageButton.color = AbilityIsActive ? SelectedColor : UnselectedColor;
+            imageButton.color = AbilityIsActive ? SelectedColor : UnselectedColor;
         }
     }
 

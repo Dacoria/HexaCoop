@@ -122,15 +122,16 @@ public class MonoHelper : MonoBehaviour
     }
 
 
-    public void SummonRocket(Hex target, PlayerScript playerWhoOwnsTheRocket) => StartCoroutine(SummonRocket(0, target, playerWhoOwnsTheRocket));
-    public IEnumerator SummonRocket(float waitTimeInSeconds, Hex target, PlayerScript playerWhoOwnsTheRocket)
+    public void SummonRocket(Hex target, PlayerScript playerWhoOwnsTheRocket) => StartCoroutine(SummonFallingDamageObject(0, target, playerWhoOwnsTheRocket, DamageObjectType.Rocket));
+
+    public IEnumerator SummonFallingDamageObject(float waitTimeInSeconds, Hex target, PlayerScript playerWhoOwnsObject, DamageObjectType damageObjectType)
     {
         yield return Wait4Seconds.Get(waitTimeInSeconds);
 
         Vector3 destination = target.transform.position + new Vector3(0, 15, 0);
-        var rocketPrefab = Rsc.GoEnemiesOrObjMap.Single(x => x.Key == "Rocket").Value;
-        var rocketGo = Instantiate(rocketPrefab, destination, Quaternion.Euler(0, 0, 180f));
-        rocketGo.GetComponent<RocketScript>().Player = playerWhoOwnsTheRocket;
-        rocketGo.GetComponent<RocketScript>().HexTarget = target;
+        var damageObjectPrefab = Rsc.GoEnemiesOrObjMap.Single(x => x.Key == damageObjectType.ToString()).Value;
+        var damageObjectGo = Instantiate(damageObjectPrefab, destination, Quaternion.Euler(0, 0, 180f));
+        damageObjectGo.GetComponent<FallingDamageObjectScript>().Player = playerWhoOwnsObject;
+        damageObjectGo.GetComponent<FallingDamageObjectScript>().HexTarget = target;
     }
 }

@@ -8,8 +8,12 @@ public class PickupItemScript : HexaEventCallback
         {
             switch (hex.HexObjectOnTileType)
             {
-                case HexObjectOnTileType.Artilery_Pickup:
+                case HexObjectOnTileType.Artillery_Pickup:
                     player.GetComponent<PlayerAbilityPickups>().AddPickupAbility(AbilityType.Artillery);
+                    Destroy(gameObject);
+                    break;
+                case HexObjectOnTileType.MeteorStrike_Pickup:
+                    player.GetComponent<PlayerAbilityPickups>().AddPickupAbility(AbilityType.MeteorStrike);
                     Destroy(gameObject);
                     break;
             }

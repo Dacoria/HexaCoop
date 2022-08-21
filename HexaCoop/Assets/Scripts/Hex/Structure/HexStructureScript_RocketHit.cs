@@ -1,8 +1,8 @@
 public partial class HexStructureScript: HexaEventCallback
 {
-    protected override void OnPlayerRocketHitTile(PlayerScript playerWhoShot, Hex hex)
+    protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hex, DamageObjectType doType)
     {
-        if(hex.HexStructureType == HexStructureType.Mountain)
+        if (hex.HexStructureType == HexStructureType.Mountain)
         {
             DestroyMountain(hex);
         }

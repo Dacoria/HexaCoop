@@ -16,7 +16,7 @@ public class SpriteAbilityHeightCorrection : HexaEventCallback
 
     private Image ImageButton;
 
-    protected override void OnNewRoundStarted(List<PlayerScript> arg1, PlayerScript arg2)
+    protected override void OnNewRoundStarted(List<PlayerScript> players, PlayerScript player)
     {
         Init();
     }

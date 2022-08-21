@@ -13,11 +13,10 @@ public static class ActionEvents
     public static Action<bool, PlayerScript> EndRound;
     public static Action EndGame;
     public static Action EnemyFaseStarted;
-    public static Action<PlayerScript, Hex> PlayerRocketHitTile;
+    public static Action<PlayerScript, Hex, DamageObjectType> PlayerDamageObjectHitTile;
     public static Action<PlayerScript, Hex, PlayerScript> PlayerBeartrapHitPlayer;
     public static Action<EnemyScript, Hex> EnemyMove;
     public static Action<EnemyScript, PlayerScript> EnemyAttack;
-     
 
     // local
     public static Action GridLoaded;

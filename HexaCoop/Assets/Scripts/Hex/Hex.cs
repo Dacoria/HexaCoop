@@ -123,5 +123,5 @@ public class Hex : MonoBehaviour
             var structureScript = structureGo.GetComponentInChildren<IStructure>();
             structureScript?.SetIsVisible(isVisible);
         }
-    }
+    }    
 }

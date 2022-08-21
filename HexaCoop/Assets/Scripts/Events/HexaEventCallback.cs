@@ -19,7 +19,7 @@ public abstract class HexaEventCallback : MonoBehaviour
         ActionEvents.EndGame += OnEndGame;
         ActionEvents.PlayerAbility += OnPlayerAbility;
         ActionEvents.UnitMovingFinished += OnUnitMovingFinished;
-        ActionEvents.PlayerRocketHitTile += OnPlayerRocketHitTile;
+        ActionEvents.PlayerDamageObjectHitTile += OnPlayerDamageObjectHitTile;
         ActionEvents.PlayerBeartrapHitPlayer += OnPlayerBeartrapHitPlayer;
         ActionEvents.UnitAttackHit += OnUnitAttackHit;
         ActionEvents.EnemyFaseStarted += OnEnemyFaseStarted;
@@ -46,7 +46,7 @@ public abstract class HexaEventCallback : MonoBehaviour
         ActionEvents.EndGame -= OnEndGame;
         ActionEvents.PlayerAbility -= OnPlayerAbility;
         ActionEvents.UnitMovingFinished -= OnUnitMovingFinished;
-        ActionEvents.PlayerRocketHitTile -= OnPlayerRocketHitTile;
+        ActionEvents.PlayerDamageObjectHitTile -= OnPlayerDamageObjectHitTile;
         ActionEvents.PlayerBeartrapHitPlayer -= OnPlayerBeartrapHitPlayer;
         ActionEvents.UnitAttackHit -= OnUnitAttackHit;
         ActionEvents.EnemyFaseStarted -= OnEnemyFaseStarted;
@@ -60,7 +60,7 @@ public abstract class HexaEventCallback : MonoBehaviour
         ActionEvents.PlayerAttackHit -= OnPlayerAttackHit;
         ActionEvents.EnemyMovingFinished -= OnEnemyMovingFinished;
         ActionEvents.PlayerMovingFinished -= OnPlayerMovingFinished;
-    }    
+    }
 
     protected virtual void OnGridLoaded() { }    
     protected virtual void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) { }
@@ -71,7 +71,7 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnEndPlayerTurn(PlayerScript player) { }
     protected virtual void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType) { }
     protected virtual void OnUnitMovingFinished(IUnit unit) { }
-    protected virtual void OnPlayerRocketHitTile(PlayerScript playerWhoShot, Hex hex) { }
+    protected virtual void OnPlayerDamageObjectHitTile(PlayerScript player, Hex hex, DamageObjectType doType) { }
     protected virtual void OnPlayerBeartrapHitPlayer(PlayerScript playerOwnsTrap, Hex hex, PlayerScript playerHit) { }
     protected virtual void OnUnitAttackHit(IUnit player, Hex hexWithTargetHit, int damage) { }
     protected virtual void OnEnemyFaseStarted() { }

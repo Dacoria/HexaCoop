@@ -28,7 +28,7 @@ public class EnemyHealth : HexaEventCallback
         CurrentHitPoints = InitHitPoints;
     }
 
-    protected override void OnPlayerRocketHitTile(PlayerScript pWhoShot, Hex hexWithTargetHit)
+    protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hexWithTargetHit, DamageObjectType doType)
     {
         if (hexWithTargetHit == enemyScript.CurrentHexTile)
         {

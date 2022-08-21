@@ -40,6 +40,4 @@ public class SelectArtilleryAbility : MonoBehaviour, IAbilityAction
     {
         NetworkAE.instance.PlayerAbility(selectedPlayer, hexSelected, AbilityType);
     }
-
-    public bool CanDoAbility(PlayerScript player) => player.GetComponent<PlayerAbilityPickups>().HasPickupAbility(AbilityType.Artillery);
 }

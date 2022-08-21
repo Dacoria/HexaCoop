@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public partial class ExtendAE : MonoBehaviour
 {
@@ -7,7 +8,6 @@ public partial class ExtendAE : MonoBehaviour
         ActionEvents.UnitAttackHit += OnUnitAttackHit;
         ActionEvents.UnitMovingFinished += OnUnitMovingFinished;
     }
-       
 
     private void OnDestroy()
     {

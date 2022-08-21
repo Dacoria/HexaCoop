@@ -1,7 +1,7 @@
 public class CameraShakeOnRocketHit : HexaEventCallback
 {
-    protected override void OnPlayerRocketHitTile(PlayerScript playerThatSendRocket, Hex hexHit)
-    {     
+    protected override void OnPlayerDamageObjectHitTile(PlayerScript player, Hex hexHit, DamageObjectType doType)
+    {
         hexHit.EnableHighlight(HighlightColorType.Pink);
         CameraShake.instance.Shake();
         

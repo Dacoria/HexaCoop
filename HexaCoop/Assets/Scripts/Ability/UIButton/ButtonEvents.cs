@@ -85,7 +85,7 @@ public class ButtonEvents : HexaEventCallback
         UpdateEndTurnButton(interactable: true);
     }
 
-    protected override void OnPlayerRocketHitTile(PlayerScript pWhoShot, Hex hex)
+    protected override void OnPlayerDamageObjectHitTile(PlayerScript player, Hex hexHit, DamageObjectType doType)
     {
         if (GameHandler.instance.GameStatus != GameStatus.ActiveRound) { return; }
         StartCoroutine(UpdatePlayerAbilityButtons());

@@ -36,6 +36,4 @@ public class SelectVisionAbility : MonoBehaviour, IAbilityAction
     {
         Utils.Destroy(GetComponents<HighlightOneTileDisplayScript>());
     }
-
-    public bool CanDoAbility(PlayerScript player) => true;
 }

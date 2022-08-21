@@ -15,7 +15,7 @@ public class PlayerHealth : HexaEventCallback
         CurrentHitPoints = InitHitPoints;        
     }
 
-    protected override void OnPlayerRocketHitTile(PlayerScript pWhoShot, Hex hex)
+    protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hex, DamageObjectType doType)
     {
         var playerOnTile = hex.GetPlayerOnHex();
         if (playerOnTile?.Id == playerScript.Id)
@@ -64,6 +64,10 @@ public class PlayerHealth : HexaEventCallback
         if(CurrentHitPoints == 0)
         {
             Die();
+            if(Netw.IsMyNetwTurn())
+            {
+                NetworkAE.instance.EndPlayerTurn(playerScript);
+            }
         }
     }
 

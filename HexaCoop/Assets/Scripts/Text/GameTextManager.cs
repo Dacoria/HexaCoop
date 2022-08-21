@@ -38,7 +38,7 @@ public class GameTextManager : HexaEventCallback
         }
     }
 
-    protected override void OnPlayerRocketHitTile(PlayerScript playerOfRocket, Hex hex)
+    protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hex, DamageObjectType doType)
     {
         if (hex.HasUnitOnHex())
         {
@@ -47,7 +47,7 @@ public class GameTextManager : HexaEventCallback
 
             if (playerOnHex != null)
             {
-                if(playerOnHex.IsOnMyNetwork() || playerOfRocket.IsOnMyNetwork())
+                if(playerOnHex.IsOnMyNetwork() || playerOwner.IsOnMyNetwork())
                 {
                     Textt.GameLocal("Rocket hit " + hex.GetPlayerOnHex().PlayerName + "! (1 dmg)");
                 }
@@ -56,14 +56,7 @@ public class GameTextManager : HexaEventCallback
             {
                 Textt.GameLocal("Rocket hit " + enemyOnHex.gameObject.name + "! (1 dmg)");
             }
-        }
-        else
-        {
-            if (playerOfRocket.IsOnMyNetwork())
-            {
-                Textt.GameLocal(playerOfRocket.PlayerName + " Missed!");
-            }
-        }
+        }        
     }
 
     protected override void OnPlayerBeartrapHitPlayer(PlayerScript pOwnsTrap, Hex hex, PlayerScript playerHit)
