@@ -9,9 +9,8 @@ public class ResetCameraPosition : HexaEventCallback
 
     private Vector3 cameraPlayerOffset = new Vector3(0, 14f, -8f);   
 
-    new void Start()
+    void Start()
     {
-        base.Start();
         originalCameraPosition = Camera.main.transform.position;
         originalCameraRotation = Camera.main.transform.rotation;
     }

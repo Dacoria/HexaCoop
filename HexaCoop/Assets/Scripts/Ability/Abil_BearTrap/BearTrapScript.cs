@@ -12,9 +12,8 @@ public class BearTrapScript : HexaEventCallback
     private int turnPlaced;
     private int destroyAfterXTurns = 2;
 
-    private new void Start()
+    private void Start()
     {
-        base.Start();
         if(PlayerOfTrap == null) { throw new Exception("Init vereist voor BearTrap"); }
         gameObject.AddComponent<DestroyBearTrapAfterUse>();
     }

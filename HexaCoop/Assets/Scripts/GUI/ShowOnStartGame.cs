@@ -6,9 +6,8 @@ public class ShowOnStartGame : HexaEventCallback
 {
     public GameObject targetGo;
 
-    new void Start()
+    void Start()
     {
-        base.Start();
         targetGo.SetActive(false);
     }
 

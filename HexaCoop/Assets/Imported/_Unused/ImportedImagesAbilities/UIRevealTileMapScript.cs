@@ -8,9 +8,8 @@ public class UIRevealTileMapScript : HexaEventCallback
 {
     [ComponentInject] private Button button;
 
-    private new IEnumerator Start()
+    private IEnumerator Start()
     {
-        base.Start();
         yield return new UnityEngine.WaitForSeconds(0.3f); 
 
         if (Settings.ShowOnlyPlainHexesBeforeGameStart)

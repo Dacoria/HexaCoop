@@ -34,4 +34,6 @@ public static class Direction
             return directionsOffsetOdd;
         }
     }
+
+    public static List<Vector3Int> GetDirectionsList(Hex hex) => GetDirectionsList(hex.HexCoordinates.z);
 }

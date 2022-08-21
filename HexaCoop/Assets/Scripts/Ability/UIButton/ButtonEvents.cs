@@ -8,9 +8,8 @@ public class ButtonEvents : HexaEventCallback
     [ComponentInject] private ButtonUpdater buttonUpdater;
     [ComponentInject] private EndTurnButtonScript endTurnButtonScript;
     
-    private new void Start()
+    private void Start()
     {
-        base.Start();
         UpdateAllAbilities(setToUnselected: true, interactable: false);
         UpdateEndTurnButton(visible: false, interactable: false, waitForSeconds: 0);
     }

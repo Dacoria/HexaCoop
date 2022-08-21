@@ -8,9 +8,8 @@ public class PortalScript : HexaEventCallback, IStructure
 
     [ComponentInject] public Hex Hex;
 
-    new void Start()
+    void Start()
     {
-        base.Start();
         ConnectedPortal = FindObjectsOfType<PortalScript>().Where(x => x != this).First();
     }
 

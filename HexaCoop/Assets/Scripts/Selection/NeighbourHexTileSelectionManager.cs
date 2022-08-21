@@ -3,23 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class HexTileSelectionManager : MonoBehaviour
+public class NeighbourHexTileSelectionManager : MonoBehaviour
 {
     public HexGrid HexGrid;
     private List<Vector3Int> validNeighboursHightlighted = new List<Vector3Int>();
 
     public PlayerScript SelectedPlayer;
-    public static HexTileSelectionManager instance;
+    public static NeighbourHexTileSelectionManager instance;
 
     private void Awake()
     {
         instance = this;
     }
 
-    public void HighlightMovementOptionsAroundPlayer(PlayerScript player, bool? withTargetOnTile = null)
+    public void HighlightMovementOptionsAroundPlayer(PlayerScript player)
     {
         SelectedPlayer = player;
-        HightlightValidNeighbourTiles(player.CurrentHexTile, withTargetOnTile);
+        onlyHighlightColor = false;
+        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: true);
+    }
+
+    private bool onlyHighlightColor = false;
+
+    public void HighlightNeighbourOptionsAroundPlayer(PlayerScript player, bool? withTargetOnTile = null)
+    {
+        SelectedPlayer = player;
+        onlyHighlightColor = true;
+        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: false);
     }
 
     public void HandleMouseClickForMove(Vector3 mousePosition, Action<PlayerScript, Hex> callback)
@@ -67,16 +77,34 @@ public class HexTileSelectionManager : MonoBehaviour
         }
     }
 
-    private void HightlightValidNeighbourTiles(Hex selectedHex, bool? withTargetOnTile)
+    private void HightlightValidNeighbourTiles(Hex selectedHex, bool excludeObstacles)
     {
-        var neighboursToTryToHightlight = HexGrid.GetNeighboursFor(selectedHex.HexCoordinates, withUnitOnTile: withTargetOnTile);
+        var neighboursToTryToHightlight = HexGrid.GetNeighboursFor(selectedHex.HexCoordinates, excludeObstacles: excludeObstacles);
         validNeighboursHightlighted = new List<Vector3Int>();
 
         foreach (var neightbour in neighboursToTryToHightlight)
         {
             validNeighboursHightlighted.Add(neightbour);
-            HexGrid.GetTileAt(neightbour).EnableHighlight(neightbour.GetHex().HasUnitOnHex() ? 
-                HighlightActionType.EnemyOption.GetColor() : HighlightActionType.MoveOption.GetColor());            
+            SetHighlightColor(neightbour);
         }
-    }    
+    }
+
+    private void SetHighlightColor(Vector3Int neightbour)
+    {
+        if(onlyHighlightColor)
+        {
+            HexGrid.GetTileAt(neightbour).EnableHighlight(HighlightActionType.SelectTile.GetColor());
+        }
+        else
+        {
+            if(neightbour.GetHex().HasUnitOnHex())
+            {
+                HexGrid.GetTileAt(neightbour).EnableHighlight(HighlightActionType.EnemyOption.GetColor());
+            }
+            else
+            {
+                HexGrid.GetTileAt(neightbour).EnableHighlight(HighlightActionType.MoveOption.GetColor());
+            }
+        }
+    }
 }

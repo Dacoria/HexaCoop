@@ -8,7 +8,7 @@ public abstract class HexaEventCallback : MonoBehaviour
     {
         this.ComponentInject();
     }
-    protected void Start()
+    protected void OnEnable()
     {
         ActionEvents.GridLoaded += OnGridLoaded;
         ActionEvents.NewRoundStarted += OnNewRoundStarted;
@@ -35,7 +35,7 @@ public abstract class HexaEventCallback : MonoBehaviour
         ActionEvents.PlayerMovingFinished += OnPlayerMovingFinished;
     }
 
-    protected void OnDestroy()
+    protected void OnDisable()
     {
         ActionEvents.GridLoaded -= OnGridLoaded;
         ActionEvents.NewRoundStarted -= OnNewRoundStarted;

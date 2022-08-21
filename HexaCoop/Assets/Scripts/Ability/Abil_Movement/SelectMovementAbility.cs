@@ -7,13 +7,13 @@ public class SelectMovementAbility : MonoBehaviour, IAbilityAction
     private bool movementAbilIsActive;
     public void DeselectAbility()
     {
-        HexTileSelectionManager.instance.DeselectHighlightedNeighbours();
+        NeighbourHexTileSelectionManager.instance.DeselectHighlightedNeighbours();
         movementAbilIsActive = false;
     }
 
     public void InitAbilityAction()
     {
-        HexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(GameHandler.instance.CurrentPlayer());
+        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(GameHandler.instance.CurrentPlayer());
         movementAbilIsActive = true;
     }
 
@@ -26,13 +26,13 @@ public class SelectMovementAbility : MonoBehaviour, IAbilityAction
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (HexTileSelectionManager.instance.SelectedPlayer == null)
+            if (NeighbourHexTileSelectionManager.instance.SelectedPlayer == null)
             {
                 // movement aanzetten gaat eerst via knoppen
                 return;
             }            
 
-            HexTileSelectionManager.instance.HandleMouseClickForMove(Input.mousePosition, OnMovementTileSelected);
+            NeighbourHexTileSelectionManager.instance.HandleMouseClickForMove(Input.mousePosition, OnMovementTileSelected);
         }
     }
 

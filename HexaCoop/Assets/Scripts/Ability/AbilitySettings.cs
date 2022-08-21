@@ -4,4 +4,5 @@
     public AbilityType Type;
     public int AvailableFromTurn;
     public bool EventImmediatelyFinished;
+    public bool IsPickup;
 }

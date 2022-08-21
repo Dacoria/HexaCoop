@@ -14,9 +14,8 @@ public partial class GameHandler : HexaEventCallback
         GameStatus = GameStatus.NotStarted;
     }
 
-    private new void Start()
+    private void Start()
     {
-        base.Start();
         HexGrid = GameObject.FindObjectOfType<HexGrid>();        
     }     
 }

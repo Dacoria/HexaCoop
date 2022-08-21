@@ -120,4 +120,17 @@ public class MonoHelper : MonoBehaviour
 
         return neighbourClosest;
     }
+
+
+    public void SummonRocket(Hex target, PlayerScript playerWhoOwnsTheRocket) => StartCoroutine(SummonRocket(0, target, playerWhoOwnsTheRocket));
+    public IEnumerator SummonRocket(float waitTimeInSeconds, Hex target, PlayerScript playerWhoOwnsTheRocket)
+    {
+        yield return Wait4Seconds.Get(waitTimeInSeconds);
+
+        Vector3 destination = target.transform.position + new Vector3(0, 15, 0);
+        var rocketPrefab = Rsc.GoEnemiesOrObjMap.Single(x => x.Key == "Rocket").Value;
+        var rocketGo = Instantiate(rocketPrefab, destination, Quaternion.Euler(0, 0, 180f));
+        rocketGo.GetComponent<RocketScript>().Player = playerWhoOwnsTheRocket;
+        rocketGo.GetComponent<RocketScript>().HexTarget = target;
+    }
 }

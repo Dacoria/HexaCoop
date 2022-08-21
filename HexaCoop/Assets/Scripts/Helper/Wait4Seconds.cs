@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public static class Wait4Seconds
 {
 
-    static Dictionary<float, WaitForSeconds> _timeInterval = new Dictionary<float, WaitForSeconds>(100);
+    static Dictionary<float, WaitForSeconds> _timeInterval = new Dictionary<float, WaitForSeconds>();
 
     public static WaitForSeconds Get(float seconds)
     {
