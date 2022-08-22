@@ -18,8 +18,9 @@ public class EnemyHealth : HexaEventCallback
         InitHitPoints = 2;
     }
 
-    private void OnEnable()
+    private new void OnEnable()
     {
+        base.OnEnable();
         CurrentHitPoints = InitHitPoints;
     }
 

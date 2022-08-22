@@ -20,6 +20,12 @@ public class PlayerHealth : HexaEventCallback
         var playerOnTile = hex.GetPlayer();
         if (playerOnTile?.Id == playerScript.Id)
         {
+            // TODO Netter oplossen tzt
+            if(doType == DamageObjectType.MeteorStrike && playerScript.GetComponent<PlayerFireImmumeScript>() != null)
+            {
+                return;
+            }
+
             TakeDamage(1);
         }
     }

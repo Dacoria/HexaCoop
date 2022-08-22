@@ -49,12 +49,12 @@ public class GameTextManager : HexaEventCallback
             {
                 if(playerOnHex.IsOnMyNetwork() || playerOwner.IsOnMyNetwork())
                 {
-                    Textt.GameLocal("Rocket hit " + hex.GetPlayer().PlayerName + "! (1 dmg)");
+                    Textt.GameLocal("Projectile hit " + hex.GetPlayer().PlayerName + "! (1 dmg)");
                 }
             }
             else if (enemyOnHex != null)
             {
-                Textt.GameLocal("Rocket hit " + enemyOnHex.gameObject.name + "! (1 dmg)");
+                Textt.GameLocal("Projectile hit " + enemyOnHex.gameObject.name + "! (1 dmg)");
             }
         }        
     }

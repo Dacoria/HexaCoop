@@ -57,7 +57,6 @@ public class WellScript : HexaEventCallback, IStructure
     {
         wellIsVisible = isVisible;
         UpdateWellDisplay();
-        Debug.Log("wellIsVisible -> " + isVisible);
     }
 
     private void UpdateWellDisplay()

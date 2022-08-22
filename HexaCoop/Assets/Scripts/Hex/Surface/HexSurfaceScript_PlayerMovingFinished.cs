@@ -31,6 +31,13 @@ public partial class HexSurfaceScript : HexaEventCallback
                     break;
                 case HexSurfaceType.Magma:
                 case HexSurfaceType.Lave_Stones:
+
+                    // TODO Netter oplossen tzt
+                    if (player.GetComponent<PlayerFireImmumeScript>() != null)
+                    {
+                        return;
+                    }
+
                     player.GetComponent<PlayerHealth>().TakeDamage(1);
                     Textt.GameLocal("Magma surface: Lose 1 Health", playerFilter: player);
                     break;
