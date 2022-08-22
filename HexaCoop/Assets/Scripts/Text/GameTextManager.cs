@@ -10,8 +10,8 @@ public class GameTextManager : HexaEventCallback
 
     protected override void OnPlayerAttackHit(PlayerScript player, Hex hexWithTargetHit, int damage)
     {
-        var enemyOnHex = hexWithTargetHit.GetEnemyOnHex();
-        var playerOnHex = hexWithTargetHit.GetPlayerOnHex();
+        var enemyOnHex = hexWithTargetHit.GetEnemy();
+        var playerOnHex = hexWithTargetHit.GetPlayer();
 
         if (enemyOnHex != null)
         {
@@ -40,16 +40,16 @@ public class GameTextManager : HexaEventCallback
 
     protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hex, DamageObjectType doType)
     {
-        if (hex.HasUnitOnHex())
+        if (hex.HasUnit())
         {
-            var playerOnHex = hex.GetPlayerOnHex();
-            var enemyOnHex = hex.GetEnemyOnHex();
+            var playerOnHex = hex.GetPlayer();
+            var enemyOnHex = hex.GetEnemy();
 
             if (playerOnHex != null)
             {
                 if(playerOnHex.IsOnMyNetwork() || playerOwner.IsOnMyNetwork())
                 {
-                    Textt.GameLocal("Rocket hit " + hex.GetPlayerOnHex().PlayerName + "! (1 dmg)");
+                    Textt.GameLocal("Rocket hit " + hex.GetPlayer().PlayerName + "! (1 dmg)");
                 }
             }
             else if (enemyOnHex != null)
@@ -126,11 +126,7 @@ public class GameTextManager : HexaEventCallback
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type)
     {
         if (GameHandler.instance.GameStatus != GameStatus.ActiveRound) { return; }
-
-        if(type == AbilityType.Radar)
-        {
-            //Textt.GameLocal("Radar shows options for player location");
-        }
+        
         else if (type == AbilityType.Vision)
         {
             Textt.GameLocal(player.PlayerName + " is watching a tile...");
@@ -138,30 +134,11 @@ public class GameTextManager : HexaEventCallback
         else if (type == AbilityType.BearTrap)
         {
             Textt.GameLocal(player.PlayerName + " has placed a bear trap!");
-        }       
-        else if(type == AbilityType.Rocket)
-        {
-            //Textt.GameLocal("Rocket incoming....");
-        }
+        }        
         else if (type == AbilityType.Meditate)
         {
             Textt.GameLocal(player.PlayerName + " sacrifices his location for extra 2 AP next turn");
-        }
-        else if (type == AbilityType.Movement)
-        {
-            // verder niet moves updaten; moet lastig te zijn te bepalen waar je bent (en met enemies???)
-            if(player.IsOnMyNetwork())
-            {
-                if (hex.HasUnitOnHex())
-                {
-                    //Textt.GameLocal(player.PlayerName + " attacks unit");
-                }
-                else
-                {
-                    //Textt.GameLocal(player.PlayerName + " moves to new tile");
-                }
-            }
-        }
+        }        
         else if (type == AbilityType.Binocular)
         {
             // verder niet moves updaten; moet lastig te zijn te bepalen zijn of je extra range hebt

@@ -31,20 +31,10 @@ public class ShowInstructions : HexaEventCallback
         Dialog.ActionButton[] buttons = { ok };
         dialog.ShowDialog("Instructions",
             @"
-Welcome to Hexa!
-
-Goal: Be the 1st person to visit the 2 Crystals to win the game. Tip: Don't die on your way there.
-Additional tip: Killing others will increase your chance of winning. You only have 2 HP, but so do the others!
+Goal: Be the 1st person to visit the 2 Crystals to win the game
 
 Move around with WASD + mouse scroll + middle mouse button.
 Every round you get an extra 5 Action Points to do stuff (up till 10). 
-
-Some tiles have an effect when you step on them.
-
-Everyone starts in the corner - good luck!
-
-
-PS Is everyone dead besides you? You win!
             "
             , buttons);
     }

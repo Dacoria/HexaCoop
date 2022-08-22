@@ -9,5 +9,4 @@ public partial class HexSurfaceScript : HexaEventCallback
             hex.ChangeHexSurfaceType(HexSurfaceType.Magma);
         }
     }
-
 }

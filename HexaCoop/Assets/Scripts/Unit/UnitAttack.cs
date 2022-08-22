@@ -39,9 +39,9 @@ public class UnitAttack : HexaEventCallback
 
             Debug.Log("OnAttackAnimationFinished2");
 
-            if (hexAttackTarget.GetUnitOnHex()?.IsAlive == true)
+            if (hexAttackTarget.GetUnit()?.IsAlive == true)
             {
-                ActionEvents.UnitAttackHit?.Invoke(hexAttackTarget.GetUnitOnHex(), unit.CurrentHexTile, 1);
+                ActionEvents.UnitAttackHit?.Invoke(hexAttackTarget.GetUnit(), unit.CurrentHexTile, 1);
                 Debug.Log("OnAttackAnimationFinished3");
             }
         }

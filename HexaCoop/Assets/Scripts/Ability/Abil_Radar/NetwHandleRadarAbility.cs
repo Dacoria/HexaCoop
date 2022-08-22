@@ -7,7 +7,7 @@ public class NetwHandleRadarAbility : HexaEventCallback, IAbilityNetworkHandler
         ClearAllRadars();
 
         var gridsAroundRadarSpot = HexGrid.instance.GetNeighboursFor(hexNearPlayer.HexCoordinates, excludeObstacles: false);
-        if (player.IsOnMyNetwork() || gridsAroundRadarSpot.Any(x => x.GetHex().GetPlayerOnHex()?.IsOnMyNetwork() == true))
+        if (player.IsOnMyNetwork() || gridsAroundRadarSpot.Any(x => x.GetHex().GetPlayer()?.IsOnMyNetwork() == true))
         {
             hexNearPlayer.EnableHighlight(HighlightColorType.Blue);
 

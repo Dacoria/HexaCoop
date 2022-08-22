@@ -6,7 +6,7 @@ public class NetwHandleMovementAbility : HexaEventCallback, IAbilityNetworkHandl
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
     {
         newHexTile = target;
-        if (newHexTile.HasUnitOnHex())
+        if (newHexTile.HasUnit())
         {
             gameObject.GetSet<UnitAttack>().AttackUnitOnHex(target);
         }

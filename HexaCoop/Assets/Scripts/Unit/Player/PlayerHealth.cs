@@ -17,7 +17,7 @@ public class PlayerHealth : HexaEventCallback
 
     protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hex, DamageObjectType doType)
     {
-        var playerOnTile = hex.GetPlayerOnHex();
+        var playerOnTile = hex.GetPlayer();
         if (playerOnTile?.Id == playerScript.Id)
         {
             TakeDamage(1);
@@ -34,7 +34,7 @@ public class PlayerHealth : HexaEventCallback
 
     protected override void OnPlayerAttackHit(PlayerScript player, Hex hexWithTargetHit, int damage)
     {
-        if (!player != playerScript && hexWithTargetHit.GetPlayerOnHex()?.Id == playerScript.Id)
+        if (!player != playerScript && hexWithTargetHit.GetPlayer()?.Id == playerScript.Id)
         {
             TakeDamage(damage);
         }
@@ -42,7 +42,7 @@ public class PlayerHealth : HexaEventCallback
 
     protected override void OnEnemyAttackHit(EnemyScript enemy, Hex hex, int damage)
     {       
-        if (hex.GetPlayerOnHex()?.Id == playerScript.Id)
+        if (hex.GetPlayer()?.Id == playerScript.Id)
         {
             TakeDamage(damage);
         }
@@ -83,7 +83,7 @@ public class PlayerHealth : HexaEventCallback
 
         if (PhotonNetwork.IsMasterClient)
         {
-            // die proces moet 1 iemand instantieren --> voor nu: masterclient (want is er altijd 1 van)
+            // dit proces moet 1 iemand instantieren --> voor nu: masterclient (want is er altijd 1 van)
             GameHandler.instance.CheckEndOfRound();
         }
     }

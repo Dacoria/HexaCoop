@@ -49,7 +49,7 @@ public class EnemyScript : HexaEventCallback, IUnit
         else
         {
             var randomNumber = UnityEngine.Random.Range(0, 2);
-            if(randomNumber == 0 && !fastestPathToPlayer.First().GetHex().HasUnitOnHex())
+            if(randomNumber == 0 && !fastestPathToPlayer.First().GetHex().HasUnit())
             {
                 NetworkAE.instance.EnemyMove(this, fastestPathToPlayer.First().GetHex());
             }

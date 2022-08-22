@@ -57,9 +57,9 @@ public class Hex : MonoBehaviour
     public void SetFogOnHex(bool fogEnabled)
     {
         fogOnHex.SetFog(fogEnabled);
-        if(GetPlayerOnHex() != null)
+        if(this.GetPlayer() != null)
         {
-            GetPlayerOnHex().PlayerModel.gameObject.SetActive(!fogEnabled);
+            this.GetPlayer().PlayerModel.gameObject.SetActive(!fogEnabled);
         }
 
         ChangeHexSurfaceType(Settings.ShowSurfacesInFog || !fogEnabled ? HexSurfaceType : HexSurfaceType.Simple_Plain, alsoChangeType: false);
@@ -68,21 +68,6 @@ public class Hex : MonoBehaviour
     }   
    
     public bool IsObstacle() => HexSurfaceType.IsObstacle() || HexStructureType.IsObstacle();
-
-    public bool HasUnitOnHex() => GetUnitOnHex() != null;
-    public IUnit GetUnitOnHex() => GetPlayerOnHex() != null ? GetPlayerOnHex() : GetEnemyOnHex();
-
-    public EnemyScript GetEnemyOnHex()
-    {
-        var enemies = EnemyManager.instance.GetEnemies();
-        return enemies.FirstOrDefault(x => x.CurrentHexTile.HexCoordinates == HexCoordinates);
-    }
-
-    public PlayerScript GetPlayerOnHex()
-    {
-        var players = NetworkHelper.instance.GetAllPlayers(isAlive: true);
-        return players.FirstOrDefault(x => x.CurrentHexTile.HexCoordinates == HexCoordinates);
-    }
 
     public void ChangeHexSurfaceType(HexSurfaceType changeToType, bool alsoChangeType = true)
     {        

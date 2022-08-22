@@ -97,7 +97,7 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         }
         else
         {
-            if(neightbour.GetHex().HasUnitOnHex())
+            if(neightbour.GetHex().HasUnit())
             {
                 HexGrid.GetTileAt(neightbour).EnableHighlight(HighlightActionType.EnemyOption.GetColor());
             }
