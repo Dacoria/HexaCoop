@@ -6,8 +6,8 @@ public class MobileMoveController : HexaEventCallback {
     public SimpleTouchController leftController;
     public SimpleTouchController rightController;
     public Transform headTrans;
-    private float speedMovements = 100f;
-    private float speedProgressiveLook = 400f;
+    private float speedMovements = 40f;
+    private float speedProgressiveLook = 120f;
 
     // PRIVATE
     [ComponentInject] private Rigidbody rigidbody;
