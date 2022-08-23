@@ -17,10 +17,6 @@ namespace WebGLSupport
         [DllImport("__Internal")]
         public static extern void WebGLInputMobileOnFocusOut(int id, Action<int> OnFocusOut);
 #else
-        /// <summary>
-        /// ID を割り振り
-        /// </summary>
-        /// <returns></returns>
         public static int WebGLInputMobileRegister(Action<int> OnTouchEnd) { return 0; }
 
         public static void WebGLInputMobileOnFocusOut(int id, Action<int> OnFocusOut) {}

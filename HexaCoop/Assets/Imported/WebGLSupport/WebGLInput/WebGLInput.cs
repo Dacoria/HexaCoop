@@ -141,10 +141,8 @@ namespace WebGLSupport
         {
             input = Setup();
 #if !(UNITY_WEBGL && !UNITY_EDITOR)
-            // WebGL 以外、更新メソッドは動作しないようにします
             enabled = false;
 #endif
-            // モバイルの入力対応
             if (Application.isMobilePlatform)
             {
                 gameObject.AddComponent<WebGLInputMobile>();
@@ -172,10 +170,7 @@ namespace WebGLSupport
                 return new RectInt(x, y, (int)rect.width, (int)1);
             }
         }
-        /// <summary>
-        /// 対象が選択されたとき
-        /// </summary>
-        /// <param name="eventData"></param>
+
         public void OnSelect()
         {
             if (id != -1) throw new Exception("OnSelect : id != -1");
@@ -185,7 +180,6 @@ namespace WebGLSupport
 
             var fontSize = Mathf.Max(14, input.fontSize); // limit font size : 14 !!
 
-            // モバイルの場合、強制表示する
             var isHidden = !(showHtmlElement || Application.isMobilePlatform);
             id = WebGLInputPlugin.WebGLInputCreate(WebGLInput.CanvasId, rect.x, rect.y, rect.width, rect.height, fontSize, input.text, input.placeholder, input.lineType != LineType.SingleLine, isPassword, isHidden, Application.isMobilePlatform);
 
@@ -215,11 +209,6 @@ namespace WebGLSupport
             blurBlock = true;
         }
 
-        /// <summary>
-        /// 画面内の描画範囲を取得する
-        /// </summary>
-        /// <param name="uiElement"></param>
-        /// <returns></returns>
         Rect GetScreenCoordinates(RectTransform uiElement)
         {
             var worldCorners = new Vector3[4];
@@ -304,7 +293,6 @@ namespace WebGLSupport
                 instance.input.text = value;
             }
 
-            // InputField.ContentType.Name が Name の場合、先頭文字が強制的大文字になるため小文字にして比べる
             if (instance.input.contentType == ContentType.Name)
             {
                 if (string.Compare(instance.input.text, value, true) == 0)
@@ -313,7 +301,6 @@ namespace WebGLSupport
                 }
             }
 
-            // InputField の ContentType による整形したテキストを HTML の input に再設定します
             if (value != instance.input.text)
             {
                 var start = WebGLInputPlugin.WebGLInputSelectionStart(id);
@@ -348,7 +335,6 @@ namespace WebGLSupport
                 return;
             }
 
-            // 未登録の場合、選択する
             if (!instances.ContainsKey(id))
             {
                 if (Application.isMobilePlatform)
@@ -375,7 +361,7 @@ namespace WebGLSupport
 
             var start = WebGLInputPlugin.WebGLInputSelectionStart(id);
             var end = WebGLInputPlugin.WebGLInputSelectionEnd(id);
-            // 選択方向によって設定します
+
             if (WebGLInputPlugin.WebGLInputSelectionDirection(id) == -1)
             {
                 input.selectionFocusPosition = start;
@@ -427,10 +413,6 @@ namespace WebGLSupport
             WebGLInputPlugin.WebGLInputForceBlur(id);   // Input ではないし、キーボードを閉じる
         }
 
-        /// <summary>
-        /// to manage tab focus
-        /// base on scene position
-        /// </summary>
         static class WebGLInputTabFocus
         {
             static List<WebGLInput> inputs = new List<WebGLInput>();

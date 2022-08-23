@@ -58,6 +58,8 @@ public static class StaticHelper
 
     public static bool IsOnEdgeOfGrid(this Vector3Int vector) => HexGrid.instance.IsOnEdgeOfGrid(vector);
     public static bool IsOnCornerOfGrid(this Vector3Int vector) => HexGrid.instance.IsOnCornerOfGrid(vector);
+    public static bool IsEmpty(this Vector2 vector) => vector.x == 0 && vector.y == 0;
+    public static bool IsEmpty(this Vector3 vector) => vector.x == 0 && vector.y == 0 && vector.z == 0;
 
     public static Vector3 ToVector3(this string sVector)
     {

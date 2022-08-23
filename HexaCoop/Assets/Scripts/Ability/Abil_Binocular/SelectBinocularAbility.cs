@@ -33,6 +33,6 @@ public class SelectBinocularAbility : MonoBehaviour, IAbilityAction
     }
 
     public bool CanDoAbility(PlayerScript player) =>
-        !player.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Binocular) &&
-        !player.GetComponent<PlayerAbilityHistory>().HasDoneAbilityPreviousTurn(AbilityType.Binocular);
+        player?.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Binocular) == false &&
+        player?.GetComponent<PlayerAbilityHistory>().HasDoneAbilityPreviousTurn(AbilityType.Binocular) == false;
 }

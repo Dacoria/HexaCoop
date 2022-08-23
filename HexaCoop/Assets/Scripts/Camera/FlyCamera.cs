@@ -43,6 +43,7 @@ public class FlyCamera : MonoBehaviour
 
         //Keyboard commands
         Vector3 changeInputKeys = GetBaseInput();
+
         var changeInput = SetSpeedOfChange(changeInputKeys);
 
         Vector3 positionBeforeChange = transform.position;

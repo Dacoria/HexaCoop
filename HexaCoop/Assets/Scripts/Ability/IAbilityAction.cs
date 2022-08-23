@@ -4,7 +4,7 @@
     {
         if(AbilityType.IsPickup())
         {
-            return player.GetComponent<PlayerAbilityPickups>().HasPickupAbility(AbilityType);
+            return player?.GetComponent<PlayerAbilityPickups>()?.HasPickupAbility(AbilityType) == true;
         }
 
         return true;        

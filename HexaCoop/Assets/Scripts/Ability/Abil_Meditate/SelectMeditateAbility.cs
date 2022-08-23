@@ -34,5 +34,5 @@ public class SelectMeditateAbility : MonoBehaviour, IAbilityAction
         Utils.Destroy(GetComponents<HighlightOneTileDisplayScript>());
     }
 
-    public bool CanDoAbility(PlayerScript player) => player.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Meditate);
+    public bool CanDoAbility(PlayerScript player) => player?.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Meditate) == false;
 }

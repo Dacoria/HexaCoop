@@ -49,5 +49,5 @@ public class SelectBearTrapAbility : MonoBehaviour, IAbilityAction
         Utils.Destroy(GetComponents<HighlightOneTileDisplayScript>());
 
     }
-    public bool CanDoAbility(PlayerScript player) => player.GetComponent<PlayerAbilityHistory>().AbilityDoneThisTurnCount(AbilityType.BearTrap) == 0;
+    public bool CanDoAbility(PlayerScript player) => player?.GetComponent<PlayerAbilityHistory>().AbilityDoneThisTurnCount(AbilityType.BearTrap) == 0;
 }

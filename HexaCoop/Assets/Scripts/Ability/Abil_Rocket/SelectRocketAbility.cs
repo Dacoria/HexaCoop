@@ -38,5 +38,5 @@ public class SelectRocketAbility : MonoBehaviour, IAbilityAction
         Utils.Destroy(GetComponents<HighlightOneTileDisplayScript>());
     }
 
-    public bool CanDoAbility(PlayerScript player) => !player.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Rocket);
+    public bool CanDoAbility(PlayerScript player) => player?.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Rocket) == false;
 }

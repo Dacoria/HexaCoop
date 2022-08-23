@@ -31,7 +31,7 @@ public class SelectForcefieldAbility : MonoBehaviour, IAbilityAction
         Utils.Destroy(GetComponents<HighlightOneTileDisplayScript>());
     }
 
-    public bool CanDoAbility(PlayerScript player) => 
-        !player.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Forcefield) &&
-        player.GetComponent<PlayerForcefieldScript>() == null;
+    public bool CanDoAbility(PlayerScript player) =>
+        player?.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Forcefield) == false &&
+        player?.GetComponent<PlayerForcefieldScript>() == null;
 }

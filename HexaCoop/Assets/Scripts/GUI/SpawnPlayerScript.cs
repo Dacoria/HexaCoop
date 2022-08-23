@@ -10,7 +10,7 @@ public class SpawnPlayerScript : MonoBehaviour
 
     private void Awake()
     {
-        this.buttons = GetComponentsInChildren<Button>().ToList();
+        this.buttons = GetComponentsInChildren<Button>().ToList();        
     }
 
     public void OnButtonClick(bool useAi)

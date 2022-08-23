@@ -41,5 +41,5 @@ public class SelectMovementAbility : MonoBehaviour, IAbilityAction
         NetworkAE.instance.PlayerAbility(selectedPlayer, hexSelected, AbilityType);
     }
 
-    public bool CanDoAbility(PlayerScript player) => !player.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Meditate);
+    public bool CanDoAbility(PlayerScript player) => player?.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Meditate) == false;
 }
