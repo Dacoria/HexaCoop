@@ -9,7 +9,6 @@ jobs:
       group: unity-build
       cancel-in-progress: true
     steps:
-      # Checkout
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
