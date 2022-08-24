@@ -21,7 +21,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         return allPlayers;
     }
 
-    public Photon.Realtime.Player[] PlayerList;
+    public Player[] PlayerList;
 
     private void Awake()
     {

@@ -1,8 +1,5 @@
-﻿using Photon.Pun;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public static partial class Rsc
@@ -26,4 +23,4 @@ public static partial class Rsc
 
     public static Sprite Get(this Dictionary<string, Sprite> dict, string key) => 
         dict.Single(x => key == x.Key).Value;
-}    
+}

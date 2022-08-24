@@ -8,7 +8,7 @@ public class ResetCameraPosition : HexaEventCallback
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;
 
-    private Vector3 cameraPlayerOffset = new Vector3(0, 14f, -8f);
+    // private Vector3 cameraPlayerOffset = new Vector3(0, 14f, -8f);
 
     private List<PlayerInitCameraPos> PlayerInitCameraPositions = new List<PlayerInitCameraPos>
     {

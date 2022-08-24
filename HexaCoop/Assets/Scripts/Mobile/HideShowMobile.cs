@@ -1,16 +1,18 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class HideShowMobile: MonoBehaviour
-{
+{    
     [ComponentInject] private CanvasGroup canvasGroup;
 
-    public bool ShowOnMobile = true;
+    public bool ShowOnMobile = false;
 
     private void Start()
     {
         this.ComponentInject();
         MobileShower.ToggleMobile += OnToggleMobile;
+
+        MobileShower.IsShowingMobile = Application.isMobilePlatform;
         UpdateMobShowStatus();
     }
 

@@ -1,9 +1,8 @@
 using System;
-using UnityEngine;
 
 public static class MobileShower
 {
-    public static bool IsShowingMobile = false;
+    public static bool IsShowingMobile;
 
     public static Action ToggleMobile;
 }

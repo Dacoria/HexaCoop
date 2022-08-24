@@ -1,17 +1,12 @@
 using System;
 using UnityEngine;
 
-public class TooltipUIHandler : MonoBehaviour
+public class TooltipUIHandler : HexaEventCallback
 {
     private bool toolTipIsActive;
     private Outline OutlineComponent;
 
     [ComponentInject] private ITooltipUIText CallingTooltipBahaviour;
-
-    public void Awake()
-    {
-        this.ComponentInject();
-    }
 
     public void OnDestroy()
     {

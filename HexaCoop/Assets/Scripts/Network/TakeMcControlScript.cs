@@ -1,7 +1,4 @@
 using Photon.Pun;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -29,7 +26,6 @@ public class TakeMcControlScript : MonoBehaviour, IPointerDownHandler, IPointerU
 
     }
     public void OnPointerUp(PointerEventData eventData) => IsHoldingMouseClick = false;
-
 
     private void Update()
     {

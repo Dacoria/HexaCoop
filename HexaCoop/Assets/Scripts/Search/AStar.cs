@@ -5,10 +5,7 @@ public class PriorityQueue<T>
 {
     private List<KeyValuePair<T, float>> elements = new List<KeyValuePair<T, float>>();
 
-    public int Count
-    {
-        get { return elements.Count; }
-    }
+    public int Count => elements.Count;
 
     public void Enqueue(T item, float priority)
     {
@@ -43,10 +40,7 @@ public class AStarSearch
     private Vector3Int start;
     private Vector3Int goal;
 
-    private float Heuristic(Vector3Int a, Vector3Int b)
-    {
-        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
-    }
+    private float Heuristic(Vector3Int a, Vector3Int b) => Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
 
     public AStarSearch(Vector3Int start, Vector3Int goal)
     {

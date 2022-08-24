@@ -1,8 +1,5 @@
-﻿using Photon.Pun;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public static partial class Rsc
@@ -44,4 +41,4 @@ public static partial class Rsc
     public static Material GetMaterial(this HighlightColorType colorType) =>
         MaterialColorMap.Single(x => x.Key == colorType.ToString()).Value;
 
-}    
+}

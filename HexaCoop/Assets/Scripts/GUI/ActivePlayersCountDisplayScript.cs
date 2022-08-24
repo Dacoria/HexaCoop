@@ -15,8 +15,6 @@ public class ActivePlayersCountDisplayScript : HexaEventCallback
     {
         Destroy(gameObject);
     }
-
-
     private void Update()
     {
         textNetwCountPlayers.text = "Active real players: " + NetworkHelper.instance.PlayerList.Count();
