@@ -24,7 +24,8 @@ public class HideShowMobile: MonoBehaviour
         var show = ShowOnMobile ? MobileShower.IsShowingMobile : !MobileShower.IsShowingMobile;
 
         canvasGroup.alpha = show ? 1 : 0;
-        canvasGroup.interactable = show ? true : false;
+        canvasGroup.interactable = show ? false : true;
+        canvasGroup.blocksRaycasts = show ? true : false;
     }
 
     private void OnDestroy()

@@ -1,65 +1,53 @@
 ﻿using UnityEngine;
 
-public class MobileMoveController : HexaEventCallback {
+public class MobileMoveController : MonoBehaviour {
 
     // PUBLIC
     public SimpleTouchController leftController;
     public SimpleTouchController rightController;
     public Transform headTrans;
+
     private float speedMovements = 40f;
     private float speedProgressiveLook = 120f;
+    private new Rigidbody rigidbody;
 
-    // PRIVATE
-    [ComponentInject] private Rigidbody rigidbody;
-    [SerializeField] bool continuousRightController = true;
-
-    new void Awake()
+    void Awake()
     {
-        base.Awake();
-        rightController.TouchEvent += RightController_TouchEvent;
+        this.rigidbody = GetComponent<Rigidbody>();
     }  
 
-    public bool ContinuousRightController
+    void FixedUpdate()
     {
-        set{continuousRightController = value;}
-    }
-
-    void RightController_TouchEvent (Vector2 value)
-    {
-        if(!continuousRightController)
-        {
-            UpdateAim(value);
-        }
-    }
-
-    void Update()
-    {
-        if(leftController.GetTouchPosition.IsEmpty() && rightController.GetTouchPosition.IsEmpty())
+        if (leftController.GetTouchPosition.IsEmpty() && rightController.GetTouchPosition.IsEmpty())
         {
             return;
         }
 
-        // move
-        rigidbody.MovePosition(transform.position + (transform.forward * leftController.GetTouchPosition.y * Time.deltaTime * speedMovements) +
-            (transform.right * leftController.GetTouchPosition.x * Time.deltaTime * speedMovements) );
+        UpdateMove(leftController.GetTouchPosition);
+        UpdateAim(rightController.GetTouchPosition);
 
-        if(continuousRightController)
-        {
-            UpdateAim(rightController.GetTouchPosition);
-        }
     }
 
-    void UpdateAim(Vector2 value)
+    private void UpdateMove(Vector2 lTouchPosition)
+    {
+        // move
+        var origPosRB = rigidbody.transform.position;
+        rigidbody.MovePosition(transform.position + (transform.forward * lTouchPosition.y * Time.fixedDeltaTime * speedMovements) +
+            (transform.right * lTouchPosition.x * Time.fixedDeltaTime * speedMovements));
+        rigidbody.position = new Vector3(rigidbody.position.x, origPosRB.y, rigidbody.position.z);
+    }
+
+    void UpdateAim(Vector2 rTouchPosition)
     {
         if(headTrans != null)
         {
             Quaternion rot = Quaternion.Euler(0f,
-                transform.localEulerAngles.y - value.x * Time.deltaTime * -speedProgressiveLook,
+                transform.localEulerAngles.y - rTouchPosition.x * Time.fixedDeltaTime * -speedProgressiveLook,
                 0f);
 
             rigidbody.MoveRotation(rot);
 
-            rot = Quaternion.Euler(headTrans.localEulerAngles.x - value.y * Time.deltaTime * speedProgressiveLook,
+            rot = Quaternion.Euler(headTrans.localEulerAngles.x - rTouchPosition.y * Time.fixedDeltaTime * speedProgressiveLook,
                 0f,
                 0f);
             headTrans.localRotation = rot;
@@ -68,17 +56,11 @@ public class MobileMoveController : HexaEventCallback {
         else
         {
 
-            Quaternion rot = Quaternion.Euler(transform.localEulerAngles.x - value.y * Time.deltaTime * speedProgressiveLook,
-                transform.localEulerAngles.y + value.x * Time.deltaTime * speedProgressiveLook,
+            Quaternion rot = Quaternion.Euler(transform.localEulerAngles.x - rTouchPosition.y * Time.fixedDeltaTime * speedProgressiveLook,
+                transform.localEulerAngles.y + rTouchPosition.x * Time.fixedDeltaTime * speedProgressiveLook,
                 0f);
 
             rigidbody.MoveRotation(rot);
         }
     }
-
-    void OnDestroy()
-    {
-        rightController.TouchEvent -= RightController_TouchEvent;
-    }
-
 }
