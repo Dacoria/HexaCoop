@@ -9,7 +9,7 @@ public class PlayerAiMove : HexaEventCallback
 
     public void DoTurn()
     {
-        if(GameHandler.instance.GameStatus != GameStatus.ActiveRound)
+        if(GameHandler.instance.GameStatus != GameStatus.PlayerFase)
         {
             return;
         }
@@ -20,7 +20,7 @@ public class PlayerAiMove : HexaEventCallback
         }
         else
         {
-            NetworkAE.instance.EndPlayerTurn(player);
+            player.EndTurn();
         }
     }
 
@@ -75,7 +75,7 @@ public class PlayerAiMove : HexaEventCallback
         tilesForTarget.Shuffle();
         var targetTile = tilesForTarget[0];
 
-        NetworkAE.instance.PlayerAbility(player, targetTile, AbilityType.Rocket);
+        player.Ability(targetTile, AbilityType.Rocket);
 
         StartCoroutine(WaitThenAction(7));
     }
@@ -101,7 +101,7 @@ public class PlayerAiMove : HexaEventCallback
         neighbours.Shuffle();
         var targetTile = neighbours[0].GetHex();
 
-        NetworkAE.instance.PlayerAbility(player, targetTile, AbilityType.Movement);
+        player.Ability(targetTile, AbilityType.Movement);
 
         StartCoroutine(WaitThenAction(6));
     }
@@ -110,7 +110,7 @@ public class PlayerAiMove : HexaEventCallback
     {
         var targetTile = HexGrid.instance.GetAllTiles()[0];
 
-        NetworkAE.instance.PlayerAbility(player, targetTile, AbilityType.Radar);
+        player.Ability(targetTile, AbilityType.Radar);
 
         StartCoroutine(WaitThenAction(4));
     }
@@ -126,7 +126,7 @@ public class PlayerAiMove : HexaEventCallback
         tilesForTarget.Shuffle();
         var targetTile = tilesForTarget[0];
 
-        NetworkAE.instance.PlayerAbility(player, targetTile, AbilityType.Vision);
+        player.Ability(targetTile, AbilityType.Vision);
 
         StartCoroutine(WaitThenAction(3));
     }

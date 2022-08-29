@@ -49,6 +49,7 @@ public class SpawnPlayers : MonoBehaviour
     {
         if (!PhotonNetwork.IsConnected)
         {
+            Textt.GameLocal("PUN not connected");
             return;
         }
 
@@ -61,5 +62,7 @@ public class SpawnPlayers : MonoBehaviour
 
         object[] myCustomInitData = new List<object> { name, isAi, GetPlayerCounter() }.ToArray();
         var player = PhotonNetwork.Instantiate(PlayerPrefab.name, new Vector2(0, 0), Quaternion.identity, 0, myCustomInitData);
+
+        Textt.GameLocal("Player spawned");
     }
 }

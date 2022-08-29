@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class NetworkAE : MonoBehaviour
 {
-    public void PlayerAbility(PlayerScript player, Hex hexTile, AbilityType abilityType)
+    public void Invoker_PlayerAbility(PlayerScript player, Hex hexTile, AbilityType abilityType)
     {
         photonView.RPC("RPC_AE_PlayerAbility", RpcTarget.All, player.Id, (Vector3)hexTile.HexCoordinates, abilityType);
     }

@@ -16,10 +16,34 @@ public class PlayerActionPoints : HexaEventCallback
 
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type)
     {
-        if(player == playerScript)
+        if(!Settings.UseQueueAbilities)
+        {
+            UpdateOnPlayerAbilityUsed(player, type);
+        }        
+    }
+
+    protected override void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType type)
+    {
+        if (Settings.UseQueueAbilities)
+        {
+            UpdateOnPlayerAbilityUsed(player, type);
+        }
+    }
+
+    protected override void OnRemoveQueueItem(AbilityQueueItem queueItem)
+    {
+        if (Settings.UseQueueAbilities && queueItem.Player == playerScript)
+        {
+            IncreaseAP(queueItem.AbilityType.Cost());
+        }
+    }
+
+    private void UpdateOnPlayerAbilityUsed(PlayerScript player, AbilityType type)
+    {
+        if (player == playerScript)
         {
             DecreaseAP(type.Cost());
-        }        
+        }
     }
 
     protected override void OnNewPlayerTurn(PlayerScript player)

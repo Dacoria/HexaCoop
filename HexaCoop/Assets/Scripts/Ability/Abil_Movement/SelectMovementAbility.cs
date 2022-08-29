@@ -13,7 +13,7 @@ public class SelectMovementAbility : MonoBehaviour, IAbilityAction
 
     public void InitAbilityAction()
     {
-        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(GameHandler.instance.CurrentPlayer());
+        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(Netw.CurrPlayer());
         movementAbilIsActive = true;
     }
 
@@ -38,7 +38,7 @@ public class SelectMovementAbility : MonoBehaviour, IAbilityAction
 
     private void OnMovementTileSelected(PlayerScript selectedPlayer, Hex hexSelected)
     {
-        NetworkAE.instance.PlayerAbility(selectedPlayer, hexSelected, AbilityType);
+        selectedPlayer.Ability(hexSelected, AbilityType);
     }
 
     public bool CanDoAbility(PlayerScript player) => player?.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Meditate) == false;

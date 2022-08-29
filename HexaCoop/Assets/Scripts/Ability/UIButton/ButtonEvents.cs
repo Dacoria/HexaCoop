@@ -62,10 +62,12 @@ public class ButtonEvents : HexaEventCallback
         UpdateEndTurnButton(interactable: false);
     }
 
+
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type)
     {
-        if(GameHandler.instance.GameStatus != GameStatus.ActiveRound) { return; }
-
+        if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
+        if (Settings.UseQueueAbilities) { return; }
+                  
         if (!type.EventImmediatelyFinished())
         {
             // niet interactable totdat het event voorbij is
@@ -75,26 +77,42 @@ public class ButtonEvents : HexaEventCallback
         else
         {
             StartCoroutine(UpdatePlayerAbilityButtons());
-        }
+        }        
+    }
+
+    protected override void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType type)
+    {
+        if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
+        if (!Settings.UseQueueAbilities) { return; }
+
+        StartCoroutine(UpdatePlayerAbilityButtons());
+    }
+
+    protected override void OnRemoveQueueItem(AbilityQueueItem queueItem)
+    {
+        if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
+        if (!Settings.UseQueueAbilities) { return; }
+
+        StartCoroutine(UpdatePlayerAbilityButtons());
     }
 
     protected override void OnUnitAttackHit(IUnit unit, Hex hexWithTargetHit, int damage)
     {        
-        if (GameHandler.instance.GameStatus != GameStatus.ActiveRound) { return; }
+        if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
         StartCoroutine(UpdatePlayerAbilityButtons());
         UpdateEndTurnButton(interactable: true);
     }
 
     protected override void OnPlayerDamageObjectHitTile(PlayerScript player, Hex hexHit, DamageObjectType doType)
     {
-        if (GameHandler.instance.GameStatus != GameStatus.ActiveRound) { return; }
+        if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
         StartCoroutine(UpdatePlayerAbilityButtons());
         UpdateEndTurnButton(interactable: true);
     }
 
     protected override void OnUnitMovingFinished(IUnit unit)
     {
-        if (GameHandler.instance.GameStatus != GameStatus.ActiveRound) { return; }
+        if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
         StartCoroutine(UpdatePlayerAbilityButtons());
         UpdateEndTurnButton(interactable: true);
     }
@@ -148,7 +166,7 @@ public class ButtonEvents : HexaEventCallback
     {
         yield return Wait4Seconds.Get(0.1f);// wacht tot wijziging is verwerkt
 
-        if (GameHandler.instance.GameStatus == GameStatus.ActiveRound) 
+        if (GameHandler.instance.GameStatus == GameStatus.PlayerFase) 
         {
             UpdateEndTurnButton(visible: true, interactable: true, waitForSeconds: 0f);
             UpdateAllAbilities(interactable: currentPlayer.IsOnMyNetwork(), setToUnselected: true);

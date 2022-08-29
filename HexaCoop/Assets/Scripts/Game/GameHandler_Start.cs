@@ -11,8 +11,8 @@ public partial class GameHandler : HexaEventCallback
     private void SetupNewGame()
     {
         var players = NetworkHelper.instance.GetAllPlayers().OrderBy(x => x.Id).Take(GetStartTilesCount()).ToList();
-        currentPlayer = players[0];
-        NetworkAE.instance.NewRoundStarted(players, CurrentPlayer());
+        SetCurrentPlayer(players[0]);
+        NetworkAE.instance.NewRoundStarted(players, Netw.CurrPlayer());
     }
 
     public void ResetGame()
@@ -35,7 +35,7 @@ public partial class GameHandler : HexaEventCallback
 
     protected override void OnNewRoundStarted(List<PlayerScript> players, PlayerScript currPlayer)
     {
-        GameStatus = GameStatus.ActiveRound;
+        GameStatus = GameStatus.PlayerFase;
 
         // refresh om te checken
         AllPlayers = NetworkHelper.instance.GetAllPlayers().Take(GetStartTilesCount()).ToList();
@@ -56,7 +56,7 @@ public partial class GameHandler : HexaEventCallback
         // reset local
         ResetGameLocal();
 
-        currentPlayer = currPlayer;
+        SetCurrentPlayer(currPlayer);
         CurrentTurn = 1;
     }
 

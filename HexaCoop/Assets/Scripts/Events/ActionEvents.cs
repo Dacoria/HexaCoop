@@ -6,9 +6,11 @@ public static class ActionEvents
 {
     // network
     public static Action<PlayerScript, Hex, AbilityType> PlayerAbility;
+    public static Action<PlayerScript, Hex, AbilityType> PlayerAbilityQueue;
     public static Action<List<PlayerScript>, PlayerScript> NewRoundStarted;
     public static Action<PlayerScript> NewPlayerTurn;
     public static Action<PlayerScript> EndPlayerTurn;
+    public static Action<PlayerScript, List<AbilityQueueItem>> EndPlayerTurnWithQueue;
     public static Action AllPlayersFinishedTurn;
     public static Action<bool, PlayerScript> EndRound;
     public static Action EndGame;
@@ -27,6 +29,8 @@ public static class ActionEvents
 
     public static Action<Animator> DieAnimationFinished;
     public static Action<GameObject> AttackAnimationFinished;
+
+    public static Action<AbilityQueueItem> RemoveQueueItem;
 
     // afgeleiden
     public static Action<PlayerScript> PlayerMovingFinished;

@@ -61,16 +61,7 @@ public class MonoHelper : MonoBehaviour
         Destroy(go);
     }
 
-    public int GenerateNewId()
-    {
-        var random = 0;
-        while (random == 0)
-        {
-            random = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
-        }
-
-        return random;
-    }
+    public int GenerateNewId() => Random.Range(int.MinValue, int.MaxValue);
 
     public void DestroyChildrenOfGo(GameObject go)
     {

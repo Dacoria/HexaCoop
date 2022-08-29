@@ -78,7 +78,7 @@ public class GameTextManager : HexaEventCallback
 
     protected override void OnNewRoundStarted(List<PlayerScript> players, PlayerScript currentPlayer)
     {      
-        if(GameHandler.instance.GameStatus != GameStatus.ActiveRound)
+        if(GameHandler.instance.GameStatus != GameStatus.PlayerFase)
         {
             return;
         }
@@ -108,7 +108,7 @@ public class GameTextManager : HexaEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript player)
     {
-        if (GameHandler.instance.GameStatus != GameStatus.ActiveRound)
+        if (GameHandler.instance.GameStatus != GameStatus.PlayerFase)
         {
             return;
         }
@@ -125,7 +125,7 @@ public class GameTextManager : HexaEventCallback
 
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type)
     {
-        if (GameHandler.instance.GameStatus != GameStatus.ActiveRound) { return; }
+        if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
         
         else if (type == AbilityType.Vision)
         {

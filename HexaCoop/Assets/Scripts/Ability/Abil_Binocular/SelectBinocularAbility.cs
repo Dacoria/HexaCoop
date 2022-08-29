@@ -24,7 +24,7 @@ public class SelectBinocularAbility : MonoBehaviour, IAbilityAction
 
     private void OnTileSelectionConfirmed(Hex hex)
     {
-        NetworkAE.instance.PlayerAbility(Netw.CurrPlayer(), hex, AbilityType);
+        Netw.CurrPlayer().Ability(hex, AbilityType);
     }
 
     public void DeselectAbility()

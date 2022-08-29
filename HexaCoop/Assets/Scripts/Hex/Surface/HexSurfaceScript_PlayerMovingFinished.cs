@@ -50,7 +50,7 @@ public partial class HexSurfaceScript : HexaEventCallback
                     {
                         var neighbourtiles = HexGrid.instance.GetNeighboursFor(player.CurrentHexTile.HexCoordinates);
                         neighbourtiles.Shuffle();
-                        NetworkAE.instance.PlayerAbility(player, neighbourtiles[0].GetHex(), AbilityType.Movement);
+                        player.Ability(neighbourtiles[0].GetHex(), AbilityType.Movement);
                     }
 
                     break;

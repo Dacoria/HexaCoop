@@ -1,12 +1,28 @@
 using Photon.Pun;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public partial class GameHandler : HexaEventCallback
 {
-    public PlayerScript currentPlayer;
-    public PlayerScript CurrentPlayer() => currentPlayer;
+    private PlayerScript _currentPlayer;
+
+    public void SetCurrentPlayer(PlayerScript player)
+    {
+        _currentPlayer = player;
+    }
+
+    public PlayerScript GetCurrentPlayer()
+    {
+        // IETS MET SIMULTANIOUS TURN
+
+
+        return _currentPlayer;
+        //Settings.UseQueueAbilities
+
+        //return currentPlayer;
+    }
 
     protected override void OnEndPlayerTurn(PlayerScript player)
     {
@@ -22,6 +38,35 @@ public partial class GameHandler : HexaEventCallback
                 StartCoroutine(AllPlayersFinishedTurnEventInXSeconds(0.5f)); // geeft iedereen tijd om events te verwerken, voordat de nieuwe komt
             }
         }
+    }
+
+    protected override void OnEndPlayerTurnWithQueue(PlayerScript player, List<AbilityQueueItem> abilityQueue)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            var waitTime = 0.5f;
+            foreach (AbilityQueueItem abilityQueueItem in abilityQueue)
+            {
+                StartCoroutine(InitAbilityInXSeconds(waitTime, abilityQueueItem));
+                waitTime += 2f;
+            }
+
+            // SIMULTANIOUS TURNS?
+            //StartCoroutine(AllPlayersFinishedTurnEventInXSeconds(waitTime));
+            StartCoroutine(EndPlayerTurnInXSeconds(waitTime, player));
+        }
+    }
+
+    private IEnumerator EndPlayerTurnInXSeconds(float waitTime, PlayerScript player)
+    {
+        yield return Wait4Seconds.Get(waitTime);
+        NetworkAE.instance.Invoker_EndPlayerTurn(player);
+    }
+
+    private IEnumerator InitAbilityInXSeconds(float waitTime, AbilityQueueItem abilityQueueItem)
+    {
+        yield return Wait4Seconds.Get(waitTime);
+        NetworkAE.instance.Invoker_PlayerAbility(abilityQueueItem.Player, abilityQueueItem.Hex, abilityQueueItem.AbilityType);
     }
 
     private IEnumerator AllPlayersFinishedTurnEventInXSeconds(float seconds)
@@ -45,13 +90,12 @@ public partial class GameHandler : HexaEventCallback
             {
                 NextPlayerTurn();
             }
-
         }
     }
 
     private void EnemyFaseFinished()
     {
-        if(GameStatus != GameStatus.ActiveRound)
+        if(GameStatus != GameStatus.PlayerFase)
         {
             return;
         }
@@ -61,18 +105,18 @@ public partial class GameHandler : HexaEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript player)
     {
-        currentPlayer = player;
+        SetCurrentPlayer(player);
     }
 
     private void NextPlayerTurn()
     {
         do
         {
-            currentPlayer = NextPlayer();
+            SetCurrentPlayer(NextPlayer());
         } 
-        while (currentPlayer.CurrentHP == 0);
+        while (Netw.CurrPlayer().CurrentHP == 0);
 
-        NetworkAE.instance.NewPlayerTurn(CurrentPlayer());
+        NetworkAE.instance.NewPlayerTurn(Netw.CurrPlayer());
     }
 
     private PlayerScript NextPlayer()
@@ -87,7 +131,7 @@ public partial class GameHandler : HexaEventCallback
                 return player;
             }
 
-            if (player.Id == currentPlayer.Id)
+            if (player.Id == Netw.CurrPlayer().Id)
             {
                 foundCurrPlayer = true;
             }

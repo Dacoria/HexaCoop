@@ -39,7 +39,7 @@ public class SelectBearTrapAbility : MonoBehaviour, IAbilityAction
         }
         else
         {
-            NetworkAE.instance.PlayerAbility(GameHandler.instance.CurrentPlayer(), hex, AbilityType);
+            Netw.CurrPlayer().Ability(hex, AbilityType);
         }
         
     } 

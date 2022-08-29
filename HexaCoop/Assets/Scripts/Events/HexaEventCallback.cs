@@ -15,9 +15,11 @@ public abstract class HexaEventCallback : MonoBehaviour
         ActionEvents.NewPlayerTurn += OnNewPlayerTurn;
         ActionEvents.AllPlayersFinishedTurn += OnAllPlayersFinishedTurn;
         ActionEvents.EndPlayerTurn += OnEndPlayerTurn;
+        ActionEvents.EndPlayerTurnWithQueue += OnEndPlayerTurnWithQueue;
         ActionEvents.EndRound += OnEndRound;
         ActionEvents.EndGame += OnEndGame;
         ActionEvents.PlayerAbility += OnPlayerAbility;
+        ActionEvents.PlayerAbilityQueue += OnPlayerAbilityQueue;
         ActionEvents.UnitMovingFinished += OnUnitMovingFinished;
         ActionEvents.PlayerDamageObjectHitTile += OnPlayerDamageObjectHitTile;
         ActionEvents.PlayerBeartrapHitPlayer += OnPlayerBeartrapHitPlayer;
@@ -28,6 +30,8 @@ public abstract class HexaEventCallback : MonoBehaviour
         ActionEvents.DieAnimationFinished += OnDieAnimationFinished;
         ActionEvents.AttackAnimationFinished += OnAttackAnimationFinished;
         ActionEvents.PlayerScriptHasTeleported += OnPlayerScriptHasTeleported;
+        ActionEvents.RemoveQueueItem += OnRemoveQueueItem;
+
 
         ActionEvents.EnemyAttackHit += OnEnemyAttackHit;
         ActionEvents.PlayerAttackHit += OnPlayerAttackHit;
@@ -42,9 +46,11 @@ public abstract class HexaEventCallback : MonoBehaviour
         ActionEvents.NewPlayerTurn -= OnNewPlayerTurn;
         ActionEvents.AllPlayersFinishedTurn -= OnAllPlayersFinishedTurn;
         ActionEvents.EndPlayerTurn -= OnEndPlayerTurn;
+        ActionEvents.EndPlayerTurnWithQueue -= OnEndPlayerTurnWithQueue;
         ActionEvents.EndRound -= OnEndRound;
         ActionEvents.EndGame -= OnEndGame;
         ActionEvents.PlayerAbility -= OnPlayerAbility;
+        ActionEvents.PlayerAbilityQueue -= OnPlayerAbilityQueue;
         ActionEvents.UnitMovingFinished -= OnUnitMovingFinished;
         ActionEvents.PlayerDamageObjectHitTile -= OnPlayerDamageObjectHitTile;
         ActionEvents.PlayerBeartrapHitPlayer -= OnPlayerBeartrapHitPlayer;
@@ -55,6 +61,8 @@ public abstract class HexaEventCallback : MonoBehaviour
         ActionEvents.DieAnimationFinished -= OnDieAnimationFinished;
         ActionEvents.AttackAnimationFinished -= OnAttackAnimationFinished;
         ActionEvents.PlayerScriptHasTeleported -= OnPlayerScriptHasTeleported;
+        ActionEvents.RemoveQueueItem -= OnRemoveQueueItem;
+
 
         ActionEvents.EnemyAttackHit -= OnEnemyAttackHit;
         ActionEvents.PlayerAttackHit -= OnPlayerAttackHit;
@@ -69,7 +77,9 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnEndRound(bool reachedMiddle, PlayerScript pWinner) { }
     protected virtual void OnEndGame() { }
     protected virtual void OnEndPlayerTurn(PlayerScript player) { }
+    protected virtual void OnEndPlayerTurnWithQueue(PlayerScript player, List<AbilityQueueItem> abilityQueue) { }
     protected virtual void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType) { }
+    protected virtual void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType abilityType) { }
     protected virtual void OnUnitMovingFinished(IUnit unit) { }
     protected virtual void OnPlayerDamageObjectHitTile(PlayerScript player, Hex hex, DamageObjectType doType) { }
     protected virtual void OnPlayerBeartrapHitPlayer(PlayerScript playerOwnsTrap, Hex hex, PlayerScript playerHit) { }
@@ -84,4 +94,5 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnPlayerMovingFinished(PlayerScript player) { }
     protected virtual void OnEnemyMovingFinished(EnemyScript enemy) { }
     protected virtual void OnPlayerAttackHit(PlayerScript player, Hex hex, int damage) { }
+    protected virtual void OnRemoveQueueItem(AbilityQueueItem queueItem) { }
 }

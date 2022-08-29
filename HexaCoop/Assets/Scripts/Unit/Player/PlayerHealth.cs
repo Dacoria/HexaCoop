@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerHealth : HexaEventCallback
 {
-    [ComponentInject] private PlayerScript playerScript;
+    [ComponentInject] private PlayerScript player;
 
     public int CurrentHitPoints { get; private set; }
     public int InitHitPoints = 20;
@@ -18,10 +18,10 @@ public class PlayerHealth : HexaEventCallback
     protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hex, DamageObjectType doType)
     {
         var playerOnTile = hex.GetPlayer();
-        if (playerOnTile?.Id == playerScript.Id)
+        if (playerOnTile?.Id == player.Id)
         {
             // TODO Netter oplossen tzt
-            if(doType == DamageObjectType.MeteorStrike && playerScript.GetComponent<PlayerFireImmumeScript>() != null)
+            if(doType == DamageObjectType.MeteorStrike && player.GetComponent<PlayerFireImmumeScript>() != null)
             {
                 return;
             }
@@ -32,7 +32,7 @@ public class PlayerHealth : HexaEventCallback
 
     protected override void OnPlayerBeartrapHitPlayer(PlayerScript pOwnsTrap, Hex hex, PlayerScript pHit)
     {
-        if (pHit.Id == playerScript.Id)
+        if (pHit.Id == player.Id)
         {
             TakeDamage(1);
         }
@@ -40,7 +40,7 @@ public class PlayerHealth : HexaEventCallback
 
     protected override void OnPlayerAttackHit(PlayerScript player, Hex hexWithTargetHit, int damage)
     {
-        if (!player != playerScript && hexWithTargetHit.GetPlayer()?.Id == playerScript.Id)
+        if (!player != this.player && hexWithTargetHit.GetPlayer()?.Id == this.player.Id)
         {
             TakeDamage(damage);
         }
@@ -48,7 +48,7 @@ public class PlayerHealth : HexaEventCallback
 
     protected override void OnEnemyAttackHit(EnemyScript enemy, Hex hex, int damage)
     {       
-        if (hex.GetPlayer()?.Id == playerScript.Id)
+        if (hex.GetPlayer()?.Id == player.Id)
         {
             TakeDamage(damage);
         }
@@ -70,9 +70,9 @@ public class PlayerHealth : HexaEventCallback
         if(CurrentHitPoints == 0)
         {
             Die();
-            if(Netw.CurrPlayer() == playerScript)
+            if(Netw.CurrPlayer() == player)
             {
-                NetworkAE.instance.EndPlayerTurn(playerScript);
+                Netw.CurrPlayer().EndTurn();
             }
         }
     }
@@ -105,6 +105,6 @@ public class PlayerHealth : HexaEventCallback
     private IEnumerator HidePlayerModelInXSeconds(float seconds)
     {
         yield return Wait4Seconds.Get(seconds);
-        playerScript.PlayerModel.gameObject.SetActive(false);
+        player.PlayerModel.gameObject.SetActive(false);
     }
 }

@@ -8,9 +8,9 @@ public class EndTurnButtonScript : HexaEventCallback
 
     public void OnEndTurnButtonClick()
     {
-        if (GameHandler.instance.CurrentPlayer().IsOnMyNetwork())
+        if (Netw.CurrPlayer().IsOnMyNetwork())
         {
-            NetworkAE.instance.EndPlayerTurn(GameHandler.instance.CurrentPlayer());
+            Netw.CurrPlayer().EndTurn();
         }
     }
 }

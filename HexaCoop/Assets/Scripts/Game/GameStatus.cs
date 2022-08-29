@@ -1,7 +1,8 @@
 ﻿public enum GameStatus
 {
     NotStarted,
-    ActiveRound,
+    PlayerFase,
+    SystemFase,
     RoundEnded,
     GameEnded
 }

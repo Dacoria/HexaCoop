@@ -14,7 +14,7 @@ public class SelectArtilleryAbility : MonoBehaviour, IAbilityAction
 
     public void InitAbilityAction()
     {
-        NeighbourHexTileSelectionManager.instance.HighlightNeighbourOptionsAroundPlayer(GameHandler.instance.CurrentPlayer());
+        NeighbourHexTileSelectionManager.instance.HighlightNeighbourOptionsAroundPlayer(Netw.CurrPlayer());
         abilIsActive = true;
     }
 
@@ -38,6 +38,6 @@ public class SelectArtilleryAbility : MonoBehaviour, IAbilityAction
 
     private void OnMovementTileSelected(PlayerScript selectedPlayer, Hex hexSelected)
     {
-        NetworkAE.instance.PlayerAbility(selectedPlayer, hexSelected, AbilityType);
+        selectedPlayer.Ability(hexSelected, AbilityType);
     }
 }
