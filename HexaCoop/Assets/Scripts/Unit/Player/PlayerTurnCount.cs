@@ -14,7 +14,7 @@ public class PlayerTurnCount : HexaEventCallback
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript currentPlayer)
     {
         TurnCount = 0;
-        if(playerScript == currentPlayer)
+        if(playerScript == currentPlayer || currentPlayer == null)
         {
             TurnCount++;
         }
@@ -22,7 +22,7 @@ public class PlayerTurnCount : HexaEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript currentPlayer)
     {
-        if (playerScript == currentPlayer)
+        if (playerScript == currentPlayer || currentPlayer == null)
         {
             TurnCount++;
         }

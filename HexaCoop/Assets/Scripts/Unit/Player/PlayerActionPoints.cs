@@ -48,7 +48,7 @@ public class PlayerActionPoints : HexaEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript player)
     {
-        if (player == playerScript)
+        if (player == playerScript || player == null)
         {
             IncreaseAP(PlayerActionsPerTurn);
         }
@@ -57,7 +57,7 @@ public class PlayerActionPoints : HexaEventCallback
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript currentPlayer)
     {
         CurrentPlayerAP = -2;
-        if (currentPlayer == playerScript)
+        if (currentPlayer == playerScript || currentPlayer == null)
         {
             IncreaseAP(PlayerActionsPerTurn);
         }

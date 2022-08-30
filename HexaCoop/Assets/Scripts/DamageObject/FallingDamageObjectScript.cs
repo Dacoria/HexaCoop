@@ -1,4 +1,5 @@
 
+using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -31,9 +32,9 @@ public class FallingDamageObjectScript : MonoBehaviour
 
     private void PlayerObjectHitTile(PlayerScript playerWhoShotRocket, Hex hexTileHit)
     {
-        if(!Netw.IsMyNetwTurn())
+        if(!PhotonNetwork.IsMasterClient)
         {
-            // logica bij curr player
+            // logica bij 1 player --> MC
             return;
         }
 

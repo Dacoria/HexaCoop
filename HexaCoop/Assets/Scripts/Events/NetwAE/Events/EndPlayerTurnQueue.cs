@@ -6,18 +6,29 @@ using UnityEngine;
 
 public partial class NetworkAE : MonoBehaviour
 { 
-    public void Invoker_EndPlayerTurnWithQueue(PlayerScript currentPlayer)
+    public void EndPlayerTurn(PlayerScript currentPlayer)
     {
-        var netwQueue = GetQueueOfPlayer();
-        var netwQueueJson = JsonUtility.ToJson(netwQueue);
-        photonView.RPC("RPC_AE_EndPlayerTurnWithQueue", RpcTarget.All, currentPlayer.Id, netwQueueJson);
+        string abilitiesQueueJson = null;
+        if(Settings.UseQueueAbilities)
+        {
+            var netwQueue = GetQueueOfPlayer();
+            abilitiesQueueJson = JsonUtility.ToJson(netwQueue);
+        }
+        
+        photonView.RPC("RPC_AE_EndPlayerTurn", RpcTarget.All, currentPlayer.Id, abilitiesQueueJson);
     }
 
     [PunRPC]
-    public void RPC_AE_EndPlayerTurnWithQueue(int currentPlayerId, string abilitiesJson)
+    public void RPC_AE_EndPlayerTurn(int currentPlayerId, string abilitiesJson)
     {
-        var netwPlayerAbilityQueue = JsonUtility.FromJson<NetwPlayerAbilityQueue>(abilitiesJson);
-        ActionEvents.EndPlayerTurnWithQueue?.Invoke(currentPlayerId.GetPlayer(), ConvertToConcreteList(netwPlayerAbilityQueue));
+        List<AbilityQueueItem> playerAbilityQueue = null;
+        if (Settings.UseQueueAbilities)
+        {
+            var netwPlayerAbilityQueue = JsonUtility.FromJson<NetwPlayerAbilityQueue>(abilitiesJson);
+            playerAbilityQueue = ConvertToConcreteList(netwPlayerAbilityQueue);
+        }
+        
+        ActionEvents.EndPlayerTurn?.Invoke(currentPlayerId.GetPlayer(), playerAbilityQueue);
     }
 
     private NetwPlayerAbilityQueue GetQueueOfPlayer()

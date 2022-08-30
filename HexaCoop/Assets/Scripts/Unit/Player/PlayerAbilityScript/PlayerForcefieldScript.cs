@@ -1,5 +1,3 @@
-using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +22,7 @@ public class PlayerForcefieldScript : HexaEventCallback
         forcefieldGo = Instantiate(Rsc.GoEnemiesOrObjMap["Forcefield"], playerModel.transform);
     }
 
-    protected override void OnEndPlayerTurn(PlayerScript player)
+    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
     {
         if(playerScript == player)
         {

@@ -18,12 +18,14 @@ public class PlayerExtraVisionRangeScript : HexaEventCallback
         TurnActivated = GameHandler.instance.CurrentTurn;
     }
 
-    protected override void OnEndPlayerTurn(PlayerScript player)
+    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue) => EndPlayerTurn(player);
+
+    private void EndPlayerTurn(PlayerScript player)
     {
-        if(playerScript == player)
+        if (playerScript == player)
         {
             // beurt van activatie + 1 andere beurt actief!
-            if(GameHandler.instance.CurrentTurn >= TurnActivated + 1)
+            if (GameHandler.instance.CurrentTurn >= TurnActivated + 1)
             {
                 DestroyBinocular();
             }

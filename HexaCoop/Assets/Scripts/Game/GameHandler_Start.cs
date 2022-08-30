@@ -11,8 +11,16 @@ public partial class GameHandler : HexaEventCallback
     private void SetupNewGame()
     {
         var players = NetworkHelper.instance.GetAllPlayers().OrderBy(x => x.Id).Take(GetStartTilesCount()).ToList();
-        SetCurrentPlayer(players[0]);
-        NetworkAE.instance.NewRoundStarted(players, Netw.CurrPlayer());
+
+        if(Settings.UseSimultaniousTurns)
+        {
+            NetworkAE.instance.NewRoundStarted(players, null);
+        }
+        else
+        {
+            SetCurrentPlayer(players[0]);
+            NetworkAE.instance.NewRoundStarted(players, Netw.CurrPlayer());
+        }
     }
 
     public void ResetGame()

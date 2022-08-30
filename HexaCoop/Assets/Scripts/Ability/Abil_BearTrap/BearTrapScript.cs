@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BearTrapScript : HexaEventCallback
@@ -47,7 +48,9 @@ public class BearTrapScript : HexaEventCallback
         NetworkAE.instance.PlayerBeartrapHitPlayer(PlayerOfTrap, Hex, playerOnBeartrap);
     }
 
-    protected override void OnEndPlayerTurn(PlayerScript player)
+    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue) => EndPlayerTurn(player);
+
+    private void EndPlayerTurn(PlayerScript player)
     {
         if (player == PlayerOfTrap)
         {

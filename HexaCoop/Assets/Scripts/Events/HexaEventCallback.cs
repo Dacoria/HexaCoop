@@ -15,7 +15,6 @@ public abstract class HexaEventCallback : MonoBehaviour
         ActionEvents.NewPlayerTurn += OnNewPlayerTurn;
         ActionEvents.AllPlayersFinishedTurn += OnAllPlayersFinishedTurn;
         ActionEvents.EndPlayerTurn += OnEndPlayerTurn;
-        ActionEvents.EndPlayerTurnWithQueue += OnEndPlayerTurnWithQueue;
         ActionEvents.EndRound += OnEndRound;
         ActionEvents.EndGame += OnEndGame;
         ActionEvents.PlayerAbility += OnPlayerAbility;
@@ -46,7 +45,6 @@ public abstract class HexaEventCallback : MonoBehaviour
         ActionEvents.NewPlayerTurn -= OnNewPlayerTurn;
         ActionEvents.AllPlayersFinishedTurn -= OnAllPlayersFinishedTurn;
         ActionEvents.EndPlayerTurn -= OnEndPlayerTurn;
-        ActionEvents.EndPlayerTurnWithQueue -= OnEndPlayerTurnWithQueue;
         ActionEvents.EndRound -= OnEndRound;
         ActionEvents.EndGame -= OnEndGame;
         ActionEvents.PlayerAbility -= OnPlayerAbility;
@@ -76,8 +74,7 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnAllPlayersFinishedTurn() { }
     protected virtual void OnEndRound(bool reachedMiddle, PlayerScript pWinner) { }
     protected virtual void OnEndGame() { }
-    protected virtual void OnEndPlayerTurn(PlayerScript player) { }
-    protected virtual void OnEndPlayerTurnWithQueue(PlayerScript player, List<AbilityQueueItem> abilityQueue) { }
+    protected virtual void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue) { }
     protected virtual void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType) { }
     protected virtual void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType abilityType) { }
     protected virtual void OnUnitMovingFinished(IUnit unit) { }

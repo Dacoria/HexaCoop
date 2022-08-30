@@ -70,9 +70,9 @@ public class PlayerHealth : HexaEventCallback
         if(CurrentHitPoints == 0)
         {
             Die();
-            if(Netw.CurrPlayer() == player)
+            if(!Settings.UseSimultaniousTurns && Netw.CurrPlayer() == player)
             {
-                Netw.CurrPlayer().EndTurn();
+                NetworkAE.instance.EndPlayerTurn(player);
             }
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class FireImmumeDisplayScript : HexaEventCallback
 {
@@ -8,7 +9,7 @@ public class FireImmumeDisplayScript : HexaEventCallback
     [ComponentInject] private TMP_Text Text;
 
     protected override void OnNewPlayerTurn(PlayerScript player) => StartCoroutine(UpdateFireImmumeDisplay());
-    protected override void OnEndPlayerTurn(PlayerScript player) => StartCoroutine(UpdateFireImmumeDisplay());
+    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue) => StartCoroutine(UpdateFireImmumeDisplay());
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType) => StartCoroutine(UpdateFireImmumeDisplay());
 
     private void Start()

@@ -62,6 +62,16 @@ public class ButtonEvents : HexaEventCallback
         UpdateEndTurnButton(interactable: false);
     }
 
+    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
+    {
+        // hier klopt deze check wel --> ook bij sim. turns
+        if (player == Netw.CurrPlayer())
+        {
+            UpdateAllAbilities(setToUnselected: true, interactable: false);
+            UpdateEndTurnButton(interactable: false);
+        }
+    }
+
 
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type)
     {
@@ -169,7 +179,14 @@ public class ButtonEvents : HexaEventCallback
         if (GameHandler.instance.GameStatus == GameStatus.PlayerFase) 
         {
             UpdateEndTurnButton(visible: true, interactable: true, waitForSeconds: 0f);
-            UpdateAllAbilities(interactable: currentPlayer.IsOnMyNetwork(), setToUnselected: true);
+            if(Settings.UseSimultaniousTurns)
+            {
+                UpdateAllAbilities(interactable: true, setToUnselected: true);
+            }
+            else
+            {
+                UpdateAllAbilities(interactable: currentPlayer.IsOnMyNetwork(), setToUnselected: true);
+            }
         }
     }
 }

@@ -12,26 +12,21 @@ public static class AbilityExtensions
     public static bool IsAvailableThisTurn(this AbilityType abilityType, PlayerScript player) => 
         abilityType == AbilityType.None ? true : player.TurnCount >= abilityType.AvailableFromTurn();
 
-    public static bool IsAvailableThisTurn(this AbilityType abilityType) =>
-        Netw.CurrPlayer() != null ? 
-            abilityType.IsAvailableThisTurn(Netw.CurrPlayer()) : 
-            false;
-
+    public static bool IsAvailableThisTurn(this AbilityType abilityType)
+    {
+        var player = Netw.CurrPlayer();
+        return abilityType.IsAvailableThisTurn(player);
+    }
 
     public static bool HaveEnoughPoints(this AbilityType abilityType, PlayerScript player) => 
         abilityType == AbilityType.None ? true : player.CurrentAP >= abilityType.Cost();
 
-    public static bool HaveEnoughPoints(this AbilityType abilityType) =>
-        Netw.CurrPlayer() != null ?
-            Netw.CurrPlayer().CurrentAP >= abilityType.Cost() : 
-            false;
+    public static bool HaveEnoughPoints(this AbilityType abilityType)
+    {
+        var player = Netw.CurrPlayer();
+        return player.CurrentAP >= abilityType.Cost();
+    }
 
     public static bool IsAvailable(this AbilityType abilityType, PlayerScript player) => 
-        abilityType.IsAvailableThisTurn(player) && abilityType.HaveEnoughPoints(player);
-
-    public static bool IsAvailable(this AbilityType abilityType) =>
-        Netw.CurrPlayer() != null ? 
-                abilityType.IsAvailableThisTurn(Netw.CurrPlayer()) && 
-                abilityType.HaveEnoughPoints(Netw.CurrPlayer()) : 
-            false;
+        abilityType.IsAvailableThisTurn(player) && abilityType.HaveEnoughPoints(player);   
 }

@@ -10,7 +10,7 @@ public class EndTurnButtonScript : HexaEventCallback
     {
         if (Netw.CurrPlayer().IsOnMyNetwork())
         {
-            Netw.CurrPlayer().EndTurn();
+            NetworkAE.instance.EndPlayerTurn(Netw.CurrPlayer());
         }
     }
 }

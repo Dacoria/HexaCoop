@@ -83,7 +83,7 @@ public class GameTextManager : HexaEventCallback
             return;
         }
 
-        if(Netw.MyPlayer() == currentPlayer)
+        if(Netw.MyPlayer().IsMyTurn())
         {
             Textt.GameLocal("New round started! Your Turn");
         }
@@ -112,8 +112,11 @@ public class GameTextManager : HexaEventCallback
         {
             return;
         }
-
-        if (Netw.MyPlayer() == player)
+        if(player == null)
+        {
+            Textt.GameLocal("New turn, your move!");
+        }
+        else if (Netw.MyPlayer() == player)
         {
             Textt.GameLocal("New turn, your move!");
         }

@@ -9,11 +9,11 @@ public class MobileMoveController : MonoBehaviour {
 
     private float speedMovements = 40f;
     private float speedProgressiveLook = 120f;
-    private new Rigidbody rigidbody;
+    private Rigidbody _rigidbody;
 
     void Awake()
     {
-        this.rigidbody = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
     }  
 
     void FixedUpdate()
@@ -31,10 +31,10 @@ public class MobileMoveController : MonoBehaviour {
     private void UpdateMove(Vector2 lTouchPosition)
     {
         // move
-        var origPosRB = rigidbody.transform.position;
-        rigidbody.MovePosition(transform.position + (transform.forward * lTouchPosition.y * Time.fixedDeltaTime * speedMovements) +
+        var origPosRB = _rigidbody.transform.position;
+        _rigidbody.MovePosition(transform.position + (transform.forward * lTouchPosition.y * Time.fixedDeltaTime * speedMovements) +
             (transform.right * lTouchPosition.x * Time.fixedDeltaTime * speedMovements));
-        rigidbody.position = new Vector3(rigidbody.position.x, origPosRB.y, rigidbody.position.z);
+        _rigidbody.position = new Vector3(_rigidbody.position.x, origPosRB.y, _rigidbody.position.z);
     }
 
     void UpdateAim(Vector2 rTouchPosition)
@@ -45,7 +45,7 @@ public class MobileMoveController : MonoBehaviour {
                 transform.localEulerAngles.y - rTouchPosition.x * Time.fixedDeltaTime * -speedProgressiveLook,
                 0f);
 
-            rigidbody.MoveRotation(rot);
+            _rigidbody.MoveRotation(rot);
 
             rot = Quaternion.Euler(headTrans.localEulerAngles.x - rTouchPosition.y * Time.fixedDeltaTime * speedProgressiveLook,
                 0f,
@@ -60,7 +60,7 @@ public class MobileMoveController : MonoBehaviour {
                 transform.localEulerAngles.y + rTouchPosition.x * Time.fixedDeltaTime * speedProgressiveLook,
                 0f);
 
-            rigidbody.MoveRotation(rot);
+            _rigidbody.MoveRotation(rot);
         }
     }
 }

@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TemperaryMountainScript : HexaEventCallback
@@ -16,24 +17,40 @@ public class TemperaryMountainScript : HexaEventCallback
         TurnActivated = GameHandler.instance.CurrentTurn;
     }
 
-    protected override void OnEndPlayerTurn(PlayerScript player)
+    protected override void OnAllPlayersFinishedTurn()
     {
-        if (PlayerThatSummonedMountain == player)
+        if(Settings.UseSimultaniousTurns)
         {
-            // beurt van activatie + 1 andere beurt actief!
-            if (GameHandler.instance.CurrentTurn >= TurnActivated + 1)
+            if (GameHandler.instance.CurrentTurn >= TurnActivated + 2) // 2 beurten, door sim turns
             {
-                var mountainGo = Utils.GetStructureGoFromHex(hex);
-
-                if (mountainGo != null)
-                {
-                    var mountainCopy = Instantiate(mountainGo, mountainGo.transform.position, Quaternion.identity);
-                    var lerpMovement = mountainCopy.GetSet<LerpMovement>();
-                    lerpMovement.MoveDown(distance: 2, duration: 2, destroyGoOnFinished: true);
-                }
-
-                hex.ChangeHexStructureType(HexStructureType.None);
+                DestroyMountain();
             }
         }
+    }
+
+    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
+    {
+        if (!Settings.UseSimultaniousTurns && PlayerThatSummonedMountain == player)
+        {
+            if (GameHandler.instance.CurrentTurn >= TurnActivated + 1)
+            {
+                DestroyMountain();
+            }
+        }
+    }
+
+    private void DestroyMountain()
+    {     
+        var mountainGo = Utils.GetStructureGoFromHex(hex);
+
+        if (mountainGo != null)
+        {
+            var mountainCopy = Instantiate(mountainGo, mountainGo.transform.position, Quaternion.identity);
+            var lerpMovement = mountainCopy.GetSet<LerpMovement>();
+            lerpMovement.MoveDown(distance: 2, duration: 2, destroyGoOnFinished: true);
+        }
+
+        hex.ChangeHexStructureType(HexStructureType.None);
+        
     }
 }

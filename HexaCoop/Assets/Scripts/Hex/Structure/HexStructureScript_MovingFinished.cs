@@ -8,9 +8,6 @@ public partial class HexStructureScript: HexaEventCallback
         {
             switch(hex.HexStructureType)
             {
-                case HexStructureType.Well:
-                    hex.GetComponentInChildren<WellScript>().PlayerSteppedOnStructure(player);
-                    break;
                 case HexStructureType.Portal:
                     hex.GetComponentInChildren<PortalScript>().PlayerSteppedOnStructure(player);
                     break;

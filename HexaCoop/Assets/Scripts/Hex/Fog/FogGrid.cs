@@ -7,6 +7,11 @@ public class FogGrid : HexaEventCallback
 {
     [ComponentInject] private HexGrid hexGrid;
 
+    private new void Awake()
+    {
+        base.Awake();                
+    }
+
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript playersTurn)
     {
         // initiele setup --> daarna OnNewPlayerTurn voor de beurt updaten
@@ -15,7 +20,12 @@ public class FogGrid : HexaEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript playersTurn)
     {
-        if (playersTurn.IsOnMyNetwork())
+        if (playersTurn == null)
+        {
+            // simultanious turns
+            UpdateVisibility(playersTurn);
+        }
+        else if (playersTurn.IsOnMyNetwork())
         {
             UpdateVisibility(playersTurn); // om bewegen van de ander te voorkomen (dat zie je)
         }
@@ -66,6 +76,12 @@ public class FogGrid : HexaEventCallback
     {
         yield return Wait4Seconds.Get(secondsToWait);
         var noFogTiles = new List<Hex>();
+
+        if(players.Any(x => x == null))
+        {
+            // voor simultanious turns; workaround (current == null)
+            players = NetworkHelper.instance.GetAllPlayers();
+        }
 
         foreach(var player in players)
         {

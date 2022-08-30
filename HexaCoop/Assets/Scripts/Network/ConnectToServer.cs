@@ -3,6 +3,7 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using Photon.Realtime;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
@@ -69,14 +70,14 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         HasStartedGame = true;
         ConnectMethod = connectMethod;
-        //Debug.Log("StartGame " + connectMethod);
+        //Textt.GameLocal("StartGame");
         PhotonNetwork.ConnectUsingSettings(PhotonNetwork.PhotonServerSettings.AppSettings, startInOfflineMode: connectMethod == ConnectMethod.Offline);
     }
 
 
     public override void OnConnectedToMaster()
     {
-        //Debug.Log("OnConnectedToMaster");
+        //Textt.GameLocal("OnConnectedToMaster");
         if (ConnectMethod == ConnectMethod.Offline)
         {
             PhotonNetwork.JoinRandomRoom();
@@ -90,16 +91,19 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        //Debug.Log("OnJoinedLobby");
+        //Textt.GameLocal("OnJoinedLobby");
 
         if (ConnectMethod == ConnectMethod.Online_Fast)
         {
-            PhotonNetwork.JoinRandomOrCreateRoom();
+            //PhotonNetwork.JoinRandomOrCreateRoom();
+            var roomOptions = new RoomOptions { };
+            PhotonNetwork.JoinOrCreateRoom("Testrun", roomOptions, TypedLobby.Default);
         }        
     }
 
     public override void OnJoinedRoom()
     {
+        //Textt.GameLocal("OnJoinedRoom");
         //Debug.Log("OnJoinedRoom");
         if (ConnectMethod == ConnectMethod.Online_Fast)
         {

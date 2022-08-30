@@ -24,7 +24,7 @@ public class PlayerAbilityHistory : HexaEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript player)
     {
-        if (player == playerScript) 
+        if (player == playerScript || player == null) 
         {
             AbilitiesPerTurn = new Dictionary<int, List<AbilityType>>();
             AbilitiesPerTurn.Add(GameHandler.instance.CurrentTurn, new List<AbilityType>());
@@ -33,7 +33,7 @@ public class PlayerAbilityHistory : HexaEventCallback
 
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player)
     {
-        if (player == playerScript)
+        if (player == playerScript || player == null)
         {
             AbilitiesPerTurn = new Dictionary<int, List<AbilityType>>();
             AbilitiesPerTurn.Add(GameHandler.instance.CurrentTurn, new List<AbilityType>());

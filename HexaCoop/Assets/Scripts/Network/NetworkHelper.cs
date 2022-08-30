@@ -43,8 +43,6 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Textt.GameLocal("OnPlayerLeftRoom");
-
         base.OnPlayerLeftRoom(otherPlayer);
         
         if(GameHandler.instance.GameStatus == GameStatus.PlayerFase)
@@ -88,7 +86,6 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Textt.GameLocal("OnPlayerEnteredRoom");
         base.OnPlayerEnteredRoom(newPlayer);
         PlayerList = PhotonNetwork.PlayerList;
         RefreshPlayerGos();

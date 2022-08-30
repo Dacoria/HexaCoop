@@ -17,7 +17,7 @@ public class PlayerFireImmumeScript : HexaEventCallback
         TurnActivated = GameHandler.instance.CurrentTurn;
     }
 
-    protected override void OnEndPlayerTurn(PlayerScript player)
+    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
     {
         if (playerScript == player)
         {

@@ -32,5 +32,15 @@ public partial class GameHandler : HexaEventCallback
     private void EnemyActionFinished()
     {
         TryDoEnemyAction();
-    }   
+    }
+
+    private void EnemyFaseFinished()
+    {
+        if (GameStatus != GameStatus.PlayerFase)
+        {
+            return;
+        }
+
+        NextPlayerTurn();
+    }
 }

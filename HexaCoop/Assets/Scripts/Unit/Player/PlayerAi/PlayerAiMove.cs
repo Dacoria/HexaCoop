@@ -20,7 +20,7 @@ public class PlayerAiMove : HexaEventCallback
         }
         else
         {
-            player.EndTurn();
+            NetworkAE.instance.EndPlayerTurn(player);
         }
     }
 

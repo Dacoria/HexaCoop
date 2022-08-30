@@ -27,9 +27,9 @@ public class PlayerAi : HexaEventCallback
     private IEnumerator OnNewTurn(PlayerScript currPlayer)
     {
         yield return Wait4Seconds.Get(2f); // wacht op wijzigingen verwerken + wachttijd
-        if (player.IsMyTurn() && player == currPlayer)
-        {
-            this.playerAiMove.DoTurn();
-        }
+        //if (player.IsMyTurn() && player == currPlayer)
+        //{
+        //    this.playerAiMove.DoTurn();
+        //}
     }
 }

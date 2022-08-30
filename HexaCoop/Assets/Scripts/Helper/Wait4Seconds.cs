@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public static class Wait4Seconds
@@ -15,5 +14,4 @@ public static class Wait4Seconds
         }
         return _timeInterval[seconds];
     }
-
 }

@@ -7,12 +7,12 @@ public partial class NetworkAE : MonoBehaviour
 {
     public void NewRoundStarted(List<PlayerScript> players, PlayerScript currentPlayer)
     {
-        photonView.RPC("RPC_AE_NewRoundStarted", RpcTarget.All, players.Select(x => x.Id).ToArray(), currentPlayer.Id);
+        photonView.RPC("RPC_AE_NewRoundStarted", RpcTarget.All, players.Select(x => x.Id).ToArray(), currentPlayer != null ? currentPlayer?.Id : -1);
     }
 
     [PunRPC]
     public void RPC_AE_NewRoundStarted(int[] playerIds, int currentPlayerId)
     {
-        ActionEvents.NewRoundStarted?.Invoke(playerIds.Select(x => x.GetPlayer()).ToList(), currentPlayerId.GetPlayer());
+        ActionEvents.NewRoundStarted?.Invoke(playerIds.Select(x => x.GetPlayer()).ToList(), currentPlayerId == -1 ? null : currentPlayerId.GetPlayer());
     }
 }
