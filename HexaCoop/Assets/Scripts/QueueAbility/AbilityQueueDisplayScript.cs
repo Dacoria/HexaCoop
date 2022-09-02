@@ -31,5 +31,6 @@ public class AbilityQueueDisplayScript : MonoBehaviour
         AbilityImage.sprite = Rsc.SpriteMap.Get(abilityType.ToString());
     }
 
+    // click on item
     public void RemoveAbility() => ActionEvents.RemoveQueueItem?.Invoke(AbilitiesQueueScript.instance.Get(QueueItemId));
 }

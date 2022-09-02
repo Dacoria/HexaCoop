@@ -9,6 +9,7 @@ public static class ActionEvents
     public static Action<List<PlayerScript>, PlayerScript> NewRoundStarted;
     public static Action<PlayerScript> NewPlayerTurn;
     public static Action<PlayerScript, List<AbilityQueueItem>> EndPlayerTurn;
+    public static Action<List<AbilityQueueItem>> StartAbilityQueue;
     public static Action AllPlayersFinishedTurn;
     public static Action<bool, PlayerScript> EndRound;
     public static Action EndGame;

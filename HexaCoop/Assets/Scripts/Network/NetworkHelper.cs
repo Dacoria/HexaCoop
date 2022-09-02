@@ -11,14 +11,23 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
 
     private List<PlayerScript> allPlayers;
 
-    public List<PlayerScript> GetAllPlayers(bool? isAlive = null)
+    public List<PlayerScript> GetAllPlayers(bool? isAlive = null, bool? isAi = null, bool? myNetwork = null)
     {
-        if(isAlive.HasValue)
+        var result = allPlayers;
+        if (isAlive.HasValue)
         {
-            return allPlayers.Where(x => x.IsAlive == isAlive.Value).ToList();
+            result = allPlayers.Where(x => x.IsAlive == isAlive.Value).ToList();
+        }
+        if (isAi.HasValue)
+        {
+            result = allPlayers.Where(x => x.IsAi == isAi.Value).ToList();
+        }
+        if (myNetwork.HasValue)
+        {
+            result = allPlayers.Where(player => player.GetComponent<PhotonView>().OwnerActorNr == PhotonNetwork.LocalPlayer.ActorNumber).ToList();
         }
 
-        return allPlayers;
+        return result;
     }
 
     public Player[] PlayerList;
@@ -89,19 +98,9 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
         PlayerList = PhotonNetwork.PlayerList;
         RefreshPlayerGos();
-    }      
-
-    public List<PlayerScript> GetMyPlayers(bool includeAi, bool? isAlive = null)
-    {
-        var players = GetAllPlayers(isAlive: isAlive);
-        var res = players
-            .Where(player => player != null)
-            .Where(player => includeAi || !player.IsAi)
-            .Where(player => player.GetComponent<PhotonView>().OwnerActorNr == PhotonNetwork.LocalPlayer.ActorNumber)
-            .ToList();
-
-        return res;
     }
 
-    public PlayerScript GetMyPlayer() => GetMyPlayers(includeAi: false).FirstOrDefault();    
+    public List<PlayerScript> GetMyPlayers(bool? isAlive = null, bool? isAi = null) => GetAllPlayers(isAlive, isAi, myNetwork: true);
+
+    public PlayerScript GetMyPlayer() => GetMyPlayers(isAi: false).FirstOrDefault();    
 }

@@ -64,6 +64,7 @@ MonoBehaviour:
   - RPC_AE_PlayerDamageObjectHitTile
   - RPC_AE_PlayerAbilityQueue
   - RPC_AE_EndPlayerTurnWithQueue
+  - RPC_AE_StartAbilityQueue
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

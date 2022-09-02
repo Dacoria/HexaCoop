@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public abstract class HexaEventCallback : MonoBehaviour
@@ -8,64 +8,65 @@ public abstract class HexaEventCallback : MonoBehaviour
     {
         this.ComponentInject();
     }
+
     protected void OnEnable()
     {
-        ActionEvents.GridLoaded += OnGridLoaded;
-        ActionEvents.NewRoundStarted += OnNewRoundStarted;
-        ActionEvents.NewPlayerTurn += OnNewPlayerTurn;
-        ActionEvents.AllPlayersFinishedTurn += OnAllPlayersFinishedTurn;
-        ActionEvents.EndPlayerTurn += OnEndPlayerTurn;
-        ActionEvents.EndRound += OnEndRound;
-        ActionEvents.EndGame += OnEndGame;
-        ActionEvents.PlayerAbility += OnPlayerAbility;
-        ActionEvents.PlayerAbilityQueue += OnPlayerAbilityQueue;
-        ActionEvents.UnitMovingFinished += OnUnitMovingFinished;
-        ActionEvents.PlayerDamageObjectHitTile += OnPlayerDamageObjectHitTile;
-        ActionEvents.PlayerBeartrapHitPlayer += OnPlayerBeartrapHitPlayer;
-        ActionEvents.UnitAttackHit += OnUnitAttackHit;
-        ActionEvents.EnemyFaseStarted += OnEnemyFaseStarted;
-        ActionEvents.EnemyMove += OnEnemyMove;
-        ActionEvents.EnemyAttack += OnEnemyAttack;
-        ActionEvents.DieAnimationFinished += OnDieAnimationFinished;
-        ActionEvents.AttackAnimationFinished += OnAttackAnimationFinished;
-        ActionEvents.PlayerScriptHasTeleported += OnPlayerScriptHasTeleported;
-        ActionEvents.RemoveQueueItem += OnRemoveQueueItem;
+        if (IsOverwritten("OnGridLoaded")) ActionEvents.GridLoaded += OnGridLoaded;
+        if (IsOverwritten("OnNewRoundStarted")) ActionEvents.NewRoundStarted += OnNewRoundStarted;
+        if (IsOverwritten("OnNewPlayerTurn")) ActionEvents.NewPlayerTurn += OnNewPlayerTurn;
+        if (IsOverwritten("OnAllPlayersFinishedTurn")) ActionEvents.AllPlayersFinishedTurn += OnAllPlayersFinishedTurn;
+        if (IsOverwritten("OnEndPlayerTurn")) ActionEvents.EndPlayerTurn += OnEndPlayerTurn;
+        if (IsOverwritten("OnEndRound")) ActionEvents.EndRound += OnEndRound;
+        if (IsOverwritten("OnEndGame")) ActionEvents.EndGame += OnEndGame;
+        if (IsOverwritten("OnPlayerAbility")) ActionEvents.PlayerAbility += OnPlayerAbility;
+        if (IsOverwritten("OnPlayerAbilityQueue")) ActionEvents.PlayerAbilityQueue += OnPlayerAbilityQueue;
+        if (IsOverwritten("OnUnitMovingFinished")) ActionEvents.UnitMovingFinished += OnUnitMovingFinished;
+        if (IsOverwritten("OnPlayerDamageObjectHitTile")) ActionEvents.PlayerDamageObjectHitTile += OnPlayerDamageObjectHitTile;
+        if (IsOverwritten("OnPlayerBeartrapHitPlayer")) ActionEvents.PlayerBeartrapHitPlayer += OnPlayerBeartrapHitPlayer;
+        if (IsOverwritten("OnUnitAttackHit")) ActionEvents.UnitAttackHit += OnUnitAttackHit;
+        if (IsOverwritten("OnEnemyFaseStarted")) ActionEvents.EnemyFaseStarted += OnEnemyFaseStarted;
+        if (IsOverwritten("OnEnemyMove")) ActionEvents.EnemyMove += OnEnemyMove;
+        if (IsOverwritten("OnEnemyAttack")) ActionEvents.EnemyAttack += OnEnemyAttack;
+        if (IsOverwritten("OnDieAnimationFinished")) ActionEvents.DieAnimationFinished += OnDieAnimationFinished;
+        if (IsOverwritten("OnAttackAnimationFinished")) ActionEvents.AttackAnimationFinished += OnAttackAnimationFinished;
+        if (IsOverwritten("OnPlayerScriptHasTeleported")) ActionEvents.PlayerScriptHasTeleported += OnPlayerScriptHasTeleported;
+        if (IsOverwritten("OnRemoveQueueItem")) ActionEvents.RemoveQueueItem += OnRemoveQueueItem;
+        if (IsOverwritten("OnStartAbilityQueue")) ActionEvents.StartAbilityQueue += OnStartAbilityQueue;
 
-
-        ActionEvents.EnemyAttackHit += OnEnemyAttackHit;
-        ActionEvents.PlayerAttackHit += OnPlayerAttackHit;
-        ActionEvents.EnemyMovingFinished += OnEnemyMovingFinished;
-        ActionEvents.PlayerMovingFinished += OnPlayerMovingFinished;
+        if (IsOverwritten("OnEnemyAttackHit")) ActionEvents.EnemyAttackHit += OnEnemyAttackHit;
+        if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit += OnPlayerAttackHit;
+        if (IsOverwritten("OnEnemyMovingFinished")) ActionEvents.EnemyMovingFinished += OnEnemyMovingFinished;
+        if (IsOverwritten("OnPlayerMovingFinished")) ActionEvents.PlayerMovingFinished += OnPlayerMovingFinished;
     }
 
     protected void OnDisable()
     {
-        ActionEvents.GridLoaded -= OnGridLoaded;
-        ActionEvents.NewRoundStarted -= OnNewRoundStarted;
-        ActionEvents.NewPlayerTurn -= OnNewPlayerTurn;
-        ActionEvents.AllPlayersFinishedTurn -= OnAllPlayersFinishedTurn;
-        ActionEvents.EndPlayerTurn -= OnEndPlayerTurn;
-        ActionEvents.EndRound -= OnEndRound;
-        ActionEvents.EndGame -= OnEndGame;
-        ActionEvents.PlayerAbility -= OnPlayerAbility;
-        ActionEvents.PlayerAbilityQueue -= OnPlayerAbilityQueue;
-        ActionEvents.UnitMovingFinished -= OnUnitMovingFinished;
-        ActionEvents.PlayerDamageObjectHitTile -= OnPlayerDamageObjectHitTile;
-        ActionEvents.PlayerBeartrapHitPlayer -= OnPlayerBeartrapHitPlayer;
-        ActionEvents.UnitAttackHit -= OnUnitAttackHit;
-        ActionEvents.EnemyFaseStarted -= OnEnemyFaseStarted;
-        ActionEvents.EnemyMove -= OnEnemyMove;
-        ActionEvents.EnemyAttack -= OnEnemyAttack;
-        ActionEvents.DieAnimationFinished -= OnDieAnimationFinished;
-        ActionEvents.AttackAnimationFinished -= OnAttackAnimationFinished;
-        ActionEvents.PlayerScriptHasTeleported -= OnPlayerScriptHasTeleported;
-        ActionEvents.RemoveQueueItem -= OnRemoveQueueItem;
+        if (IsOverwritten("OnGridLoaded")) ActionEvents.GridLoaded -= OnGridLoaded;
+        if (IsOverwritten("OnNewRoundStarted")) ActionEvents.NewRoundStarted -= OnNewRoundStarted;
+        if (IsOverwritten("OnNewPlayerTurn")) ActionEvents.NewPlayerTurn -= OnNewPlayerTurn;
+        if (IsOverwritten("OnAllPlayersFinishedTurn")) ActionEvents.AllPlayersFinishedTurn -= OnAllPlayersFinishedTurn;
+        if (IsOverwritten("OnEndPlayerTurn")) ActionEvents.EndPlayerTurn -= OnEndPlayerTurn;
+        if (IsOverwritten("OnEndRound")) ActionEvents.EndRound -= OnEndRound;
+        if (IsOverwritten("OnEndGame")) ActionEvents.EndGame -= OnEndGame;
+        if (IsOverwritten("OnPlayerAbility")) ActionEvents.PlayerAbility -= OnPlayerAbility;
+        if (IsOverwritten("OnPlayerAbilityQueue")) ActionEvents.PlayerAbilityQueue -= OnPlayerAbilityQueue;
+        if (IsOverwritten("OnUnitMovingFinished")) ActionEvents.UnitMovingFinished -= OnUnitMovingFinished;
+        if (IsOverwritten("OnPlayerDamageObjectHitTile")) ActionEvents.PlayerDamageObjectHitTile -= OnPlayerDamageObjectHitTile;
+        if (IsOverwritten("OnPlayerBeartrapHitPlayer")) ActionEvents.PlayerBeartrapHitPlayer -= OnPlayerBeartrapHitPlayer;
+        if (IsOverwritten("OnUnitAttackHit")) ActionEvents.UnitAttackHit -= OnUnitAttackHit;
+        if (IsOverwritten("OnEnemyFaseStarted")) ActionEvents.EnemyFaseStarted -= OnEnemyFaseStarted;
+        if (IsOverwritten("OnEnemyMove")) ActionEvents.EnemyMove -= OnEnemyMove;
+        if (IsOverwritten("OnEnemyAttack")) ActionEvents.EnemyAttack -= OnEnemyAttack;
+        if (IsOverwritten("OnDieAnimationFinished")) ActionEvents.DieAnimationFinished -= OnDieAnimationFinished;
+        if (IsOverwritten("OnAttackAnimationFinished")) ActionEvents.AttackAnimationFinished -= OnAttackAnimationFinished;
+        if (IsOverwritten("OnPlayerScriptHasTeleported")) ActionEvents.PlayerScriptHasTeleported -= OnPlayerScriptHasTeleported;
+        if (IsOverwritten("OnRemoveQueueItem")) ActionEvents.RemoveQueueItem -= OnRemoveQueueItem;
+        if (IsOverwritten("OnStartAbilityQueue")) ActionEvents.StartAbilityQueue -= OnStartAbilityQueue;
 
-
-        ActionEvents.EnemyAttackHit -= OnEnemyAttackHit;
-        ActionEvents.PlayerAttackHit -= OnPlayerAttackHit;
-        ActionEvents.EnemyMovingFinished -= OnEnemyMovingFinished;
-        ActionEvents.PlayerMovingFinished -= OnPlayerMovingFinished;
+        if (IsOverwritten("OnEnemyAttackHit")) ActionEvents.EnemyAttackHit -= OnEnemyAttackHit;
+        if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit -= OnPlayerAttackHit;
+        if (IsOverwritten("OnEnemyMovingFinished")) ActionEvents.EnemyMovingFinished -= OnEnemyMovingFinished;
+        if (IsOverwritten("OnPlayerMovingFinished")) ActionEvents.PlayerMovingFinished -= OnPlayerMovingFinished;
     }
 
     protected virtual void OnGridLoaded() { }    
@@ -92,4 +93,15 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnEnemyMovingFinished(EnemyScript enemy) { }
     protected virtual void OnPlayerAttackHit(PlayerScript player, Hex hex, int damage) { }
     protected virtual void OnRemoveQueueItem(AbilityQueueItem queueItem) { }
+    protected virtual void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueueItems) { }
+
+
+
+
+    private bool IsOverwritten(string functionName)
+    {
+        var type = GetType();
+        var method = type.GetMember(functionName, BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.Instance);
+        return method.Length > 0;
+    }
 }

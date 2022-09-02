@@ -4,21 +4,20 @@ using System.Linq;
 
 public partial class GameHandler : HexaEventCallback
 {
-
     private void EndPlayerTurnSequential (PlayerScript player)
     {
+        if (!PhotonNetwork.IsMasterClient) { return; }
+
         // 1 iemand bepaalt de volgende stap --> masterclient
-        if(PhotonNetwork.IsMasterClient)
+        
+        if (NetworkHelper.instance.GetAllPlayers(isAlive: true).Any(x => x.TurnCount < CurrentTurn))
         {
-            if (NetworkHelper.instance.GetAllPlayers(isAlive: true).Any(x => x.TurnCount < CurrentTurn))
-            {
-                NextPlayerTurn();
-            }
-            else
-            {
-                StartCoroutine(AllPlayersFinishedTurnEventInXSeconds(0.5f)); // geeft iedereen tijd om events te verwerken, voordat de nieuwe komt
-            }
+            NextPlayerTurn();
         }
+        else
+        {
+            StartCoroutine(AllPlayersFinishedTurnEventInXSeconds(0.5f)); // geeft iedereen tijd om events te verwerken, voordat de nieuwe komt
+        }        
     }   
 
     private IEnumerator AllPlayersFinishedTurnEventInXSeconds(float seconds)
@@ -34,6 +33,8 @@ public partial class GameHandler : HexaEventCallback
 
     private void NextPlayerTurn()
     {
+        if (!PhotonNetwork.IsMasterClient) { return; }
+
         do
         {
             SetCurrentPlayer(NextPlayer());

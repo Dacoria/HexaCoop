@@ -15,6 +15,8 @@ public partial class GameHandler : HexaEventCallback
 
     protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
     {
+        if (!PhotonNetwork.IsMasterClient) { return; }
+
         if (Settings.UseQueueAbilities)
         {
             EndPlayerTurnWithQueue(player, abilityQueue);
@@ -40,22 +42,23 @@ public partial class GameHandler : HexaEventCallback
     {
         CurrentTurn++; // Losse event call van maken? eigenlijk is de turn pas geeindigd na de enemy fase...
 
+        if (!PhotonNetwork.IsMasterClient) { return; }
+
         // 1 doet de monster movements
-        if (PhotonNetwork.IsMasterClient)
+        if (EnemyManager.instance.GetEnemies().Any())
         {
-            if(EnemyManager.instance.GetEnemies().Any())
-            {
-                DoEnemyFase(0.5f); 
-            }
-            else
-            {
-                StartNewPlayerTurns();
-            }
+            DoEnemyFase(0.5f);
+        }
+        else
+        {
+            StartNewPlayerTurns();
         }
     }
 
     private void StartNewPlayerTurns()
     {
+        if (!PhotonNetwork.IsMasterClient) { return; }
+
         if (Settings.UseSimultaniousTurns)
         {
             NetworkAE.instance.NewPlayerTurn(null);

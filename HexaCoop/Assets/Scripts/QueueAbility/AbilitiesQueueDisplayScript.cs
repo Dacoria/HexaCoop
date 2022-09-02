@@ -28,17 +28,17 @@ public class AbilitiesQueueDisplayScript : HexaEventCallback
     protected override void OnNewPlayerTurn(PlayerScript player) => StartCoroutine(UpdateQueue());
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) => StartCoroutine(UpdateQueue());
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType)
-    {
-        if(AbilitiesQueueScript.instance.AbilityQueueItems.Any(x => x.Player != player)) { return; }
-
-        if(AbilityDisplayGOs[0].IsActivated)
-        {
-            RemoveAbilityGO(AbilityDisplayGOs[0]);
-        }
-
-        AbilityDisplayGOs[0].IsActivated = true;
-    }
+    //protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType)
+    //{
+    //    if(AbilitiesQueueScript.instance.AbilityQueueItems.Any(x => x.Player != player)) { return; }
+    //
+    //    if(AbilityDisplayGOs[0].IsActivated)
+    //    {
+    //        RemoveAbilityGO(AbilityDisplayGOs[0]);
+    //    }
+    //
+    //    AbilityDisplayGOs[0].IsActivated = true;
+    //}
 
     private IEnumerator UpdateQueue()
     {

@@ -7,50 +7,68 @@ public partial class GameHandler : HexaEventCallback
 {
     private Dictionary<PlayerScript, List<AbilityQueueItem>> playersAbilityQueueDict = new Dictionary<PlayerScript, List<AbilityQueueItem>>();
 
-
     private void EndPlayerTurnWithQueue(PlayerScript player, List<AbilityQueueItem> abilityQueue)
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient) { return; }
+
+        playersAbilityQueueDict.Add(player, abilityQueue);
+        
+        if (playersAbilityQueueDict.Count == NetworkHelper.instance.GetAllPlayers(isAlive: true).Count())
         {
-            playersAbilityQueueDict.Add(player, abilityQueue);
-            if (playersAbilityQueueDict.Count == NetworkHelper.instance.GetAllPlayers(isAlive: true).Count())
-            {
-                // TODO -> CHANGE FASE?
-                StartProcessingQueueAbilities();
-            }
+            // TODO -> CHANGE FASE?
+            var totalAbilitieQueue = GetTotalAbilitieQueue(playersAbilityQueueDict);
+            NetworkAE.instance.StartAbilityQueue(totalAbilitieQueue); // ook voor visueel maken van queue door andere spelers
+            playersAbilityQueueDict.Clear();
+        }
+        else if (Netw.PlayersOnMyNetwork().Any(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork)))
+        {
+            var playerOnMyNetworkWithoutTurn = Netw.PlayersOnMyNetwork().First(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork));
+            NetworkAE.instance.NewPlayerTurn(playerOnMyNetworkWithoutTurn);            
         }
     }
 
-    private void StartProcessingQueueAbilities()
+    private List<AbilityQueueItem> GetTotalAbilitieQueue(Dictionary<PlayerScript, List<AbilityQueueItem>> playersAbilityQueueDict)
     {
-        if (PhotonNetwork.IsMasterClient)
+        var result = new List<AbilityQueueItem>();
+        for (int i = 0; i < 10; i++)
         {
-            var waitTime = 0.5f;
-
-            for (int i = 0; i < 10; i ++)
+            foreach (var playersAbilityQueue in playersAbilityQueueDict)
             {
-                foreach (var playersAbilityQueue in playersAbilityQueueDict)
+                if (i <= playersAbilityQueue.Value.Count() - 1)
                 {
-                    if(i <= playersAbilityQueue.Value.Count() - 1)
-                    {
-                        StartCoroutine(InitAbilityInXSeconds(waitTime, playersAbilityQueue.Value[i]));
-                        waitTime += 2f;
-                    }
+                    result.Add(playersAbilityQueue.Value[i]);
                 }
             }
-
-            StartCoroutine(EndQueuePlayerTurnInXSeconds(waitTime));
         }
+
+        return result;
+    }
+
+    protected override void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueueItems)
+    {        
+        if (!PhotonNetwork.IsMasterClient) { return; }
+        
+        var waitTime = 0.5f;
+        foreach (var abilityQueueItem in abilityQueueItems)
+        {
+            StartCoroutine(InitAbilityInXSeconds(waitTime, abilityQueueItem));
+            waitTime += 2f;
+        }
+
+        StartCoroutine(EndQueuePlayerTurnInXSeconds(waitTime));
+        
     }
 
     private IEnumerator InitAbilityInXSeconds(float waitTime, AbilityQueueItem abilityQueueItem)
     {
+        if (!PhotonNetwork.IsMasterClient) { yield break; }
         yield return Wait4Seconds.Get(waitTime);
         NetworkAE.instance.Invoker_PlayerAbility(abilityQueueItem.Player, abilityQueueItem.Hex, abilityQueueItem.AbilityType);
     }
 
     private IEnumerator EndQueuePlayerTurnInXSeconds(float waitTime)
     {
+        if (!PhotonNetwork.IsMasterClient) { yield break; }
         yield return Wait4Seconds.Get(waitTime);
         playersAbilityQueueDict.Clear();
 

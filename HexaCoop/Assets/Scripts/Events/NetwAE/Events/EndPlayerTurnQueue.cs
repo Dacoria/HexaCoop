@@ -31,11 +31,13 @@ public partial class NetworkAE : MonoBehaviour
         ActionEvents.EndPlayerTurn?.Invoke(currentPlayerId.GetPlayer(), playerAbilityQueue);
     }
 
-    private NetwPlayerAbilityQueue GetQueueOfPlayer()
+    private NetwPlayerAbilityQueue GetQueueOfPlayer() => ConvertToAbilityNetworkList(AbilitiesQueueScript.instance.AbilityQueueItems);
+
+    private NetwPlayerAbilityQueue ConvertToAbilityNetworkList(List<AbilityQueueItem> abilityQueueItems)
         =>
-        new NetwPlayerAbilityQueue {
-            PlayerAbilities = AbilitiesQueueScript.instance.AbilityQueueItems
-            .Select(
+        new NetwPlayerAbilityQueue
+        {
+            PlayerAbilities = abilityQueueItems.Select(
                 abilityQueueItem => new NetwPlayerAbilityQueueItem
                 {
                     PlayerId = abilityQueueItem.Player.Id,

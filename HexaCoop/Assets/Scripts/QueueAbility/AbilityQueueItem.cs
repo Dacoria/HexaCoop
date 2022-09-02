@@ -1,9 +1,9 @@
 ﻿public class AbilityQueueItem
 {
-    public int Id;
-    public PlayerScript Player;
-    public Hex Hex;
-    public AbilityType AbilityType;
+    public int Id { get; private set; }
+    public PlayerScript Player { get; private set; }
+    public Hex Hex { get; private set; }
+    public AbilityType AbilityType { get; private set; }
 
     public AbilityQueueItem(PlayerScript player, Hex hex, AbilityType abilityType)
     {
