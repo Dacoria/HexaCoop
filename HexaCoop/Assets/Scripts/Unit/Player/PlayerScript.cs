@@ -50,7 +50,7 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUn
         if(IsAi && PhotonNetwork.IsMasterClient)
         {
             //gameObject.AddComponent<PlayerAi>();
-            IsAi = false;
+            //IsAi = false;
         }
 
         NetworkHelper.instance.RefreshPlayerGos();

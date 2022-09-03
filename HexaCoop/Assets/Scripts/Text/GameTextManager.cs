@@ -114,11 +114,14 @@ public class GameTextManager : HexaEventCallback
         }
         if(Settings.UseSimultaniousTurns)
         {
-            if(!player.IsAi) // AI is toch seq --> geen melding nodig
-            {            
-                Textt.GameLocal("New turn! - pick your moves");
+            if(player.IsAi) 
+            {
+                Textt.GameLocal("Pick moves for your AI-player: " + player.PlayerName);
             }
-            
+            else
+            {
+                Textt.GameLocal("New turn! - pick your moves ");
+            }            
         }
         else
         {
