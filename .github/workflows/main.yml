@@ -7,11 +7,7 @@ jobs:
     # This stops builds that are in-progress once a new commit comes in
     concurrency: 
       group: unity-build
-      cancel-in-progress: true
-     
-    strategy:       
-      projectPath:
-      - HexaCoop # ** this is what you're looking for **
+      cancel-in-progress: true  
       
     steps:
       - name: Checkout repository
@@ -22,7 +18,7 @@ jobs:
       # Cache
       - uses: actions/cache@v2
         with:
-          path: Library
+          path: HexaCoop/Library
           key: Library
           
       # Build
