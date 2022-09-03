@@ -124,7 +124,10 @@ public class GameTextManager : HexaEventCallback
         {
             if(player.IsAi) 
             {
-                Textt.GameLocal("Pick moves for your AI-player: " + player.PlayerName);
+                if(player.IsOnMyNetwork())
+                {
+                    Textt.GameLocal("Pick moves for your AI-player: " + player.PlayerName);
+                }                
             }
             else
             {
