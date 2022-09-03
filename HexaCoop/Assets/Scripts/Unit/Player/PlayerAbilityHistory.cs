@@ -24,7 +24,7 @@ public class PlayerAbilityHistory : HexaEventCallback
 
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) => AbilitiesPerTurn = new Dictionary<int, List<AbilityType>>();
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId)
     {
         if (player == playerScript)
         {

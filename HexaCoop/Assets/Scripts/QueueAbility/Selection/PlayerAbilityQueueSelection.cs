@@ -1,14 +1,12 @@
 using System.Linq;
 using System.Collections.Generic;
 
-public class AbilitiesQueueScript : HexaEventCallback
+public class PlayerAbilityQueueSelection : HexaEventCallback
 {
-    public static AbilitiesQueueScript instance;
     public List<AbilityQueueItem> AbilityQueueItems = new List<AbilityQueueItem>();
 
     private new void Awake()
     {
-        instance = this;
         base.Awake();
 
         if(!Settings.UseQueueAbilities)

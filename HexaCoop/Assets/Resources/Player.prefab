@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: -3695283073322087198}
   - component: {fileID: 4835080434235015479}
   - component: {fileID: 2801669386152103223}
+  - component: {fileID: -4227324833721091319}
+  - component: {fileID: 729938297930168100}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -194,6 +196,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 998778d5151b3e14e96889bc5e84c617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4227324833721091319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645293598411083032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0497f77961668c4493226afcec2038a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &729938297930168100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645293598411083032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bf425406a340e443abeae714f806927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectOfPlayerToColor: {fileID: 6687776862965261774}
 --- !u!1 &6238259098244947033
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +473,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: BarbarianModelAnim
       objectReference: {fileID: 0}
+    - target: {fileID: 5046313036903033789, guid: 9e46f5ecff571e94a8814c328080f46c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8bde23281e580584d8689ae07333fa45, type: 2}
+    - target: {fileID: 5046313036903033789, guid: 9e46f5ecff571e94a8814c328080f46c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8bde23281e580584d8689ae07333fa45, type: 2}
+    - target: {fileID: 5046313036903033789, guid: 9e46f5ecff571e94a8814c328080f46c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8bde23281e580584d8689ae07333fa45, type: 2}
     - target: {fileID: 8558650626723003798, guid: 9e46f5ecff571e94a8814c328080f46c,
         type: 3}
       propertyPath: m_Controller
@@ -474,6 +516,12 @@ MonoBehaviour:
 --- !u!4 &5521174804531434882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2316613493316544492, guid: 9e46f5ecff571e94a8814c328080f46c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7834403569748718190}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6687776862965261774 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3492160076455761824, guid: 9e46f5ecff571e94a8814c328080f46c,
     type: 3}
   m_PrefabInstance: {fileID: 7834403569748718190}
   m_PrefabAsset: {fileID: 0}

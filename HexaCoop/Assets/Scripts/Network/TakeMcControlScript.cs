@@ -8,23 +8,17 @@ public class TakeMcControlScript : MonoBehaviour, IPointerDownHandler, IPointerU
     private bool IsHoldingMouseClick;
     private float timeHoldingMouse;
 
-    public Image MiddleMouseImage;
-    public Sprite OrangeMiddleMouseSprite;
-    public Sprite RedMcMiddleMouseSprite;
-    public Sprite BlueMcMiddleMouseSprite;
-
     private void Awake()
     {
         this.ComponentInject();
-        MiddleMouseImage.sprite = PhotonNetwork.IsMasterClient ? OrangeMiddleMouseSprite : RedMcMiddleMouseSprite;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         IsHoldingMouseClick = true;
         Settings.ShowPunMcButtons = false;
-
     }
+
     public void OnPointerUp(PointerEventData eventData) => IsHoldingMouseClick = false;
 
     private void Update()
@@ -35,24 +29,14 @@ public class TakeMcControlScript : MonoBehaviour, IPointerDownHandler, IPointerU
         }        
         else
         {
-            MiddleMouseImage.sprite = PhotonNetwork.IsMasterClient ? OrangeMiddleMouseSprite : RedMcMiddleMouseSprite;
-
             timeHoldingMouse += Time.deltaTime;
-            if (timeHoldingMouse >= 0.2f)
+
+            if (timeHoldingMouse >= 1f)
             {
                 Settings.ShowPunMcButtons = true;
-
-                if (timeHoldingMouse >= 0.5f)
+                if (!PhotonNetwork.IsMasterClient)
                 {
-                    if (!PhotonNetwork.IsMasterClient)
-                    {
-                        PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
-                    }
-                }
-
-                if(PhotonNetwork.IsMasterClient)
-                {
-                    MiddleMouseImage.sprite = BlueMcMiddleMouseSprite;
+                    PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
                 }
             }
         }

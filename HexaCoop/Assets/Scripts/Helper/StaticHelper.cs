@@ -52,7 +52,7 @@ public static class StaticHelper
 
     public static bool In<T>(this T val, params T[] values) where T : struct => values.Contains(val);
     public static PlayerScript GetPlayer(this int id) => NetworkHelper.instance.GetAllPlayers().FirstOrDefault(p => p.Id == id);    
-    public static EnemyScript GetEnemy(this int id) => ObjectNetworkInit.instance.SpawnedNetworkObjects[id].GetComponent<EnemyScript>();
+    public static EnemyScript GetEnemy(this int id) => ObjectNetworkInitManager.instance.SpawnedNetworkObjects[id].GetComponent<EnemyScript>();
     public static Hex GetHex(this Vector3Int coordinates) => HexGrid.instance.GetTileAt(coordinates); 
     public static Hex GetHex(this Vector3 coordinates) => HexGrid.instance.GetTileAt(new Vector3Int((int)coordinates.x, (int)coordinates.y, (int)coordinates.z));
 
@@ -60,6 +60,7 @@ public static class StaticHelper
     public static bool IsOnCornerOfGrid(this Vector3Int vector) => HexGrid.instance.IsOnCornerOfGrid(vector);
     public static bool IsEmpty(this Vector2 vector) => vector.x == 0 && vector.y == 0;
     public static bool IsEmpty(this Vector3 vector) => vector.x == 0 && vector.y == 0 && vector.z == 0;
+    public static Color SetAlpha(this Color color, float newAlpha) => new Color(color.r, color.g, color.b, newAlpha);
 
     public static Vector3 ToVector3(this string sVector)
     {

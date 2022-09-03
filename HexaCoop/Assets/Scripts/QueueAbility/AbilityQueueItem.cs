@@ -5,11 +5,11 @@
     public Hex Hex { get; private set; }
     public AbilityType AbilityType { get; private set; }
 
-    public AbilityQueueItem(PlayerScript player, Hex hex, AbilityType abilityType)
+    public AbilityQueueItem(PlayerScript player, Hex hex, AbilityType abilityType, int? id = null)
     {
         Player = player;
         Hex = hex;
         AbilityType = abilityType;
-        Id = MonoHelper.instance.GenerateNewId();
+        Id = id.HasValue ? id.Value : MonoHelper.instance.GenerateNewId();
     }    
 }

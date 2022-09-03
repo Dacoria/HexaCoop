@@ -76,7 +76,7 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnEndRound(bool reachedMiddle, PlayerScript pWinner) { }
     protected virtual void OnEndGame() { }
     protected virtual void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue) { }
-    protected virtual void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType) { }
+    protected virtual void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId) { }
     protected virtual void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType abilityType) { }
     protected virtual void OnUnitMovingFinished(IUnit unit) { }
     protected virtual void OnPlayerDamageObjectHitTile(PlayerScript player, Hex hex, DamageObjectType doType) { }

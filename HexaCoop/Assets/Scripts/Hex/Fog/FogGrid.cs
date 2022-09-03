@@ -31,7 +31,7 @@ public class FogGrid : HexaEventCallback
         }
     }
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId)
     {
         if (player.IsOnMyNetwork() && abilityType == AbilityType.Binocular)
         {

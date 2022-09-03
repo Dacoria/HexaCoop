@@ -10,7 +10,7 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance;
 
     public List<EnemyScript> GetEnemies() => 
-        ObjectNetworkInit.instance.SpawnedNetworkObjects
+        ObjectNetworkInitManager.instance.SpawnedNetworkObjects
         .Select(x => x.Value)
         .Where(x => x.activeSelf)
         .Where(x => x.GetComponent<EnemyScript>() != null)
@@ -52,7 +52,7 @@ public class EnemyManager : MonoBehaviour
 
         foreach (EnemyScript enemy in enemies)
         {
-            ObjectNetworkInit.instance.InstantiatePunObject(enemy.gameObject);            
+            ObjectNetworkInitManager.instance.InstantiatePunObject(enemy.gameObject);            
             Destroy(enemy.gameObject);
         }
     }

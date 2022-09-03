@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System.Linq;
+using UnityEngine;
 
 public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUnit
 {
@@ -15,6 +16,7 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUn
     public int TurnCount => playerTurnCount?.TurnCount ?? 0;
     public int CurrentAP => playerActionPoints?.CurrentPlayerAP ?? 0;
     public int CurrentHP => playerHealth?.CurrentHitPoints ?? 0;
+    public Color Color => playerColor.Color;
 
     public Hex CurrentHexTile { get; private set; }
     public int Id { get; private set; }
@@ -30,7 +32,8 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUn
     [ComponentInject] private PlayerTurnCount playerTurnCount;
     [ComponentInject] private PlayerActionPoints playerActionPoints;
     [ComponentInject] private PlayerHealth playerHealth;
-    
+    [ComponentInject] private PlayerColor playerColor;
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         object[] instantiationData = info.photonView.InstantiationData;

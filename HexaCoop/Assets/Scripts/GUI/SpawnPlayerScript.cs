@@ -15,7 +15,7 @@ public class SpawnPlayerScript : MonoBehaviour
 
     public void OnButtonClick(bool useAi)
     {
-        SpawnPlayers.instance.SpawnDummyPlayer(useAi);
+        SpawnPlayersManager.instance.SpawnDummyPlayer(useAi);
     }
 
     private bool hasMaxAmountOfPlayers;

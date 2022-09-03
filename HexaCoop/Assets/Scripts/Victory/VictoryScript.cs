@@ -2,7 +2,7 @@ public class VictoryScript : HexaEventCallback
 {
     public Hex VictoryHex;   
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId)
     {
         if(abilityType == AbilityType.Movement)
         {

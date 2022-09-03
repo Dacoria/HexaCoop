@@ -72,7 +72,7 @@ public class ButtonEvents : HexaEventCallback
         }
     }
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type, int queueId)
     {
         if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
         if (Settings.UseQueueAbilities) { return; }

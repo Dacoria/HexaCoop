@@ -23,7 +23,7 @@ public class SyncedMetaData : MonoBehaviourPunCallbacks, IPunInstantiateMagicCal
             StartSpawnHex = hexCoordinates.Value.GetHex();
         }
 
-        var resourcePool = ObjectNetworkInit.instance.SpawnedNetworkObjects;
+        var resourcePool = ObjectNetworkInitManager.instance.SpawnedNetworkObjects;
         resourcePool.Add(this.Id, this.gameObject);
 
         StartPos = transform.position;

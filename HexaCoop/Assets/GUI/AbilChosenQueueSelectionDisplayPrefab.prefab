@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26673195, g: 0.6981132, b: 0.28830624, a: 1}
+  m_Color: {r: 0.34109113, g: 0.6852051, b: 0.6886792, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -178,10 +178,10 @@ GameObject:
   - component: {fileID: 4330376479071501261}
   - component: {fileID: 4330376479071501259}
   - component: {fileID: 4330376479071501258}
-  - component: {fileID: 4330376479071501256}
   - component: {fileID: 4740979400063985677}
+  - component: {fileID: 5998402943759427046}
   m_Layer: 5
-  m_Name: AbilChosenDisplayPrefab
+  m_Name: AbilChosenQueueSelectionDisplayPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,20 +246,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4330376479071501256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4330376479071501260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9af6f1f74cfff5a4ba2d6af442e8136e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AbilityImage: {fileID: 4330376478712589332}
-  BackgroundAbility: {fileID: 4330376477518355797}
 --- !u!114 &4740979400063985677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,8 +290,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4330376479071501256}
-        m_TargetAssemblyTypeName: QueueAbilityDisplayScript, Assembly-CSharp
+      - m_Target: {fileID: 5998402943759427046}
+        m_TargetAssemblyTypeName: AbilityQueueItemDisplayScript, Assembly-CSharp
         m_MethodName: RemoveAbility
         m_Mode: 1
         m_Arguments:
@@ -316,3 +302,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5998402943759427046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4330376479071501260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 264f4e687211d084083e8251953a15ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityImage: {fileID: 4330376478712589332}
+  BackgroundAbility: {fileID: 4330376477518355797}
+  Button: {fileID: 0}

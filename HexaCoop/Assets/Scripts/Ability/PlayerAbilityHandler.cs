@@ -7,7 +7,7 @@ public partial class PlayerAbilityHandler : HexaEventCallback
 
     private Dictionary<AbilityType, IAbilityNetworkHandler> dictAbilityHandlers = new Dictionary<AbilityType,IAbilityNetworkHandler>();
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId)
     {
         if (player == playerScript)
         {

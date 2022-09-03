@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class ObjectNetworkInit : MonoBehaviourPunCallbacks
+public class ObjectNetworkInitManager : MonoBehaviourPunCallbacks
 {
     private void Awake()
     {
@@ -11,7 +11,7 @@ public class ObjectNetworkInit : MonoBehaviourPunCallbacks
         var enemies = Rsc.GoEnemiesOrObjMap; // nodig voor inladen resource in PUN
     }
 
-    public static ObjectNetworkInit instance;
+    public static ObjectNetworkInitManager instance;
     public Dictionary<int, GameObject> SpawnedNetworkObjects = new Dictionary<int, GameObject>();
 
     public InstantiationInfo InstantiatePunObject(GameObject go)

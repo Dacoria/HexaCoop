@@ -3,12 +3,12 @@ using Photon.Pun;
 using System.Collections.Generic;
 using System.Linq;
 
-public class SpawnPlayers : MonoBehaviour
+public class SpawnPlayersManager : MonoBehaviour
 {
     public GameObject PlayerPrefab;
     public bool SpawnDummyPlayerOnStart;
 
-    public static SpawnPlayers instance;
+    public static SpawnPlayersManager instance;
 
     private void Awake()
     {

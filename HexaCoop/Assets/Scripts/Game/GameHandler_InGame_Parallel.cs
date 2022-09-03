@@ -62,7 +62,7 @@ public partial class GameHandler : HexaEventCallback
     {
         if (!PhotonNetwork.IsMasterClient) { yield break; }
         yield return Wait4Seconds.Get(waitTime);
-        NetworkAE.instance.Invoker_PlayerAbility(abilityQueueItem.Player, abilityQueueItem.Hex, abilityQueueItem.AbilityType);
+        NetworkAE.instance.Invoker_PlayerAbility(abilityQueueItem.Player, abilityQueueItem.Hex, abilityQueueItem.AbilityType, abilityQueueItem.Id);
     }
 
     private IEnumerator EndQueuePlayerTurnInXSeconds(float waitTime)

@@ -12,7 +12,7 @@ public class PlayerAbilityPickups : HexaEventCallback
         AbilityPickups = new List<AbilityType>();
     }
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId)
     {
         if (player == playerScript)
         {

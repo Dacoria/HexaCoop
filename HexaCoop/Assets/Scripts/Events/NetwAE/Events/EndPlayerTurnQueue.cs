@@ -11,7 +11,7 @@ public partial class NetworkAE : MonoBehaviour
         string abilitiesQueueJson = null;
         if(Settings.UseQueueAbilities)
         {
-            var netwQueue = GetQueueOfPlayer();
+            var netwQueue = GetQueueOfPlayer(currentPlayer);
             abilitiesQueueJson = JsonUtility.ToJson(netwQueue);
         }
         
@@ -31,26 +31,43 @@ public partial class NetworkAE : MonoBehaviour
         ActionEvents.EndPlayerTurn?.Invoke(currentPlayerId.GetPlayer(), playerAbilityQueue);
     }
 
-    private NetwPlayerAbilityQueue GetQueueOfPlayer() => ConvertToAbilityNetworkList(AbilitiesQueueScript.instance.AbilityQueueItems);
+    private NetwPlayerAbilityQueue GetQueueOfPlayer(PlayerScript player) => ConvertToAbilityNetworkList(player.GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems);
 
     private NetwPlayerAbilityQueue ConvertToAbilityNetworkList(List<AbilityQueueItem> abilityQueueItems)
         =>
         new NetwPlayerAbilityQueue
         {
-            PlayerAbilities = abilityQueueItems.Select(
-                abilityQueueItem => new NetwPlayerAbilityQueueItem
-                {
-                    PlayerId = abilityQueueItem.Player.Id,
-                    HexCoordinates = abilityQueueItem.Hex.HexCoordinates,
-                    Ability = abilityQueueItem.AbilityType
-                }
-            ).ToList()
+            PlayerAbilities = abilityQueueItems
+            .Select(abilityQueueItem => ConvertToNetworkAbilItem(abilityQueueItem))
+            .ToList()
         };
 
+    private NetwPlayerAbilityQueueItem ConvertToNetworkAbilItem(AbilityQueueItem abilityQueueItem)
+    {
+        return new NetwPlayerAbilityQueueItem
+        {
+            PlayerId = abilityQueueItem.Player.Id,
+            HexCoordinates = abilityQueueItem.Hex.HexCoordinates,
+            Ability = abilityQueueItem.AbilityType,
+            Id = abilityQueueItem.Id,
+        };
+    }
+
     private List<AbilityQueueItem> ConvertToConcreteList(NetwPlayerAbilityQueue netwPlayerAbilityQueue)
-        => netwPlayerAbilityQueue.PlayerAbilities
-        .Select(netwQueueItem => new AbilityQueueItem(netwQueueItem.PlayerId.GetPlayer(), netwQueueItem.HexCoordinates.GetHex(), netwQueueItem.Ability))
+    { 
+        return netwPlayerAbilityQueue.PlayerAbilities
+        .Select(netwQueueItem => ConvertToAbilQueueItem(netwQueueItem))
         .ToList();
+    }
+
+    private AbilityQueueItem ConvertToAbilQueueItem(NetwPlayerAbilityQueueItem netwQueueItem)
+    {
+        return new AbilityQueueItem(
+            netwQueueItem.PlayerId.GetPlayer(),
+            netwQueueItem.HexCoordinates.GetHex(),
+            netwQueueItem.Ability,
+            netwQueueItem.Id);
+    }
 }
 
 [Serializable]
@@ -62,7 +79,8 @@ public class NetwPlayerAbilityQueue
 [Serializable]
 public class NetwPlayerAbilityQueueItem
 {
+    public int Id;
     public int PlayerId;
     public Vector3 HexCoordinates;
-    public AbilityType Ability;
+    public AbilityType Ability;    
 }
