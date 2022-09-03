@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: ab49f3cef633f1d4c84f8c46ec6c0b74
 ModelImporter:
-  serializedVersion: 21202
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       1: 100000
@@ -285,6 +285,7 @@ ModelImporter:
   - 3014723763036b442b52f60b16e2aa31
   - 4cad842dbf772894698e9a0bbaf5acef
   - ff0e4d52b383a234ba466e17fa99c433
+  - 4ad6b6046e9519b47817d7188a6ecdfb
   - 0a026a54761c6204b960b910343af0b3
   - b061ae134f6f1184eafbd5a4797f1571
   - 18abc2beedf0b4a499d3f8f43782198e
@@ -614,6 +615,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
