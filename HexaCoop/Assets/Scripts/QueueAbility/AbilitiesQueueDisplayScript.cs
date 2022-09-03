@@ -11,12 +11,9 @@ public class AbilitiesQueueDisplayScript : HexaEventCallback
     public AbilityQueueDisplayScript QueueAbilityDisplayPrefab;
 
     private List<AbilityQueueDisplayScript> AbilityDisplayGOs = new List<AbilityQueueDisplayScript>();
-    [SerializeField] private TMP_Text text;
 
     private void Start()
     {
-        text.gameObject.SetActive(false);
-
         if (!Settings.UseQueueAbilities)
         {
             Destroy(transform.parent.gameObject);
@@ -45,7 +42,6 @@ public class AbilitiesQueueDisplayScript : HexaEventCallback
         yield return Wait4Seconds.Get(0.1f);
         DestroyOldQueueItems();
         CreateNewQueueItems();
-        text.gameObject.SetActive(AbilitiesQueueScript.instance.AbilityQueueItems.Count() > 0);
     }
 
     private void CreateNewQueueItems()
@@ -64,7 +60,6 @@ public class AbilitiesQueueDisplayScript : HexaEventCallback
         {
             RemoveAbilityGO(AbilityDisplayGOs[i]);
         }
-        text.gameObject.SetActive(false);
     }
 
     private void RemoveAbilityGO(AbilityQueueDisplayScript item)
