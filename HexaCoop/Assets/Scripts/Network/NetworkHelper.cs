@@ -24,7 +24,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         }
         if (myNetwork.HasValue)
         {
-            result = allPlayers.Where(player => player.GetComponent<PhotonView>().OwnerActorNr == PhotonNetwork.LocalPlayer.ActorNumber).ToList();
+            result = allPlayers.Where(player => player?.GetComponent<PhotonView>().OwnerActorNr == PhotonNetwork.LocalPlayer.ActorNumber).ToList();
         }
 
         return result;

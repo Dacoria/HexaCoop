@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,7 @@ public partial class GameHandler : HexaEventCallback
             return;
         }
 
-        NextPlayerTurn();
+        throw new Exception("Parrallel vs Seq");
+        // NextPlayerTurn();
     }
 }

@@ -72,7 +72,6 @@ public class ButtonEvents : HexaEventCallback
         }
     }
 
-
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type)
     {
         if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
@@ -175,6 +174,7 @@ public class ButtonEvents : HexaEventCallback
     private IEnumerator CheckEnableButtonsNewTurn(PlayerScript currentPlayer)
     {
         yield return Wait4Seconds.Get(0.1f);// wacht tot wijziging is verwerkt
+        if(Settings.UseSimultaniousTurns && !currentPlayer.IsOnMyNetwork()) { yield break; } // AI beurt verandert niet bij andere spelers
 
         if (GameHandler.instance.GameStatus == GameStatus.PlayerFase) 
         {

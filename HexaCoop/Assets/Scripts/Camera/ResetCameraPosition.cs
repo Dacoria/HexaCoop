@@ -8,7 +8,8 @@ public class ResetCameraPosition : HexaEventCallback
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;
 
-    // private Vector3 cameraPlayerOffset = new Vector3(0, 14f, -8f);
+    public bool Setting_ResetCameraToPlayer;
+    public bool Setting_ResetCameraOnNewTurnEvent;
 
     private List<PlayerInitCameraPos> PlayerInitCameraPositions = new List<PlayerInitCameraPos>
     {
@@ -28,7 +29,18 @@ public class ResetCameraPosition : HexaEventCallback
     protected override void OnNewRoundStarted(List<PlayerScript> arg1, PlayerScript arg2)
     {
         // begin het spel bij je eigen speler
-        StartCoroutine(ResetCameraAfterXSeconds(0.15f));
+        if (Setting_ResetCameraOnNewTurnEvent)
+        {
+            StartCoroutine(ResetCameraAfterXSeconds(0.15f));
+        }
+    }
+
+    protected override void OnNewPlayerTurn(PlayerScript player)
+    {
+        if(Setting_ResetCameraOnNewTurnEvent && player.IsOnMyNetwork() && player.IsAi)
+        {
+            ResetCameraToPlayer();
+        }   
     }
 
     private IEnumerator ResetCameraAfterXSeconds(float seconds)
@@ -46,7 +58,7 @@ public class ResetCameraPosition : HexaEventCallback
         var targetPos = originalCameraPosition;
         var targetRot = originalCameraRotation;
 
-        if (player?.CurrentHexTile != null)
+        if (player?.CurrentHexTile != null && Setting_ResetCameraToPlayer)
         {
             var playerInitCameraPos = PlayerInitCameraPositions.Single(x => x.Index == player.Index);
             targetPos = playerInitCameraPos.Position;

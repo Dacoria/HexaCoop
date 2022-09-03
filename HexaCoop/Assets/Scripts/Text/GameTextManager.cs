@@ -112,17 +112,24 @@ public class GameTextManager : HexaEventCallback
         {
             return;
         }
-        if(player == null)
+        if(Settings.UseSimultaniousTurns)
         {
-            Textt.GameLocal("New turn, your move!");
-        }
-        else if (Netw.MyPlayer() == player)
-        {
-            Textt.GameLocal("New turn, your move!");
+            if(!player.IsAi) // AI is toch seq --> geen melding nodig
+            {            
+                Textt.GameLocal("New turn! - pick your moves");
+            }
+            
         }
         else
         {
-            Textt.GameLocal("Turn: " + player.PlayerName);
+            if (Netw.MyPlayer() == player)
+            {
+                Textt.GameLocal("New turn, your move!");
+            }
+            else
+            {
+                Textt.GameLocal("Turn: " + player.PlayerName);
+            }
         }
     }
 

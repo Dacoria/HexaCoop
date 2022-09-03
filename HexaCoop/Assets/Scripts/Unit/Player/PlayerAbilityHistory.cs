@@ -22,28 +22,17 @@ public class PlayerAbilityHistory : HexaEventCallback
     public bool HasDoneAbilityThisTurn(AbilityType type) => AbilityDoneThisTurnCount(type) > 0;
     public bool HasDoneAbilityPreviousTurn(AbilityType type) => AbilityDonePreviousTurnCount(type) > 0;
 
-    protected override void OnNewPlayerTurn(PlayerScript player)
-    {
-        if (player == playerScript || player == null) 
-        {
-            AbilitiesPerTurn = new Dictionary<int, List<AbilityType>>();
-            AbilitiesPerTurn.Add(GameHandler.instance.CurrentTurn, new List<AbilityType>());
-        }
-    }
-
-    protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player)
-    {
-        if (player == playerScript || player == null)
-        {
-            AbilitiesPerTurn = new Dictionary<int, List<AbilityType>>();
-            AbilitiesPerTurn.Add(GameHandler.instance.CurrentTurn, new List<AbilityType>());
-        }
-    }
+    protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) => AbilitiesPerTurn = new Dictionary<int, List<AbilityType>>();
 
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType)
     {
         if (player == playerScript)
         {
+            if(!AbilitiesPerTurn.ContainsKey(GameHandler.instance.CurrentTurn))
+            {
+                AbilitiesPerTurn.Add(GameHandler.instance.CurrentTurn, new List<AbilityType>());
+            }
+
             AbilitiesPerTurn[GameHandler.instance.CurrentTurn].Add(abilityType);
         }
     }

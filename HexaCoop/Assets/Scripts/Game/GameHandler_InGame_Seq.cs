@@ -12,7 +12,8 @@ public partial class GameHandler : HexaEventCallback
         
         if (NetworkHelper.instance.GetAllPlayers(isAlive: true).Any(x => x.TurnCount < CurrentTurn))
         {
-            NextPlayerTurn();
+            SetNextCurrentPlayer();
+            NetworkAE.instance.NewPlayerTurn_Sequential(Netw.CurrPlayer());
         }
         else
         {
@@ -26,12 +27,7 @@ public partial class GameHandler : HexaEventCallback
         NetworkAE.instance.AllPlayersFinishedTurn();
     }
 
-    protected override void OnNewPlayerTurn(PlayerScript player)
-    {
-        SetCurrentPlayer(player);
-    }
-
-    private void NextPlayerTurn()
+    private void SetNextCurrentPlayer()
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
 
@@ -40,8 +36,6 @@ public partial class GameHandler : HexaEventCallback
             SetCurrentPlayer(NextPlayer());
         } 
         while (Netw.CurrPlayer().CurrentHP == 0);
-
-        NetworkAE.instance.NewPlayerTurn(Netw.CurrPlayer());
     }
 
     private PlayerScript NextPlayer()

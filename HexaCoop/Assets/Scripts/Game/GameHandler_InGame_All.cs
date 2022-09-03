@@ -8,10 +8,8 @@ public partial class GameHandler : HexaEventCallback
 {
     private PlayerScript _currentPlayer;
 
-    public void SetCurrentPlayer(PlayerScript player)
-    {
-        _currentPlayer = player;
-    }
+    public void SetCurrentPlayer(PlayerScript player) => _currentPlayer = player;
+    public PlayerScript GetCurrentPlayer() => _currentPlayer;
 
     protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
     {
@@ -26,17 +24,6 @@ public partial class GameHandler : HexaEventCallback
             EndPlayerTurnSequential(player);
         }
     }
-
-    public PlayerScript GetCurrentPlayer()
-    {
-        if (Settings.UseSimultaniousTurns)
-        {
-            Netw.MyPlayer();
-        }
-
-
-        return _currentPlayer;        
-    }   
 
     protected override void OnAllPlayersFinishedTurn()
     {
@@ -61,11 +48,28 @@ public partial class GameHandler : HexaEventCallback
 
         if (Settings.UseSimultaniousTurns)
         {
-            NetworkAE.instance.NewPlayerTurn(null);
+            NetworkAE.instance.NewPlayerTurn_Simultanious();
         }
         else
         {
-            NextPlayerTurn();
+            SetNextCurrentPlayer();
+            NetworkAE.instance.NewPlayerTurn_Sequential(Netw.CurrPlayer());
+        }
+    }
+
+    protected override void OnNewPlayerTurn(PlayerScript player)
+    {
+        if (Settings.UseSimultaniousTurns)
+        {
+            if (player.IsOnMyNetwork())
+            {
+                // alleen op eigen netwerk setten (om zo ook AI te ondersteunen; vandaar zo)
+                SetCurrentPlayer(player);
+            }
+        }
+        else
+        {
+            SetCurrentPlayer(player);
         }
     }
 }

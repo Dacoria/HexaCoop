@@ -23,7 +23,7 @@ public partial class GameHandler : HexaEventCallback
         else if (Netw.PlayersOnMyNetwork().Any(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork)))
         {
             var playerOnMyNetworkWithoutTurn = Netw.PlayersOnMyNetwork().First(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork));
-            NetworkAE.instance.NewPlayerTurn(playerOnMyNetworkWithoutTurn);            
+            NetworkAE.instance.NewPlayerTurn_Sequential(playerOnMyNetworkWithoutTurn);
         }
     }
 
@@ -56,7 +56,6 @@ public partial class GameHandler : HexaEventCallback
         }
 
         StartCoroutine(EndQueuePlayerTurnInXSeconds(waitTime));
-        
     }
 
     private IEnumerator InitAbilityInXSeconds(float waitTime, AbilityQueueItem abilityQueueItem)
@@ -70,7 +69,6 @@ public partial class GameHandler : HexaEventCallback
     {
         if (!PhotonNetwork.IsMasterClient) { yield break; }
         yield return Wait4Seconds.Get(waitTime);
-        playersAbilityQueueDict.Clear();
 
         NetworkAE.instance.AllPlayersFinishedTurn();
     }

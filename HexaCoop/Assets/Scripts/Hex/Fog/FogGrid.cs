@@ -20,12 +20,7 @@ public class FogGrid : HexaEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript playersTurn)
     {
-        if (playersTurn == null)
-        {
-            // simultanious turns
-            UpdateVisibility(playersTurn);
-        }
-        else if (playersTurn.IsOnMyNetwork())
+        if (playersTurn.IsOnMyNetwork())
         {
             UpdateVisibility(playersTurn); // om bewegen van de ander te voorkomen (dat zie je)
         }

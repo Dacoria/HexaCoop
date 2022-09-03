@@ -11,7 +11,7 @@ public class ActivePlayersCountDisplayScript : HexaEventCallback
     public TMP_Text textCountAllPlayers;
     public TMP_Text textPlayersAlive;
 
-    protected override void OnNewRoundStarted(List<PlayerScript> arg1, PlayerScript arg2)
+    protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript currPlayer)
     {
         Destroy(gameObject);
     }

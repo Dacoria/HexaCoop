@@ -14,12 +14,12 @@ public partial class GameHandler : HexaEventCallback
 
         if(Settings.UseSimultaniousTurns)
         {
-            NetworkAE.instance.NewRoundStarted(players, null);
+            NetworkAE.instance.NewRoundStarted_Simultanious(players);
         }
         else
         {
             SetCurrentPlayer(players[0]);
-            NetworkAE.instance.NewRoundStarted(players, Netw.CurrPlayer());
+            NetworkAE.instance.NewRoundStarted_Sequential(players, Netw.CurrPlayer());
         }
     }
 
@@ -44,6 +44,7 @@ public partial class GameHandler : HexaEventCallback
     protected override void OnNewRoundStarted(List<PlayerScript> players, PlayerScript currPlayer)
     {
         GameStatus = GameStatus.PlayerFase;
+        playersAbilityQueueDict.Clear();
 
         // refresh om te checken
         AllPlayers = NetworkHelper.instance.GetAllPlayers().Take(GetStartTilesCount()).ToList();
