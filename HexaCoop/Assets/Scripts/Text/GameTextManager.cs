@@ -82,14 +82,22 @@ public class GameTextManager : HexaEventCallback
         {
             return;
         }
+        Textt.Reset();
 
-        if(Netw.MyPlayer().IsMyTurn())
+        if (Settings.UseSimultaniousTurns)
         {
-            Textt.GameLocal("New round started! Your Turn");
+            Textt.GameLocal("New turn! - pick your moves ");
         }
         else
         {
-            Textt.GameLocal("New round started! Turn: " + currentPlayer.PlayerName);
+            if (Netw.MyPlayer() == currentPlayer)
+            {
+                Textt.GameLocal("New turn, your move!");
+            }
+            else
+            {
+                Textt.GameLocal("Turn: " + currentPlayer.PlayerName);
+            }
         }
     }
 

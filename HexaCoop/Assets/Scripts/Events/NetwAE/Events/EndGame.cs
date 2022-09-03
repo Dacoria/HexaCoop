@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public partial class NetworkAE : MonoBehaviour
-{    
+{
     public void EndGame()
     {
         photonView.RPC("RPC_AE_EndGame", RpcTarget.All);

@@ -2026,6 +2026,7 @@ GameObject:
   - component: {fileID: 160928227}
   - component: {fileID: 160928229}
   - component: {fileID: 160928230}
+  - component: {fileID: 160928231}
   m_Layer: 5
   m_Name: MovementInstructions
   m_TagString: Untagged
@@ -2103,7 +2104,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160928225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8e4f4442e53fab45b54c8e21bc6e425, type: 3}
   m_Name: 
@@ -2121,6 +2122,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &160928231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160928225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fb8b4ded05eafe419b97d7ace80eb45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &225494313
 GameObject:
   m_ObjectHideFlags: 0
@@ -8155,6 +8168,7 @@ GameObject:
   - component: {fileID: 889907207}
   - component: {fileID: 889907210}
   - component: {fileID: 889907211}
+  - component: {fileID: 889907212}
   m_Layer: 5
   m_Name: Instructions
   m_TagString: Untagged
@@ -8301,6 +8315,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &889907212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889907204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6037c05fca7c38549b4dd70a9d6e2d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &891112347
 GameObject:
   m_ObjectHideFlags: 0
@@ -9305,7 +9331,6 @@ GameObject:
   - component: {fileID: 949095220}
   - component: {fileID: 949095222}
   - component: {fileID: 949095221}
-  - component: {fileID: 949095223}
   m_Layer: 5
   m_Name: ScrollMouse
   m_TagString: Untagged
@@ -9371,25 +9396,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949095219}
   m_CullTransparentMesh: 1
---- !u!114 &949095223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949095219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6037c05fca7c38549b4dd70a9d6e2d97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MiddleMouseImage: {fileID: 949095221}
-  OrangeMiddleMouseSprite: {fileID: 21300000, guid: 86120985721b66b4a8e7e4ed91ce892f,
-    type: 3}
-  RedMcMiddleMouseSprite: {fileID: 21300000, guid: 865027940231f674cafe932bb1c195e8,
-    type: 3}
-  BlueMcMiddleMouseSprite: {fileID: 21300000, guid: e43b36a146a36844786d0bf59b89efae,
-    type: 3}
 --- !u!1001 &949132219
 PrefabInstance:
   m_ObjectHideFlags: 0

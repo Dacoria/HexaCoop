@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public partial class GameHandler : HexaEventCallback
 {
@@ -12,7 +13,7 @@ public partial class GameHandler : HexaEventCallback
         if (!PhotonNetwork.IsMasterClient) { return; }
 
         playersAbilityQueueDict.Add(player, abilityQueue);
-        
+
         if (playersAbilityQueueDict.Count == NetworkHelper.instance.GetAllPlayers(isAlive: true).Count())
         {
             // TODO -> CHANGE FASE?
@@ -20,8 +21,9 @@ public partial class GameHandler : HexaEventCallback
             NetworkAE.instance.StartAbilityQueue(totalAbilitieQueue); // ook voor visueel maken van queue door andere spelers
             playersAbilityQueueDict.Clear();
         }
-        else if (Netw.PlayersOnMyNetwork().Any(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork)))
+        else if (player.IsOnMyNetwork() && Netw.PlayersOnMyNetwork().Any(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork)))
         {
+            // AI Speler + sim turns? dan AI speler pakken
             var playerOnMyNetworkWithoutTurn = Netw.PlayersOnMyNetwork().First(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork));
             NetworkAE.instance.NewPlayerTurn_Sequential(playerOnMyNetworkWithoutTurn);
         }
@@ -52,7 +54,7 @@ public partial class GameHandler : HexaEventCallback
         foreach (var abilityQueueItem in abilityQueueItems)
         {
             StartCoroutine(InitAbilityInXSeconds(waitTime, abilityQueueItem));
-            waitTime += 2f;
+            waitTime += 3f;
         }
 
         StartCoroutine(EndQueuePlayerTurnInXSeconds(waitTime));

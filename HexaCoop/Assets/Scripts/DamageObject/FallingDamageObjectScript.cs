@@ -6,7 +6,7 @@ using UnityEngine;
 public class FallingDamageObjectScript : MonoBehaviour
 {
     public DamageObjectType DamageObjectType;
-    public float Speed = 4;
+    public float Speed = 15;
 
     private Vector3 endposition;
     public GameObject Explosion;

@@ -37,5 +37,4 @@ public static class ActionEvents
     public static Action<EnemyScript> EnemyMovingFinished;
     public static Action<PlayerScript, Hex, int> PlayerAttackHit;
     public static Action<EnemyScript, Hex, int> EnemyAttackHit;
-
 }

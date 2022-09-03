@@ -1,10 +1,8 @@
 ﻿using Photon.Pun;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public partial class NetworkAE : MonoBehaviour
-{    
+{
     public void PlayerDamageObjectHitTile(PlayerScript playerWhoShotRocket, Hex hexTile, DamageObjectType doType)
     {
         photonView.RPC("RPC_AE_PlayerDamageObjectHitTile", RpcTarget.All, playerWhoShotRocket.Id, (Vector3)hexTile.HexCoordinates, doType);

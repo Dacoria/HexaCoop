@@ -4,7 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 
-public class GameDialogScript : MonoBehaviour
+public class GameDialogScript : HexaEventCallback
 {
     public TMP_Text TextDialogLines;
     public static GameDialogScript instance;
@@ -12,14 +12,20 @@ public class GameDialogScript : MonoBehaviour
     public bool UseTypeWriterEffect = true;
     private float TypeWriterSpeed = 30;
 
-    private void Awake()
+    private new void Awake()
     {
-        this.ComponentInject();
+        base.Awake();
         instance = this;
-        TextDialogLines.text = "";
+        Reset();
     }
 
     private string finalText = "";
+
+    public void Reset()
+    {
+        TextDialogLines.text = "";
+        finalText = "";
+    }
 
     public void AddText(string additionalText)
     {

@@ -13,7 +13,7 @@ public partial class NetworkAE : MonoBehaviour
 
     [PunRPC]
     public void RPC_AE_StartAbilityQueue(string abilitiesJson)
-    {        
+    {
         var netwPlayerAbilityQueue = JsonUtility.FromJson<NetwPlayerAbilityQueue>(abilitiesJson);
         var playerAbilityQueue = ConvertToConcreteList(netwPlayerAbilityQueue);
         ActionEvents.StartAbilityQueue?.Invoke(playerAbilityQueue);

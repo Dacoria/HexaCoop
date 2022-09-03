@@ -1,7 +1,5 @@
 ﻿using Photon.Pun;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public partial class NetworkAE : MonoBehaviour
 {
