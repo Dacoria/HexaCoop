@@ -8,6 +8,11 @@ jobs:
     concurrency: 
       group: unity-build
       cancel-in-progress: true
+     
+    strategy:       
+      projectPath:
+      - HexaCoop # ** this is what you're looking for **
+      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
