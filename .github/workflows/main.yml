@@ -18,7 +18,7 @@ jobs:
       # Cache
       - uses: actions/cache@v2
         with:
-          path: HexaCoop/Library
+          path: Library
           key: Library
           
       # Build
