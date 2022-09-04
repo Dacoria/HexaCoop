@@ -43,7 +43,7 @@ public partial class HexSurfaceScript : HexaEventCallback
                     break;
                 case HexSurfaceType.Ice:
 
-                    player.GetComponent<PlayerActionPoints>().IncreaseAP(AbilityType.Movement.Cost());
+                    player.GetComponent<PlayerActionPoints>().IncreaseAP(AbilityType.Movement.GetCost());
                     Textt.GameLocal("Ice surface: Move/Slide to a neighbour tile", playerFilter: player);
 
                     if (Netw.CurrPlayer().IsOnMyNetwork())

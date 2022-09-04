@@ -44,20 +44,64 @@ public static class Direction
     public static List<Vector3Int> GetDirectionsList(Hex hex) => GetDirectionsList(hex.HexCoordinates.z);
     public static Dictionary<DirectionType, Vector3Int> GetDirectionsDict(Vector3Int coor) => GetDirectionsDict(coor.z);
 
-    public static DirectionType DeriveDirection(this Vector3Int hexFromCoor, Vector3Int hexToCoor, int steps = 1)
+    public static List<DirectionType> DeriveDirections(this Vector3Int hexFromCoor, Vector3Int hexToCoor, int steps = 1)
     {
-        var diffV3 = (hexToCoor - hexFromCoor) / steps;
+        if(hexFromCoor == hexToCoor) { return new List<DirectionType>(); }
+
+        var path = GetPathToHex(hexFromCoor, hexToCoor);
+        var result = new List<DirectionType> { GetDirectionFromCoordinates(hexFromCoor, path[0]) };
+
+        for (var i = 1; i < path.Count(); i++)
+        {
+            var nextDirection = GetDirectionFromCoordinates(path[i - 1], path[i - 0]);
+            result.Add(nextDirection);
+        }
+        
+        return result;
+    }
+
+    private static DirectionType GetDirectionFromCoordinates(Vector3Int hexFromCoor, Vector3Int hexToCoor)
+    {
+        var diffV3 = hexToCoor - hexFromCoor;
         var directionDic = GetDirectionsDict(hexFromCoor);
 
-        // aanname: Dit kan altijd
         var result = directionDic.Single(x => x.Value == diffV3).Key;
         return result;
     }
 
-    public static Vector3Int GetHexCoorInDirection(this Vector3Int hexFromCoor, DirectionType dir, int steps = 1)
+    private static List<Vector3Int> GetPathToHex(Vector3Int from, Vector3Int to)
+    {
+        var astar = new AStarSearch(from, to, excludeObstaclesFromPath: false);
+        var path = astar.FindPath();
+        return path;
+    }
+
+    public static Vector3Int GetNewHexCoorFromDirection(this Vector3Int hexFromCoor, DirectionType dir, int steps = 1)
+    {
+        var dirs = new List<DirectionType>();
+        for (var i = 0; i < steps; i++)
+        {
+            dirs.Add(dir);
+        }
+
+        return hexFromCoor.GetNewHexCoorFromDirections(dirs);
+    }
+
+    public static Vector3Int GetNewHexCoorFromDirections(this Vector3Int hexFromCoor, List<DirectionType> dirs)
+    {
+        var nextHex = hexFromCoor;
+        foreach (var dir in dirs)
+        {
+            nextHex = GetHexCoorFromDirection(nextHex, dir);
+        }
+
+        return nextHex;
+    }
+
+    private static Vector3Int GetHexCoorFromDirection(this Vector3Int hexFromCoor, DirectionType dir)
     {
         var directionDic = GetDirectionsDict(hexFromCoor);
-        var result = hexFromCoor + (directionDic[dir] * steps);
+        var result = hexFromCoor + directionDic[dir];
         return result;
     }
 }

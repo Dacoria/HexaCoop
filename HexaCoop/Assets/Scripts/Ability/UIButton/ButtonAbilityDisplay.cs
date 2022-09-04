@@ -25,7 +25,7 @@ public class ButtonAbilityDisplay : MonoBehaviour
 
     private void Start()
     {
-        costText.text = Type.Cost().ToString();        
+        costText.text = Type.GetCost().ToString();        
     }
 
     private Color UnselectedColor = new Color(81 / 255f, 216 / 255f, 255 / 255f); // blue (on grey)

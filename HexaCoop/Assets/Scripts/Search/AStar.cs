@@ -42,7 +42,7 @@ public class AStarSearch
 
     private float Heuristic(Vector3Int a, Vector3Int b) => Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
 
-    public AStarSearch(Vector3Int start, Vector3Int goal)
+    public AStarSearch(Vector3Int start, Vector3Int goal, bool excludeObstaclesFromPath)
     {
         this.start = start;
         this.goal = goal;
@@ -59,7 +59,7 @@ public class AStarSearch
 
             if (current.Equals(goal)) break;
 
-            foreach (var neighbor in HexGrid.instance.GetNeighboursFor(current))
+            foreach (var neighbor in HexGrid.instance.GetNeighboursFor(current, excludeObstacles: excludeObstaclesFromPath))
             {                
                 float newCost = costSoFar[current] + HexGrid.instance.Cost(current, neighbor);
 

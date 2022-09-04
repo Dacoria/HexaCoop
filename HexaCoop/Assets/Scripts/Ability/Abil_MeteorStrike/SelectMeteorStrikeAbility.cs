@@ -14,8 +14,14 @@ public class SelectMeteorStrikeAbility : MonoBehaviour, IAbilityAction
 
     public void InitAbilityAction()
     {
-        NeighbourHexTileSelectionManager.instance.HighlightNeighbourOptionsAroundPlayer(Netw.CurrPlayer());
-        abilIsActive = true;
+        if (Settings.UseQueueAbilities)
+        {
+            Netw.CurrPlayer().Ability(Netw.CurrPlayer().CurrentHexTile, AbilityType);
+        }
+        else { 
+            NeighbourHexTileSelectionManager.instance.HighlightNeighbourOptionsAroundPlayer(Netw.CurrPlayer());
+            abilIsActive = true;
+        }
     }
 
     private void Update()

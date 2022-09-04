@@ -77,7 +77,7 @@ public class ButtonEvents : HexaEventCallback
         if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
         if (Settings.UseQueueAbilities) { return; }
                   
-        if (!type.EventImmediatelyFinished())
+        if (!type.GetEventImmediatelyFinished())
         {
             // niet interactable totdat het event voorbij is
             UpdateAllAbilities(setToUnselected: true, interactable: false);

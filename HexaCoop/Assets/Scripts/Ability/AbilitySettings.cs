@@ -5,4 +5,5 @@
     public int AvailableFromTurn;
     public bool EventImmediatelyFinished;
     public bool IsPickup;
+    public float Duration;
 }

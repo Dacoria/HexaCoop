@@ -16,11 +16,11 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         instance = this;
     }
 
-    public void HighlightMovementOptionsAroundPlayer(PlayerScript player, bool excludeObstacles)
+    public void HighlightMovementOptionsAroundPlayer(PlayerScript player, bool excludeObstacles, int range = 1)
     {
         SelectedPlayer = player;
         onlyHighlightColor = false;
-        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: excludeObstacles);
+        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: excludeObstacles, range: range);
     }
 
     private bool onlyHighlightColor = false;
@@ -29,7 +29,7 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
     {
         SelectedPlayer = player;
         onlyHighlightColor = true;
-        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: false);
+        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: false, range: 1) ;
     }
 
     public void HandleMouseClickForMove(Vector3 mousePosition, Action<PlayerScript, Hex> callback)
@@ -77,9 +77,9 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         }
     }
 
-    private void HightlightValidNeighbourTiles(Hex selectedHex, bool excludeObstacles)
+    private void HightlightValidNeighbourTiles(Hex selectedHex, bool excludeObstacles, int range)
     {
-        var neighboursToTryToHightlight = HexGrid.GetNeighboursFor(selectedHex.HexCoordinates, excludeObstacles: excludeObstacles);
+        var neighboursToTryToHightlight = HexGrid.GetNeighboursFor(selectedHex.HexCoordinates, excludeObstacles: excludeObstacles, range: range);
         validNeighboursHightlighted = new List<Vector3Int>();
 
         foreach (var neightbour in neighboursToTryToHightlight)

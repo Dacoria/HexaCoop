@@ -53,7 +53,7 @@ public partial class GameHandler : HexaEventCallback
         foreach (var abilityQueueItem in abilityQueueItems)
         {
             StartCoroutine(InitAbilityInXSeconds(waitTime, abilityQueueItem));
-            waitTime += 3f;
+            waitTime += abilityQueueItem.AbilityType.GetDuration() + 0.3f;
         }
 
         StartCoroutine(EndQueuePlayerTurnInXSeconds(waitTime));
@@ -85,13 +85,13 @@ public partial class GameHandler : HexaEventCallback
         {
             return hexSubmitted;
         }
-        if(abilityType != AbilityType.Movement)
+        if(abilityType != AbilityType.Movement && abilityType != AbilityType.Jump)
         {
             return hexSubmitted;
         }
 
-        var direction = hexCoorPlayerStartTurn.DeriveDirection(hexSubmitted.HexCoordinates);
-        var newTargetHexCoor = player.CurrentHexTile.HexCoordinates.GetHexCoorInDirection(direction);
+        var directions = hexCoorPlayerStartTurn.DeriveDirections(hexSubmitted.HexCoordinates);
+        var newTargetHexCoor = player.CurrentHexTile.HexCoordinates.GetNewHexCoorFromDirections(directions);
         var hexResult = newTargetHexCoor.GetHex();
 
         return hexResult;

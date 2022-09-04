@@ -34,7 +34,7 @@ public class PlayerActionPoints : HexaEventCallback
     {
         if (Settings.UseQueueAbilities && queueItem.Player == playerScript)
         {
-            IncreaseAP(queueItem.AbilityType.Cost());
+            IncreaseAP(queueItem.AbilityType.GetCost());
         }
     }
 
@@ -42,7 +42,7 @@ public class PlayerActionPoints : HexaEventCallback
     {
         if (player == playerScript)
         {
-            DecreaseAP(type.Cost());
+            DecreaseAP(type.GetCost());
         }
     }
 

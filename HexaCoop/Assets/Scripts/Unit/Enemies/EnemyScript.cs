@@ -72,7 +72,7 @@ public class EnemyScript : HexaEventCallback, IUnit
 
     private List<Vector3Int> GetPathToHex(Vector3Int from, Vector3Int to)
     {
-        var astar = new AStarSearch(from, to);
+        var astar = new AStarSearch(from, to, excludeObstaclesFromPath: true);
         var path = astar.FindPath();
         return path;
     }

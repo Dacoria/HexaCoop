@@ -60,7 +60,7 @@ public class PlayerAiMove : HexaEventCallback
         var tilesForTarget = HexGrid.instance.GetTiles(HighlightColorType.Blue);
         if(!tilesForTarget.Any())
         {
-            if(AbilityType.Rocket.Cost() + AbilityType.Radar.Cost() <= player.CurrentAP)
+            if(AbilityType.Rocket.GetCost() + AbilityType.Radar.GetCost() <= player.CurrentAP)
             {
                 currentCallbackAfterAction = DoRocket;
                 DoRadar();

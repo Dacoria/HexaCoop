@@ -1,33 +1,25 @@
-using System.Linq;
 using UnityEngine;
 
-public class SelectArtilleryAbility : MonoBehaviour, IAbilityAction
+public class SelectJumpAbility : MonoBehaviour, IAbilityAction
 {
-    public AbilityType AbilityType => AbilityType.Artillery;
+    public AbilityType AbilityType => AbilityType.Jump;
 
-    private bool abilIsActive;
+    private bool movementAbilIsActive;
     public void DeselectAbility()
     {
         NeighbourHexTileSelectionManager.instance.DeselectHighlightedNeighbours();
-        abilIsActive = false;
+        movementAbilIsActive = false;
     }
 
     public void InitAbilityAction()
     {
-        if (Settings.UseQueueAbilities)
-        {
-            Netw.CurrPlayer().Ability(Netw.CurrPlayer().CurrentHexTile, AbilityType);
-        }
-        else
-        {
-            NeighbourHexTileSelectionManager.instance.HighlightNeighbourOptionsAroundPlayer(Netw.CurrPlayer());
-            abilIsActive = true;
-        }
+        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(Netw.CurrPlayer(), excludeObstacles: !Settings.UseQueueAbilities, range: 2);
+        movementAbilIsActive = true;
     }
 
     private void Update()
     {
-        if (!abilIsActive)
+        if(!movementAbilIsActive)
         {
             return;
         }
@@ -36,8 +28,9 @@ public class SelectArtilleryAbility : MonoBehaviour, IAbilityAction
         {
             if (NeighbourHexTileSelectionManager.instance.SelectedPlayer == null)
             {
+                // movement aanzetten gaat eerst via knoppen
                 return;
-            }
+            }            
 
             NeighbourHexTileSelectionManager.instance.HandleMouseClickForMove(Input.mousePosition, OnMovementTileSelected);
         }
@@ -47,4 +40,6 @@ public class SelectArtilleryAbility : MonoBehaviour, IAbilityAction
     {
         selectedPlayer.Ability(hexSelected, AbilityType);
     }
+
+    public bool CanDoAbility(PlayerScript player) => player?.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Meditate) == false;
 }
