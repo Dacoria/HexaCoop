@@ -72,8 +72,8 @@ public partial class GameHandler : HexaEventCallback
         }
         else
         {
-            NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, hexForAbil, abilityQueueItem.AbilityType, abilityQueueItem.Id);
-            //Textt.GameLocal("Abil " + abilityQueueItem.AbilityType + " voor p " + abilityQueueItem.Player.PlayerName + " kon niet voor hex " + abilityQueueItem.Hex.HexCoordinates);
+            var hexToSend = hexForAbil ?? abilityQueueItem.Hex;
+            NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, hexToSend, abilityQueueItem.AbilityType, abilityQueueItem.Id);
         }        
     }
 
