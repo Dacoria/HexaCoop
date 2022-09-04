@@ -75,9 +75,9 @@ public class HexGrid : MonoBehaviour
         return result;
     }
 
-    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range = 1, bool excludeObstacles = true, bool? withUnitOnTile = null)
+    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range = 1, bool excludeObstacles = true, bool? withUnitOnTile = null, bool onlyMoveInOneDirection = false)
     {
-        var neighbours = GetNeighboursFor(hexCoordinates, range);
+        var neighbours = GetNeighboursFor(hexCoordinates, range, onlyMoveInOneDirection);
         if(excludeObstacles)
         {
             neighbours = neighbours.Where(x => !x.GetHex().IsObstacle()).ToList();
@@ -99,7 +99,43 @@ public class HexGrid : MonoBehaviour
         return hexTileDict[hexRightUpperCornerCoordinate];
     }
 
-    private List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range)
+    private List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range, bool onlyMoveInOneDirection)
+    {
+        if(onlyMoveInOneDirection)
+        {
+            return GetNeighboursOneDirections(hexCoordinates, range);
+        }
+        else
+        {
+            return GetNeighboursAllDirections(hexCoordinates, range);
+        }
+    }
+
+    private List<Vector3Int> GetNeighboursOneDirections(Vector3Int startHexCoor, int range)
+    {
+        if (range <= 0)
+        {
+            return new List<Vector3Int>();
+        }
+
+        var result = new List<Vector3Int>();
+
+        foreach (DirectionType direction in Enum.GetValues(typeof(DirectionType)))
+        {
+            for(int step = 1; step <= range; step++)
+            {
+                var newHexCoor = startHexCoor.GetNewHexCoorFromDirection(direction, step);
+                if (hexTileDict.ContainsKey(newHexCoor))
+                {
+                    result.Add(newHexCoor);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private List<Vector3Int> GetNeighboursAllDirections(Vector3Int hexCoordinates, int range)
     {
         if (range <= 0)
         {

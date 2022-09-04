@@ -13,16 +13,9 @@ public class SelectArtilleryAbility : MonoBehaviour, IAbilityAction
     }
 
     public void InitAbilityAction()
-    {
-        if (Settings.UseQueueAbilities)
-        {
-            Netw.CurrPlayer().Ability(Netw.CurrPlayer().CurrentHexTile, AbilityType);
-        }
-        else
-        {
-            NeighbourHexTileSelectionManager.instance.HighlightNeighbourOptionsAroundPlayer(Netw.CurrPlayer());
-            abilIsActive = true;
-        }
+    { 
+        NeighbourHexTileSelectionManager.instance.HighlightNeighbourOptionsAroundPlayer(Netw.CurrPlayer());
+        abilIsActive = true;
     }
 
     private void Update()

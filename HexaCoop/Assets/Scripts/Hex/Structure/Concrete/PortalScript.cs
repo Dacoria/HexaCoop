@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class PortalScript : HexaEventCallback, IStructure
 {
-    public PortalScript ConnectedPortal;
+    public Vector3Int HexCoorConnectedPortal;
 
-    [ComponentInject] public Hex Hex;
+    private PortalScript ConnectedPortal;
+    [HideInInspector] [ComponentInject] private Hex hex;
 
     void Start()
     {
-        ConnectedPortal = FindObjectsOfType<PortalScript>().Where(x => x != this).First();
+        if(ConnectedPortal == null)
+        {
+            if (HexCoorConnectedPortal.GetHex() != null)
+            {
+                ConnectedPortal = HexCoorConnectedPortal.GetHex().GetComponentInChildren<PortalScript>();
+            }
+            else
+            {
+                ConnectedPortal = FindObjectsOfType<PortalScript>().Where(x => x != this).OrderByDescending(x => Vector3.Distance(x.transform.position, this.transform.position)).First();
+            }
+        }
+
+        
     }
 
     public void PlayerSteppedOnStructure(PlayerScript player) => StartCoroutine(PortalToNewHex(player)); // coroutine voorkomt dat je direct door de andere portal weer terugkomt
@@ -18,15 +31,15 @@ public class PortalScript : HexaEventCallback, IStructure
     private IEnumerator PortalToNewHex(PlayerScript player)
     {
         yield return Wait4Seconds.Get(0.05f);
-        if (ConnectedPortal.Hex.HasUnit())
+        if (ConnectedPortal.hex.HasUnit())
         {
-            MoveUnitAwayFromPortal(player, ConnectedPortal.Hex.GetUnit());
+            MoveUnitAwayFromPortal(player, ConnectedPortal.hex.GetUnit());
         }
 
-        player.transform.position = ConnectedPortal.Hex.transform.position;
-        player.SetCurrentHexTile(ConnectedPortal.Hex);
+        player.transform.position = ConnectedPortal.hex.transform.position;
+        player.SetCurrentHexTile(ConnectedPortal.hex);
 
-        ActionEvents.PlayerScriptHasTeleported?.Invoke(player, player.CurrentHexTile);        
+        ActionEvents.PlayerHasTeleported?.Invoke(player, player.CurrentHexTile);        
     }
 
     private void MoveUnitAwayFromPortal(PlayerScript playerDoingAbility, IUnit unit)

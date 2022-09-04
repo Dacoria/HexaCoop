@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public partial class GameHandler : HexaEventCallback
 {
@@ -65,13 +66,16 @@ public partial class GameHandler : HexaEventCallback
         if (!PhotonNetwork.IsMasterClient) { yield break; }
         yield return Wait4Seconds.Get(waitTime);
 
+
         var hexForAbil = DetermineHexForAbil(abilityQueueItem.Player, abilityQueueItem.AbilityType, abilityQueueItem.Hex, hexCoorPlayerStartTurn);
+
         if (hexForAbil != null && abilityQueueItem.Player.CanDoAbility(hexForAbil, abilityQueueItem.AbilityType))
         {
             NetworkAE.instance.Invoker_PlayerAbility(abilityQueueItem.Player, hexForAbil, abilityQueueItem.AbilityType, abilityQueueItem.Id);
         }
         else
         {
+            Debug.Log("Unable to do move: " + abilityQueueItem.Player.PlayerName + " " + hexForAbil?.HexCoordinates + " " + abilityQueueItem.Hex.HexCoordinates);
             var hexToSend = hexForAbil ?? abilityQueueItem.Hex;
             NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, hexToSend, abilityQueueItem.AbilityType, abilityQueueItem.Id);
         }        
@@ -85,12 +89,13 @@ public partial class GameHandler : HexaEventCallback
         {
             return hexSubmitted;
         }
-        if(abilityType != AbilityType.Movement && abilityType != AbilityType.Jump)
+        if(abilityType != AbilityType.Movement && abilityType != AbilityType.Jump && abilityType != AbilityType.Artillery)
         {
             return hexSubmitted;
         }
 
         var directions = hexCoorPlayerStartTurn.DeriveDirections(hexSubmitted.HexCoordinates);
+
         var newTargetHexCoor = player.CurrentHexTile.HexCoordinates.GetNewHexCoorFromDirections(directions);
         var hexResult = newTargetHexCoor.GetHex();
 

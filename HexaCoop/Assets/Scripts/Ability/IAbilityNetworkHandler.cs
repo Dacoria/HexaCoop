@@ -1,9 +1,11 @@
-﻿public interface IAbilityNetworkHandler
+﻿using System;
+using System.Collections.Generic;
+
+public interface IAbilityNetworkHandler
 {
-    public bool CanDoAbility(PlayerScript playerDoingAbility, Hex target)
-    {
-        return true;
-    }
+    public bool CanDoAbility(PlayerScript playerDoingAbility, Hex target) => true;
+
+    public List<Action> EventsTillAbilityIsFinished => new List<Action>();
 
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target);
 }

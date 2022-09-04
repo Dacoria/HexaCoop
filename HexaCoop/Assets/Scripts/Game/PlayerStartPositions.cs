@@ -8,7 +8,7 @@ public static class PlayerStartPositions
 {
     public static List<PlayerStartPosition> GetStartTiles(Vector3Int tileRUCoor, int players = 4)
     {
-        var startPos = tileRUCoor.y < 8 ? new Vector3Int(0, 0, 0): new Vector3Int(2, 0, 1);
+        var startPos = tileRUCoor.z < 8 ? new Vector3Int(0, 0, 0): new Vector3Int(2, 0, 2);
 
         // bij oneven aantal rijen + z is zelf oneven, dan begint de x bij 1 ipv 0! --> vandaar extra corrigeren
         var xUnevenIncrement = (tileRUCoor.z % 2 == 0 && startPos.z % 2 == 1) ? 1 : 0;

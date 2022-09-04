@@ -57,9 +57,10 @@ public class Hex : MonoBehaviour
     public void SetFogOnHex(bool fogEnabled)
     {
         fogOnHex.SetFog(fogEnabled);
-        if(this.GetPlayer() != null)
+        var player = this.GetPlayer();
+        if (player != null && player.IsAlive)
         {
-            this.GetPlayer().PlayerModel.gameObject.SetActive(!fogEnabled);
+            player.PlayerModel.gameObject.SetActive(!fogEnabled);
         }
 
         ChangeHexSurfaceType(Settings.ShowSurfacesInFog || !fogEnabled ? HexSurfaceType : HexSurfaceType.Simple_Plain, alsoChangeType: false);

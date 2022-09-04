@@ -13,9 +13,6 @@ public partial class HexSurfaceScript : HexaEventCallback
                     Textt.GameLocal("Desert surface: Lose 2 Actionpoints", playerFilter: player);
                     break;
                 case HexSurfaceType.Light_Grey_Stone:
-                case HexSurfaceType.Granite_Stone:
-                case HexSurfaceType.Grey_Stone:
-                case HexSurfaceType.Dirt_Stones:
                 case HexSurfaceType.Big_Brown_Stones:
                     player.GetComponent<PlayerActionPoints>().IncreaseAP(1);
                     Textt.GameLocal("Stone surface: Gain 1 Actionpoint", playerFilter: player);

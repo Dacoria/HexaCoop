@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class UnitAttack : HexaEventCallback
 {
@@ -30,11 +31,16 @@ public class UnitAttack : HexaEventCallback
         if (gameObject == animatorGo.transform.parent.gameObject)
         {
             ActionEvents.UnitAttackHit?.Invoke(unit, hexAttackTarget, 1);
+            StartCoroutine(RetaliateIfTargetIsStillAlive(0.1f, hexAttackTarget.GetUnit()));            
+        }
+    }
 
-            if (hexAttackTarget.GetUnit()?.IsAlive == true)
-            {
-                ActionEvents.UnitAttackHit?.Invoke(hexAttackTarget.GetUnit(), unit.CurrentHexTile, 1);
-            }
+    private IEnumerator RetaliateIfTargetIsStillAlive(float waitTime, IUnit attackTarget)
+    {
+        yield return Wait4Seconds.Get(waitTime);
+        if (attackTarget?.IsAlive == true)
+        {
+            ActionEvents.UnitAttackHit?.Invoke(hexAttackTarget.GetUnit(), unit.CurrentHexTile, 1);
         }
     }
 }

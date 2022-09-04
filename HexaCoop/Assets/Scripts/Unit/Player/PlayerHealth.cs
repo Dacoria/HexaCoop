@@ -8,7 +8,7 @@ public class PlayerHealth : HexaEventCallback
     [ComponentInject] private PlayerScript player;
 
     public int CurrentHitPoints { get; private set; }
-    public int InitHitPoints = 20;
+    public int InitHitPoints = 2;
 
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript currentPlayer)
     {
@@ -54,8 +54,6 @@ public class PlayerHealth : HexaEventCallback
         }
     }
 
-    public void IncreaseHp(int hpIncrease) => CurrentHitPoints += hpIncrease;
-
     public void TakeDamage(int damage)
     {
         var forcefieldScript = GetComponent<PlayerForcefieldScript>();
@@ -79,26 +77,27 @@ public class PlayerHealth : HexaEventCallback
 
     private void Die()
     {
-        StartCoroutine(StartDyingInXSeconds(0.5f));
+        if(!PhotonNetwork.IsMasterClient) { return; }
+        NetworkAE.instance.PlayerDied(player);
+    }
+
+    protected override void OnPlayerDied(PlayerScript playerThatDied)
+    {
+        if (playerThatDied == player)
+        { 
+            CurrentHitPoints = 0;
+            StartCoroutine(StartDyingInXSeconds(0.5f));
+        }
     }
 
     private IEnumerator StartDyingInXSeconds(float seconds)
     {
         yield return Wait4Seconds.Get(seconds);
         GetComponentInChildren<Animator>(true).SetTrigger(Statics.ANIMATION_TRIGGER_DIE);
-
+        StartCoroutine(HidePlayerModelInXSeconds(2f));
         if (PhotonNetwork.IsMasterClient)
         {
-            // dit proces moet 1 iemand instantieren --> voor nu: masterclient (want is er altijd 1 van)
             GameHandler.instance.CheckEndOfRound();
-        }
-    }
-
-    protected override void OnDieAnimationFinished(Animator animator)
-    {
-        if (animator.transform.parent.gameObject == gameObject)
-        {
-            StartCoroutine(HidePlayerModelInXSeconds(1f));
         }
     }
 

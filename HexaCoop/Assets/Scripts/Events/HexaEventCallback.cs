@@ -30,9 +30,10 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnEnemyAttack")) ActionEvents.EnemyAttack += OnEnemyAttack;
         if (IsOverwritten("OnDieAnimationFinished")) ActionEvents.DieAnimationFinished += OnDieAnimationFinished;
         if (IsOverwritten("OnAttackAnimationFinished")) ActionEvents.AttackAnimationFinished += OnAttackAnimationFinished;
-        if (IsOverwritten("OnPlayerScriptHasTeleported")) ActionEvents.PlayerScriptHasTeleported += OnPlayerScriptHasTeleported;
+        if (IsOverwritten("OnPlayerScriptHasTeleported")) ActionEvents.PlayerHasTeleported += OnPlayerScriptHasTeleported;
         if (IsOverwritten("OnRemoveQueueItem")) ActionEvents.RemoveQueueItem += OnRemoveQueueItem;
         if (IsOverwritten("OnStartAbilityQueue")) ActionEvents.StartAbilityQueue += OnStartAbilityQueue;
+        if (IsOverwritten("OnPlayerDied")) ActionEvents.PlayerDied += OnPlayerDied;
 
         if (IsOverwritten("OnEnemyAttackHit")) ActionEvents.EnemyAttackHit += OnEnemyAttackHit;
         if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit += OnPlayerAttackHit;
@@ -61,9 +62,10 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnEnemyAttack")) ActionEvents.EnemyAttack -= OnEnemyAttack;
         if (IsOverwritten("OnDieAnimationFinished")) ActionEvents.DieAnimationFinished -= OnDieAnimationFinished;
         if (IsOverwritten("OnAttackAnimationFinished")) ActionEvents.AttackAnimationFinished -= OnAttackAnimationFinished;
-        if (IsOverwritten("OnPlayerScriptHasTeleported")) ActionEvents.PlayerScriptHasTeleported -= OnPlayerScriptHasTeleported;
+        if (IsOverwritten("OnPlayerScriptHasTeleported")) ActionEvents.PlayerHasTeleported -= OnPlayerScriptHasTeleported;
         if (IsOverwritten("OnRemoveQueueItem")) ActionEvents.RemoveQueueItem -= OnRemoveQueueItem;
         if (IsOverwritten("OnStartAbilityQueue")) ActionEvents.StartAbilityQueue -= OnStartAbilityQueue;
+        if (IsOverwritten("OnPlayerDied")) ActionEvents.PlayerDied -= OnPlayerDied;
 
         if (IsOverwritten("OnEnemyAttackHit")) ActionEvents.EnemyAttackHit -= OnEnemyAttackHit;
         if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit -= OnPlayerAttackHit;
@@ -97,8 +99,7 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnPlayerAttackHit(PlayerScript player, Hex hex, int damage) { }
     protected virtual void OnRemoveQueueItem(AbilityQueueItem queueItem) { }
     protected virtual void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueueItems) { }
-
-
+    protected virtual void OnPlayerDied(PlayerScript player) { }
 
 
     private bool IsOverwritten(string functionName)

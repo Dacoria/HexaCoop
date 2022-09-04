@@ -59,7 +59,10 @@ public class FogGrid : HexaEventCallback
     {
         foreach (var player in GameHandler.instance.AllPlayers)
         {
-            player?.PlayerModel.gameObject.SetActive(!player.CurrentHexTile.FogIsActive());
+            if (player.IsAlive)
+            {
+                player?.PlayerModel.gameObject.SetActive(!player.CurrentHexTile.FogIsActive());
+            }
         }
     }
 
