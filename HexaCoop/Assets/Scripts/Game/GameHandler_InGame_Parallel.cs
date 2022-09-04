@@ -34,11 +34,14 @@ public partial class GameHandler : HexaEventCallback
         var result = new List<AbilityQueueItem>();
         for (int i = 0; i < 10; i++)
         {
-            foreach (var playersAbilityQueue in playersAbilityQueueDict)
+            foreach (var player in PlayerQueueOrder)
             {
-                if (i <= playersAbilityQueue.Value.Count() - 1)
+                if (playersAbilityQueueDict.TryGetValue(player, out var playerQueue))
                 {
-                    result.Add(playersAbilityQueue.Value[i]);
+                    if (i <= playerQueue.Count() - 1)
+                    {
+                        result.Add(playerQueue[i]);
+                    }
                 }
             }
         }
@@ -66,6 +69,13 @@ public partial class GameHandler : HexaEventCallback
         if (!PhotonNetwork.IsMasterClient) { yield break; }
         yield return Wait4Seconds.Get(waitTime);
 
+        if(!abilityQueueItem.Player.IsAlive)
+        {
+            // player kan dood zijn --> in dat geval, geen acties van hem meer
+            NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, abilityQueueItem.Hex, abilityQueueItem.AbilityType, abilityQueueItem.Id);
+            yield break;
+        }
+
 
         var hexForAbil = DetermineHexForAbil(abilityQueueItem.Player, abilityQueueItem.AbilityType, abilityQueueItem.Hex, hexCoorPlayerStartTurn);
 
@@ -75,7 +85,6 @@ public partial class GameHandler : HexaEventCallback
         }
         else
         {
-            Debug.Log("Unable to do move: " + abilityQueueItem.Player.PlayerName + " " + hexForAbil?.HexCoordinates + " " + abilityQueueItem.Hex.HexCoordinates);
             var hexToSend = hexForAbil ?? abilityQueueItem.Hex;
             NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, hexToSend, abilityQueueItem.AbilityType, abilityQueueItem.Id);
         }        
@@ -108,5 +117,21 @@ public partial class GameHandler : HexaEventCallback
         yield return Wait4Seconds.Get(waitTime);
 
         NetworkAE.instance.AllPlayersFinishedTurn();
+    }
+
+    public List<PlayerScript> PlayerQueueOrder;
+
+    private void SetNewPlayerOrderForSimultaniousTurns()
+    {
+        if(!PhotonNetwork.IsMasterClient) { return; }
+
+        var allAliveplayers = NetworkHelper.instance.GetAllPlayers(isAlive: true);
+        allAliveplayers.Shuffle();
+        NetworkAE.instance.NewSimTurnsPlayOrder(allAliveplayers);
+    }
+
+    protected override void OnNewSimTurnsPlayOrder(List<PlayerScript> players)
+    {
+        PlayerQueueOrder = players;
     }
 }

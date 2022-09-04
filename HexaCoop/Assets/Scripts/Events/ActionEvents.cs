@@ -22,7 +22,7 @@ public static class ActionEvents
     public static Action<EnemyScript, Hex> EnemyMove;
     public static Action<EnemyScript, PlayerScript> EnemyAttack;
     public static Action<PlayerScript> PlayerDied;
-
+    public static Action<List<PlayerScript>> NewSimTurnsPlayOrder;
 
     // local
     public static Action GridLoaded;

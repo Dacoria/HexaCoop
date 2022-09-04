@@ -4,26 +4,12 @@ using UnityEngine;
 
 public class PortalScript : HexaEventCallback, IStructure
 {
-    public Vector3Int HexCoorConnectedPortal;
-
     private PortalScript ConnectedPortal;
     [HideInInspector] [ComponentInject] private Hex hex;
 
     void Start()
     {
-        if(ConnectedPortal == null)
-        {
-            if (HexCoorConnectedPortal.GetHex() != null)
-            {
-                ConnectedPortal = HexCoorConnectedPortal.GetHex().GetComponentInChildren<PortalScript>();
-            }
-            else
-            {
-                ConnectedPortal = FindObjectsOfType<PortalScript>().Where(x => x != this).OrderByDescending(x => Vector3.Distance(x.transform.position, this.transform.position)).First();
-            }
-        }
-
-        
+        ConnectedPortal = FindObjectsOfType<PortalScript>().Where(x => x != this).OrderByDescending(x => Vector3.Distance(x.transform.position, this.transform.position)).First();
     }
 
     public void PlayerSteppedOnStructure(PlayerScript player) => StartCoroutine(PortalToNewHex(player)); // coroutine voorkomt dat je direct door de andere portal weer terugkomt
@@ -39,7 +25,7 @@ public class PortalScript : HexaEventCallback, IStructure
         player.transform.position = ConnectedPortal.hex.transform.position;
         player.SetCurrentHexTile(ConnectedPortal.hex);
 
-        ActionEvents.PlayerHasTeleported?.Invoke(player, player.CurrentHexTile);        
+        ActionEvents.PlayerHasTeleported?.Invoke(player, player.CurrentHexTile);
     }
 
     private void MoveUnitAwayFromPortal(PlayerScript playerDoingAbility, IUnit unit)
@@ -50,6 +36,6 @@ public class PortalScript : HexaEventCallback, IStructure
         );
     }
 
-    // altijd visible lijk me
+    // altijd visible lijkt me
     public void SetIsVisible(bool isVisible) { }
 }

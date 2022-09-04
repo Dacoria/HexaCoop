@@ -15,13 +15,14 @@ public partial class GameHandler : HexaEventCallback
         if(Settings.UseSimultaniousTurns)
         {
             NetworkAE.instance.NewRoundStarted_Simultanious(players);
+            SetNewPlayerOrderForSimultaniousTurns();
         }
         else
         {
             SetCurrentPlayer(players[0]);
             NetworkAE.instance.NewRoundStarted_Sequential(players, Netw.CurrPlayer());
         }
-    }
+    }    
 
     public void ResetGame()
     {

@@ -34,12 +34,13 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnRemoveQueueItem")) ActionEvents.RemoveQueueItem += OnRemoveQueueItem;
         if (IsOverwritten("OnStartAbilityQueue")) ActionEvents.StartAbilityQueue += OnStartAbilityQueue;
         if (IsOverwritten("OnPlayerDied")) ActionEvents.PlayerDied += OnPlayerDied;
+        if (IsOverwritten("OnNewSimTurnsPlayOrder")) ActionEvents.NewSimTurnsPlayOrder += OnNewSimTurnsPlayOrder;        
 
         if (IsOverwritten("OnEnemyAttackHit")) ActionEvents.EnemyAttackHit += OnEnemyAttackHit;
         if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit += OnPlayerAttackHit;
         if (IsOverwritten("OnEnemyMovingFinished")) ActionEvents.EnemyMovingFinished += OnEnemyMovingFinished;
         if (IsOverwritten("OnPlayerMovingFinished")) ActionEvents.PlayerMovingFinished += OnPlayerMovingFinished;
-    }
+    }   
 
     protected void OnDisable()
     {
@@ -66,6 +67,7 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnRemoveQueueItem")) ActionEvents.RemoveQueueItem -= OnRemoveQueueItem;
         if (IsOverwritten("OnStartAbilityQueue")) ActionEvents.StartAbilityQueue -= OnStartAbilityQueue;
         if (IsOverwritten("OnPlayerDied")) ActionEvents.PlayerDied -= OnPlayerDied;
+        if (IsOverwritten("OnNewSimTurnsPlayOrder")) ActionEvents.NewSimTurnsPlayOrder -= OnNewSimTurnsPlayOrder;
 
         if (IsOverwritten("OnEnemyAttackHit")) ActionEvents.EnemyAttackHit -= OnEnemyAttackHit;
         if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit -= OnPlayerAttackHit;
@@ -100,6 +102,7 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnRemoveQueueItem(AbilityQueueItem queueItem) { }
     protected virtual void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueueItems) { }
     protected virtual void OnPlayerDied(PlayerScript player) { }
+    protected virtual void OnNewSimTurnsPlayOrder(List<PlayerScript> players) { }
 
 
     private bool IsOverwritten(string functionName)

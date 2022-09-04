@@ -61,6 +61,12 @@ public partial class GameHandler : HexaEventCallback
     {
         if (Settings.UseSimultaniousTurns)
         {
+            if(!player.IsAi)
+            {
+                // anders is het geen nieuwe beurt
+                SetNewPlayerOrderForSimultaniousTurns();
+            }            
+
             if (player.IsOnMyNetwork())
             {
                 // alleen op eigen netwerk setten (om zo ook AI te ondersteunen; vandaar zo)
