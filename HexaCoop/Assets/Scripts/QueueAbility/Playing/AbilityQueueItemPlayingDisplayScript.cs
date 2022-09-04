@@ -6,6 +6,7 @@ public class AbilityQueueItemPlayingDisplayScript : HexaEventCallback
     [SerializeField] private Image AbilityImage;
     [SerializeField] private Image BackgroundAbility;
     [SerializeField] private Image ActiveAbilityHighlighter;
+    [SerializeField] private Image NotExecutedCross;
     [ComponentInject] private CanvasGroup canvasGroup;
     
     public int QueueItemId;
@@ -17,6 +18,7 @@ public class AbilityQueueItemPlayingDisplayScript : HexaEventCallback
         BackgroundAbility.color = colorBg;
 
         SetIsActiveAbility(false);
+        NotExecutedCross.gameObject.SetActive(false);
     }
 
     private bool isActivated;
@@ -36,5 +38,10 @@ public class AbilityQueueItemPlayingDisplayScript : HexaEventCallback
         }
 
         ActiveAbilityHighlighter.gameObject.SetActive(isActive);
+    }
+
+    public void SetIsNotExecuted()
+    {
+        NotExecutedCross.gameObject.SetActive(true);
     }
 }

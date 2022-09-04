@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class NetwHandleSummonMountainAbility : HexaEventCallback, IAbilityNetworkHandler
 {
-    [ComponentInject] private PlayerScript playerScript;
+    public bool CanDoAbility(PlayerScript playerDoingAbility, Hex target)
+    {
+        return !target.IsObstacle();
+    }
 
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
     {

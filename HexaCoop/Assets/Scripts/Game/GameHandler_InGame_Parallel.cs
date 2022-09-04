@@ -2,7 +2,6 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public partial class GameHandler : HexaEventCallback
 {
@@ -62,9 +61,40 @@ public partial class GameHandler : HexaEventCallback
 
     private IEnumerator InitAbilityInXSeconds(float waitTime, AbilityQueueItem abilityQueueItem)
     {
+        var hexCoorPlayerStartTurn = abilityQueueItem.Player.CurrentHexTile.HexCoordinates;
         if (!PhotonNetwork.IsMasterClient) { yield break; }
         yield return Wait4Seconds.Get(waitTime);
-        NetworkAE.instance.Invoker_PlayerAbility(abilityQueueItem.Player, abilityQueueItem.Hex, abilityQueueItem.AbilityType, abilityQueueItem.Id);
+
+        var hexForAbil = DetermineHexForAbil(abilityQueueItem.Player, abilityQueueItem.AbilityType, abilityQueueItem.Hex, hexCoorPlayerStartTurn);
+        if (hexForAbil != null && abilityQueueItem.Player.CanDoAbility(hexForAbil, abilityQueueItem.AbilityType))
+        {
+            NetworkAE.instance.Invoker_PlayerAbility(abilityQueueItem.Player, hexForAbil, abilityQueueItem.AbilityType, abilityQueueItem.Id);
+        }
+        else
+        {
+            NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, hexForAbil, abilityQueueItem.AbilityType, abilityQueueItem.Id);
+            //Textt.GameLocal("Abil " + abilityQueueItem.AbilityType + " voor p " + abilityQueueItem.Player.PlayerName + " kon niet voor hex " + abilityQueueItem.Hex.HexCoordinates);
+        }        
+    }
+
+    private Hex DetermineHexForAbil(PlayerScript player, AbilityType abilityType, Hex hexSubmitted, UnityEngine.Vector3Int hexCoorPlayerStartTurn)
+    {
+        // voor movement --> directie ipv hex-resultaat --> hier bepalen (voor nu)
+
+        if(player.CurrentHexTile.HexCoordinates == hexCoorPlayerStartTurn)
+        {
+            return hexSubmitted;
+        }
+        if(abilityType != AbilityType.Movement)
+        {
+            return hexSubmitted;
+        }
+
+        var direction = hexCoorPlayerStartTurn.DeriveDirection(hexSubmitted.HexCoordinates);
+        var newTargetHexCoor = player.CurrentHexTile.HexCoordinates.GetHexCoorInDirection(direction);
+        var hexResult = newTargetHexCoor.GetHex();
+
+        return hexResult;
     }
 
     private IEnumerator EndQueuePlayerTurnInXSeconds(float waitTime)

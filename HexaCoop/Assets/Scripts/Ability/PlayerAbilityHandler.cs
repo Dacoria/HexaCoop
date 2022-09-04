@@ -26,4 +26,14 @@ public partial class PlayerAbilityHandler : HexaEventCallback
         var newAbilHandler = (IAbilityNetworkHandler)gameObject.AddComponent(abilityDisplayScript);
         dictAbilityHandlers.Add(abilityType, newAbilHandler);
     }
+
+    public bool CanDoAbility(Hex hex, AbilityType abilityType)
+    {
+        if (!dictAbilityHandlers.ContainsKey(abilityType))
+        {
+            CreateAbilityHandler(abilityType);
+        }
+
+        return dictAbilityHandlers[abilityType].CanDoAbility(playerScript, hex);
+    }
 }

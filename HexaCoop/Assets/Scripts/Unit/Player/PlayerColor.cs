@@ -42,7 +42,7 @@ public class PlayerColor : HexaEventCallback
         0 => Colorr.Orange,
         1 => Colorr.LightBlue,
         2 => Colorr.Purple,
-        3 => Colorr.Red,
+        3 => Colorr.Yellow,
         _ => Colorr.White,
     };
 }

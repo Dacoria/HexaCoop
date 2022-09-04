@@ -16,11 +16,11 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         instance = this;
     }
 
-    public void HighlightMovementOptionsAroundPlayer(PlayerScript player)
+    public void HighlightMovementOptionsAroundPlayer(PlayerScript player, bool excludeObstacles)
     {
         SelectedPlayer = player;
         onlyHighlightColor = false;
-        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: true);
+        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: excludeObstacles);
     }
 
     private bool onlyHighlightColor = false;

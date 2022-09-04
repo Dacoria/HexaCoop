@@ -34,6 +34,18 @@ public class AbilityQueuePlayingDisplayScript : HexaEventCallback
         }
     }
 
+    protected override void OnPlayerAbilityNotExecuted(PlayerScript player, Hex hex, AbilityType abilityType, int queueId)
+    {
+        foreach (var queueItemDisplayGo in AbilityDisplayGOs)
+        {
+            queueItemDisplayGo.SetIsActiveAbility(queueItemDisplayGo.QueueItemId == queueId);
+            if(queueItemDisplayGo.QueueItemId == queueId)
+            {
+                queueItemDisplayGo.SetIsNotExecuted();
+            }            
+        }
+    }
+
     protected override void OnAllPlayersFinishedTurn()
     {
         foreach (var queueItemDisplayGo in AbilityDisplayGOs)

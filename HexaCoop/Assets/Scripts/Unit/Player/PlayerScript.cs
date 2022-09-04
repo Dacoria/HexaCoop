@@ -25,6 +25,7 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUn
     public void SetCurrentHexTile(Hex hex) => CurrentHexTile = hex;
     public void MoveToNewDestination(Hex tile) => gameObject.GetSet<UnitMovement>().GoToDestination(tile, 2f);
     public int GetVision() => this.baseVisionRange + GetComponents<PlayerExtraVisionRangeScript>().Sum(x => x.AdditionalRange);
+    public bool CanDoAbility(Hex hex, AbilityType abilityType) => playerAbilityHandler.CanDoAbility(hex, abilityType);
 
 
     [ComponentInject (SearchDirection=SearchDirection.CHILDREN)] public PlayerModel PlayerModel;
@@ -33,6 +34,7 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUn
     [ComponentInject] private PlayerActionPoints playerActionPoints;
     [ComponentInject] private PlayerHealth playerHealth;
     [ComponentInject] private PlayerColor playerColor;
+    [ComponentInject] private PlayerAbilityHandler playerAbilityHandler;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {

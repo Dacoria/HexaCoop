@@ -1,12 +1,14 @@
 
 public class NetwHandleMovementAbility : HexaEventCallback, IAbilityNetworkHandler
 {
-    private Hex newHexTile;
+    public bool CanDoAbility(PlayerScript playerDoingAbility, Hex target)
+    {
+        return !target.IsObstacle();
+    }
 
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
     {
-        newHexTile = target;
-        if (newHexTile.HasUnit())
+        if (target.HasUnit())
         {
             gameObject.GetSet<UnitAttack>().AttackUnitOnHex(target);
         }

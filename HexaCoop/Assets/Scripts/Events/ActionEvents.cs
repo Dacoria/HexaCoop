@@ -6,6 +6,7 @@ public static class ActionEvents
 {
     // network
     public static Action<PlayerScript, Hex, AbilityType, int> PlayerAbility;
+    public static Action<PlayerScript, Hex, AbilityType, int> PlayerAbilityNotExecuted;
     public static Action<List<PlayerScript>, PlayerScript> NewRoundStarted;
     public static Action<PlayerScript> NewPlayerTurn;
     public static Action<PlayerScript, List<AbilityQueueItem>> EndPlayerTurn;
