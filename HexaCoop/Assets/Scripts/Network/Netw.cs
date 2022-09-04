@@ -4,7 +4,7 @@ public static class Netw
 {
     public static PlayerScript MyPlayer() => NetworkHelper.instance.GetMyPlayer();
     public static PlayerScript CurrPlayer() => GameHandler.instance.GetCurrentPlayer();
-    public static List<PlayerScript> PlayersOnMyNetwork() => NetworkHelper.instance.GetMyPlayers();
+    public static List<PlayerScript> PlayersOnMyNetwork(bool? isAlive = null, bool? isAi = null) => NetworkHelper.instance.GetMyPlayers(isAlive: isAlive, isAi: isAi);
     public static PlayerScript GetPlayer(int id) => NetworkHelper.instance.GetAllPlayers(isAlive: true).FirstOrDefault(x => x.Id == id);
 
     public static bool IsMe(this PlayerScript player) => MyPlayer() == player;

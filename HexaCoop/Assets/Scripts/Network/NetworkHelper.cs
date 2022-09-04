@@ -16,15 +16,15 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         var result = allPlayers;
         if (isAlive.HasValue)
         {
-            result = allPlayers.Where(x => x.IsAlive == isAlive.Value).ToList();
+            result = result.Where(x => x.IsAlive == isAlive.Value).ToList();
         }
         if (isAi.HasValue)
         {
-            result = allPlayers.Where(x => x.IsAi == isAi.Value).ToList();
+            result = result.Where(x => x.IsAi == isAi.Value).ToList();
         }
         if (myNetwork.HasValue)
         {
-            result = allPlayers.Where(player => player?.GetComponent<PhotonView>().OwnerActorNr == PhotonNetwork.LocalPlayer.ActorNumber).ToList();
+            result = result.Where(player => player?.GetComponent<PhotonView>().OwnerActorNr == PhotonNetwork.LocalPlayer?.ActorNumber).ToList();
         }
 
         return result;
@@ -100,7 +100,7 @@ public class NetworkHelper : MonoBehaviourPunCallbacks
         RefreshPlayerGos();
     }
 
-    public List<PlayerScript> GetMyPlayers(bool? isAlive = null, bool? isAi = null) => GetAllPlayers(isAlive, isAi, myNetwork: true);
+    public List<PlayerScript> GetMyPlayers(bool? isAlive = null, bool? isAi = null) => GetAllPlayers(isAlive:isAlive, isAi:isAi, myNetwork: true);
 
     public PlayerScript GetMyPlayer() => GetMyPlayers(isAi: false).FirstOrDefault();    
 }

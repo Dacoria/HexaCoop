@@ -163,6 +163,16 @@ public class ButtonEvents : HexaEventCallback
                 // todo: dat moet anders -> doel Ability zelf weet of hij extra redenen heeft om wel/niet getoond te worden. Bv max aantal keren een raket per keer
                 var canDoAbilityThisTurn = buttonUpdater.abilityScripts.Single(x => x.Type == abilityType).GetComponent<IAbilityAction>().CanDoAbility(Netw.CurrPlayer());
 
+                if(Settings.UseQueueAbilities && abilityType.IsPickup())
+                {
+                    // heeft pickup abil al gezet in queue
+                    if(Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems.Any(x => x.AbilityType == abilityType))
+                    {
+                        canDoAbilityThisTurn = false;
+                    }
+
+                }
+
                 buttonUpdater.SetAbilityInteractable(abilityType, availableInTurnResult && enoughPointsResult && canDoAbilityThisTurn);
             }
         }

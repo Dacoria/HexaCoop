@@ -21,10 +21,10 @@ public partial class GameHandler : HexaEventCallback
             NetworkAE.instance.StartAbilityQueue(totalAbilitieQueue); // ook voor visueel maken van queue door andere spelers
             playersAbilityQueueDict.Clear();
         }
-        else if (player.IsOnMyNetwork() && Netw.PlayersOnMyNetwork().Any(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork)))
+        else if (player.IsOnMyNetwork() && Netw.PlayersOnMyNetwork(isAlive: true).Any(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork)))
         {
             // AI Speler + sim turns? dan AI speler pakken
-            var playerOnMyNetworkWithoutTurn = Netw.PlayersOnMyNetwork().First(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork));
+            var playerOnMyNetworkWithoutTurn = Netw.PlayersOnMyNetwork(isAlive: true).First(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork));
             NetworkAE.instance.NewPlayerTurn_Sequential(playerOnMyNetworkWithoutTurn);
         }
     }
@@ -69,7 +69,7 @@ public partial class GameHandler : HexaEventCallback
         if (!PhotonNetwork.IsMasterClient) { yield break; }
         yield return Wait4Seconds.Get(waitTime);
 
-        if(!abilityQueueItem.Player.IsAlive)
+        if(!abilityQueueItem.Player.IsAlive || GameStatus == GameStatus.RoundEnded)
         {
             // player kan dood zijn --> in dat geval, geen acties van hem meer
             NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, abilityQueueItem.Hex, abilityQueueItem.AbilityType, abilityQueueItem.Id);
@@ -119,12 +119,15 @@ public partial class GameHandler : HexaEventCallback
         NetworkAE.instance.AllPlayersFinishedTurn();
     }
 
+    private int turnPlayerOrderUpdated;
     public List<PlayerScript> PlayerQueueOrder;
 
     private void SetNewPlayerOrderForSimultaniousTurns()
     {
         if(!PhotonNetwork.IsMasterClient) { return; }
+        if(CurrentTurn == turnPlayerOrderUpdated) { return; }
 
+        turnPlayerOrderUpdated = CurrentTurn; // reden: Local host + AI = meerdere calls.
         var allAliveplayers = NetworkHelper.instance.GetAllPlayers(isAlive: true);
         allAliveplayers.Shuffle();
         NetworkAE.instance.NewSimTurnsPlayOrder(allAliveplayers);
