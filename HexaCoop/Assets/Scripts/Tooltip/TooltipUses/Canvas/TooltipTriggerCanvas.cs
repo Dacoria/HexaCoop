@@ -1,37 +1,26 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class TooltipTriggerCanvas : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public string Header;
     public string Content;
+    public string Header;
 
     private Vector2 PositionMouseOnStartTooltip;
 
     private bool activeTooltip;
 
     public void Update()
-    {        
-        if(Input.GetMouseButtonDown(1))
-        {
-            if (!activeTooltip)
-            {
-                PositionMouseOnStartTooltip = Input.mousePosition;
-                TooltipSystem.instance.Show(Content, Header);
-                activeTooltip = true;
-            }
-            else
-            {
-                StopTooltip();
-            }
-        }
-
+    {
         if(!activeTooltip)
         {
             return;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
             StopTooltip();
         }
@@ -50,7 +39,9 @@ public class TooltipTriggerCanvas : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        
+        PositionMouseOnStartTooltip = Input.mousePosition;
+        TooltipSystem.instance.Show(Content, Header);
+        activeTooltip = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)

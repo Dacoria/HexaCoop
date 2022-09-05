@@ -11,7 +11,7 @@ public static class AbilityExtensions
 
 
     public static bool IsAvailableThisTurn(this AbilityType abilityType, PlayerScript player) => 
-        abilityType == AbilityType.None ? true : player?.TurnCount >= abilityType.GetAvailableFromTurn();
+        abilityType == AbilityType.None ? true : player.TurnCount >= abilityType.GetAvailableFromTurn();
 
     public static bool IsAvailableThisTurn(this AbilityType abilityType)
     {
@@ -25,7 +25,7 @@ public static class AbilityExtensions
     public static bool HaveEnoughPoints(this AbilityType abilityType)
     {
         var player = Netw.CurrPlayer();
-        return player?.CurrentAP >= abilityType.GetCost();
+        return player.CurrentAP >= abilityType.GetCost();
     }
 
     public static bool IsAvailable(this AbilityType abilityType, PlayerScript player) => 

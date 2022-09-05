@@ -84,8 +84,7 @@ public class TooltipSystem : MonoBehaviour
 
     private IEnumerator FadeOut()
     {
-        var initialA = (Tooltip.BackGround.color.a * fadeOutTime);
-        for (float a = initialA; a >= 0; a = a - Time.deltaTime)
+        for (float a = (Tooltip.BackGround.color.a * fadeOutTime); a >= 0; a -= Time.deltaTime)
         {
             SetTooltipAlphaColor(a / fadeOutTime);
             yield return null;
@@ -96,6 +95,7 @@ public class TooltipSystem : MonoBehaviour
     private IEnumerator FadeIn()
     {
         var initialA = Tooltip.BackGround.color.a;
+
         for (float a = 0; a <= fadeInTime; a += Time.deltaTime)
         {
             SetTooltipAlphaColor(Math.Min(1, initialA + (a / fadeInTime)));
