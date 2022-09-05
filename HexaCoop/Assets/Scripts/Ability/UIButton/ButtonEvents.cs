@@ -166,7 +166,7 @@ public class ButtonEvents : HexaEventCallback
                 if(Settings.UseQueueAbilities && abilityType.IsPickup())
                 {
                     // heeft pickup abil al gezet in queue
-                    if(Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems.Any(x => x.AbilityType == abilityType))
+                    if(Netw.CurrPlayer() != null && Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems.Any(x => x.AbilityType == abilityType))
                     {
                         canDoAbilityThisTurn = false;
                     }
