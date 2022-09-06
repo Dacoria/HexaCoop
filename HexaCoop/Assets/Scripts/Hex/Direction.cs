@@ -44,7 +44,7 @@ public static class Direction
     public static List<Vector3Int> GetDirectionsList(Hex hex) => GetDirectionsList(hex.HexCoordinates.z);
     public static Dictionary<DirectionType, Vector3Int> GetDirectionsDict(Vector3Int coor) => GetDirectionsDict(coor.z);
 
-    public static List<DirectionType> DeriveDirections(this Vector3Int hexFromCoor, Vector3Int hexToCoor, int steps = 1)
+    public static List<DirectionType> DeriveDirections(this Vector3Int hexFromCoor, Vector3Int hexToCoor)
     {
         if(hexFromCoor == hexToCoor) { return new List<DirectionType>(); }
 

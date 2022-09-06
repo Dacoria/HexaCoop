@@ -8,18 +8,24 @@ public class NetwHandleArtilleryAbility : HexaEventCallback, IAbilityNetworkHand
             target.SetFogOnHex(false); // local!
         }
 
-        var directionOffset = target.HexCoordinates - playerDoingAbility.CurrentHexTile.HexCoordinates;
-        var dirIndex = Direction.GetDirectionsList(playerDoingAbility.CurrentHexTile).FindIndex(x => x == directionOffset);
 
+        var direction = playerDoingAbility.CurrentHexTile.HexCoordinates.DeriveDirections(target.HexCoordinates)[0];
         var waitTimeToSummonRocket = 0f;
-        
-        while(target != null)
-        {
-            StartCoroutine(MonoHelper.instance.SummonFallingDamageObject(waitTimeToSummonRocket, target, playerDoingAbility, DamageObjectType.Rocket));
-            waitTimeToSummonRocket += 0.2f;
 
-            var newOffset = Direction.GetDirectionsList(target)[dirIndex];
-            target = HexGrid.instance.GetTileAt(target.HexCoordinates + newOffset);
+        var newTile = playerDoingAbility.CurrentHexTile;
+
+        while (true)
+        {
+            var newCoor = Direction.GetNewHexCoorFromDirection(newTile.HexCoordinates, direction);
+            newTile = HexGrid.instance.GetTileAt(newCoor);
+
+            if (newTile == null)
+            {
+                break;
+            }
+
+            StartCoroutine(MonoHelper.instance.SummonFallingDamageObject(waitTimeToSummonRocket, newTile, playerDoingAbility, DamageObjectType.Rocket));
+            waitTimeToSummonRocket += 0.2f;
         }
     }
 }
