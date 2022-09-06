@@ -23,5 +23,6 @@ public class AbilityQueueItemSelectionDisplayScript : MonoBehaviour
     }
 
     // click on item
-    public void RemoveAbility() => ActionEvents.RemoveQueueItem?.Invoke(Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().Get(QueueItemId));
+    //public void RemoveAbility() => ActionEvents.RemoveQueueItem?.Invoke(Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().Get(QueueItemId));
+    public void RemoveAbility() { }
 }

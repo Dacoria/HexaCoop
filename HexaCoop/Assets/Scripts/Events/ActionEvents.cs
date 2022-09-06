@@ -34,7 +34,7 @@ public static class ActionEvents
     public static Action<Animator> DieAnimationFinished;
     public static Action<GameObject> AttackAnimationFinished;
 
-    public static Action<AbilityQueueItem> RemoveQueueItem;
+    public static Action<List<AbilityQueueItem>> RemoveQueueItems;
     public static Action<PlayerScript, Hex, AbilityType> PlayerAbilityQueue;
 
 

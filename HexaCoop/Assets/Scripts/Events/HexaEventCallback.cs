@@ -31,7 +31,7 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnDieAnimationFinished")) ActionEvents.DieAnimationFinished += OnDieAnimationFinished;
         if (IsOverwritten("OnAttackAnimationFinished")) ActionEvents.AttackAnimationFinished += OnAttackAnimationFinished;
         if (IsOverwritten("OnPlayerScriptHasTeleported")) ActionEvents.PlayerHasTeleported += OnPlayerScriptHasTeleported;
-        if (IsOverwritten("OnRemoveQueueItem")) ActionEvents.RemoveQueueItem += OnRemoveQueueItem;
+        if (IsOverwritten("OnRemoveQueueItems")) ActionEvents.RemoveQueueItems += OnRemoveQueueItems;
         if (IsOverwritten("OnStartAbilityQueue")) ActionEvents.StartAbilityQueue += OnStartAbilityQueue;
         if (IsOverwritten("OnPlayerDied")) ActionEvents.PlayerDied += OnPlayerDied;
         if (IsOverwritten("OnNewSimTurnsPlayOrder")) ActionEvents.NewSimTurnsPlayOrder += OnNewSimTurnsPlayOrder;        
@@ -64,7 +64,7 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnDieAnimationFinished")) ActionEvents.DieAnimationFinished -= OnDieAnimationFinished;
         if (IsOverwritten("OnAttackAnimationFinished")) ActionEvents.AttackAnimationFinished -= OnAttackAnimationFinished;
         if (IsOverwritten("OnPlayerScriptHasTeleported")) ActionEvents.PlayerHasTeleported -= OnPlayerScriptHasTeleported;
-        if (IsOverwritten("OnRemoveQueueItem")) ActionEvents.RemoveQueueItem -= OnRemoveQueueItem;
+        if (IsOverwritten("OnRemoveQueueItems")) ActionEvents.RemoveQueueItems -= OnRemoveQueueItems;
         if (IsOverwritten("OnStartAbilityQueue")) ActionEvents.StartAbilityQueue -= OnStartAbilityQueue;
         if (IsOverwritten("OnPlayerDied")) ActionEvents.PlayerDied -= OnPlayerDied;
         if (IsOverwritten("OnNewSimTurnsPlayOrder")) ActionEvents.NewSimTurnsPlayOrder -= OnNewSimTurnsPlayOrder;
@@ -73,7 +73,7 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit -= OnPlayerAttackHit;
         if (IsOverwritten("OnEnemyMovingFinished")) ActionEvents.EnemyMovingFinished -= OnEnemyMovingFinished;
         if (IsOverwritten("OnPlayerMovingFinished")) ActionEvents.PlayerMovingFinished -= OnPlayerMovingFinished;
-    }
+    }  
 
     protected virtual void OnGridLoaded() { }    
     protected virtual void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) { }
@@ -99,7 +99,7 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnPlayerMovingFinished(PlayerScript player) { }
     protected virtual void OnEnemyMovingFinished(EnemyScript enemy) { }
     protected virtual void OnPlayerAttackHit(PlayerScript player, Hex hex, int damage) { }
-    protected virtual void OnRemoveQueueItem(AbilityQueueItem queueItem) { }
+    protected virtual void OnRemoveQueueItems(List<AbilityQueueItem> queueItems) { }
     protected virtual void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueueItems) { }
     protected virtual void OnPlayerDied(PlayerScript player) { }
     protected virtual void OnNewSimTurnsPlayOrder(List<PlayerScript> players) { }

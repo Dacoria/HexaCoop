@@ -30,11 +30,17 @@ public class PlayerActionPoints : HexaEventCallback
         }
     }
 
-    protected override void OnRemoveQueueItem(AbilityQueueItem queueItem)
+    protected override void OnRemoveQueueItems(List<AbilityQueueItem> queueItems)
     {
-        if (Settings.UseQueueAbilities && queueItem.Player == playerScript)
+        if (Settings.UseQueueAbilities)
         {
-            IncreaseAP(queueItem.AbilityType.GetCost());
+            foreach (var queueItem in queueItems)
+            {
+                if (queueItem.Player == playerScript)
+                {
+                    IncreaseAP(queueItem.AbilityType.GetCost());
+                }
+            }
         }
     }
 

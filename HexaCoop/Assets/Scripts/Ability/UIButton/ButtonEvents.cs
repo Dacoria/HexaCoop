@@ -7,6 +7,8 @@ public class ButtonEvents : HexaEventCallback
 {
     [ComponentInject] private ButtonUpdater buttonUpdater;
     [ComponentInject] private EndTurnButtonScript endTurnButtonScript;
+
+    private int MaxAbilsInQueuePerTurn = 6;
     
     private void Start()
     {
@@ -97,7 +99,7 @@ public class ButtonEvents : HexaEventCallback
         StartCoroutine(UpdatePlayerAbilityButtons());
     }
 
-    protected override void OnRemoveQueueItem(AbilityQueueItem queueItem)
+    protected override void OnRemoveQueueItems(List<AbilityQueueItem> queueItems)
     {
         if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
         if (!Settings.UseQueueAbilities) { return; }
@@ -163,14 +165,25 @@ public class ButtonEvents : HexaEventCallback
                 // todo: dat moet anders -> doel Ability zelf weet of hij extra redenen heeft om wel/niet getoond te worden. Bv max aantal keren een raket per keer
                 var canDoAbilityThisTurn = buttonUpdater.abilityScripts.Single(x => x.Type == abilityType).GetComponent<IAbilityAction>().CanDoAbility(Netw.CurrPlayer());
 
-                if(Settings.UseQueueAbilities && abilityType.IsPickup())
+                if(Settings.UseQueueAbilities)
                 {
-                    // heeft pickup abil al gezet in queue
-                    if(Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems.Any(x => x.AbilityType == abilityType))
+                    if (abilityType.IsPickup())
+                    {
+                        // heeft pickup abil al gezet in queue
+                        if (Netw.CurrPlayer() != null && Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems.Any(x => x.AbilityType == abilityType))
+                        {
+                            canDoAbilityThisTurn = false;
+                        }
+                    }
+                    var currItemsInQueue = Netw.CurrPlayer() == null ? 0 : Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems.Count();
+                    if (currItemsInQueue < abilityType.GetAvailableFromQueuePlace())
                     {
                         canDoAbilityThisTurn = false;
                     }
-
+                    if(currItemsInQueue >= MaxAbilsInQueuePerTurn)
+                    {
+                        canDoAbilityThisTurn = false;
+                    }
                 }
 
                 buttonUpdater.SetAbilityInteractable(abilityType, availableInTurnResult && enoughPointsResult && canDoAbilityThisTurn);

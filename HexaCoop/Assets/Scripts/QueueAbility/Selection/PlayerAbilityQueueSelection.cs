@@ -9,7 +9,7 @@ public class PlayerAbilityQueueSelection : HexaEventCallback
     {
         base.Awake();
 
-        if(!Settings.UseQueueAbilities)
+        if (!Settings.UseQueueAbilities)
         {
             Destroy(this);
         }
@@ -18,7 +18,15 @@ public class PlayerAbilityQueueSelection : HexaEventCallback
     public AbilityQueueItem Get(int queueId) => AbilityQueueItems.Single(x => x.Id == queueId);
 
     protected override void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType abilityType) => AbilityQueueItems.Add(new AbilityQueueItem(player, hex, abilityType));
-    protected override void OnRemoveQueueItem(AbilityQueueItem queueItem) => AbilityQueueItems.Remove(AbilityQueueItems.FirstOrDefault(x => x.Id == queueItem.Id));     
+    protected override void OnRemoveQueueItems(List<AbilityQueueItem> queueItems)
+    {
+        for (int i = queueItems.Count - 1; i >= 0 ; i--)
+        {
+            var queueItem = queueItems[i];
+            AbilityQueueItems.Remove(AbilityQueueItems.FirstOrDefault(x => x.Id == queueItem.Id));
+        }
+    }
+
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) => AbilityQueueItems.RemoveAll(x => true);
     protected override void OnNewPlayerTurn(PlayerScript player) => AbilityQueueItems.RemoveAll(x => true);
 }

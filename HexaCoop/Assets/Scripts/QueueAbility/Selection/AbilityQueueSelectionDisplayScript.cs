@@ -6,8 +6,10 @@ public class AbilityQueueSelectionDisplayScript : HexaEventCallback
     // PRIVE QUEUE VAN USER! (geen netwerk!)
 
     public AbilityQueueItemSelectionDisplayScript QueueAbilityDisplayPrefab;
-
+    public ClearQueueDisplayScript ClearQueuePrefab;
+    
     private List<AbilityQueueItemSelectionDisplayScript> AbilityDisplayGOs = new List<AbilityQueueItemSelectionDisplayScript>();
+    private ClearQueueDisplayScript ClearQueueGo;
 
     private void Start()
     {
@@ -18,7 +20,7 @@ public class AbilityQueueSelectionDisplayScript : HexaEventCallback
     }
 
     protected override void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType abilityType) => StartCoroutine(UpdateQueue(player));
-    protected override void OnRemoveQueueItem(AbilityQueueItem queueItem) => StartCoroutine(UpdateQueue(Netw.CurrPlayer()));
+    protected override void OnRemoveQueueItems(List<AbilityQueueItem> queueItems) => StartCoroutine(UpdateQueue(Netw.CurrPlayer()));
     protected override void OnNewPlayerTurn(PlayerScript player)
     {
         if(player.IsOnMyNetwork())
@@ -48,6 +50,11 @@ public class AbilityQueueSelectionDisplayScript : HexaEventCallback
         yield return Wait4Seconds.Get(0.1f);
         DestroyOldQueueItems();
         CreateNewQueueItems(player, interactable);
+
+        if(AbilityDisplayGOs.Count > 0)
+        {
+            ClearQueueGo = Instantiate(ClearQueuePrefab, transform); 
+        }
     }
 
     private void CreateNewQueueItems(PlayerScript player, bool? interactable = null)
@@ -72,11 +79,13 @@ public class AbilityQueueSelectionDisplayScript : HexaEventCallback
         {
             RemoveAbilityGO(AbilityDisplayGOs[i]);
         }
+        Destroy(ClearQueueGo?.gameObject);
+        ClearQueueGo = null;
     }
 
     private void RemoveAbilityGO(AbilityQueueItemSelectionDisplayScript item)
     {
         Destroy(item.gameObject);
-        AbilityDisplayGOs.Remove(item);
+        AbilityDisplayGOs.Remove(item);        
     }
 }
