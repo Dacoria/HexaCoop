@@ -68,6 +68,7 @@ MonoBehaviour:
   - RPC_AE_PlayerAbilityNotExecuted
   - RPC_AE_PlayerDied
   - RPC_AE_NewSimTurnsPlayOrder
+  - RPC_AE_UnitMovingFinished
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

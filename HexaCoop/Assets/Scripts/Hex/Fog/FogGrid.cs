@@ -39,8 +39,7 @@ public class FogGrid : HexaEventCallback
         }
     }
 
-    protected override void OnPlayerMovingFinished(PlayerScript player) => UpdatePlayerAfterNewPosInTurn(player);
-    protected override void OnPlayerScriptHasTeleported(PlayerScript player, Hex hex) => UpdatePlayerAfterNewPosInTurn(player);
+    protected override void OnPlayerMovingFinished(PlayerScript player, Hex hexMovedTo) => UpdatePlayerAfterNewPosInTurn(player);
 
     private void UpdatePlayerAfterNewPosInTurn(PlayerScript player)
     {

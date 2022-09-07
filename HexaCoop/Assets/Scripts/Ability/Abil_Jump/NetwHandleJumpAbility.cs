@@ -8,6 +8,6 @@ public class NetwHandleJumpAbility : HexaEventCallback, IAbilityNetworkHandler
 
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
     {
-        gameObject.GetSet<UnitMovement>().GoToDestination(target, 1.3f);
+        gameObject.GetAdd<UnitMovement>().GoToDestination(target, 1.3f);
     }   
 }

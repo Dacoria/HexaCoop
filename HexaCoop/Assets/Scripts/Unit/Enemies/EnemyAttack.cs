@@ -14,7 +14,7 @@
     {
         if (enemy.Id == enemyScript.Id)
         {
-            var unitAttack = gameObject.GetSet<UnitAttack>();
+            var unitAttack = gameObject.GetAdd<UnitAttack>();
             unitAttack.AttackUnitOnHex(player.CurrentHexTile);
         }
     }

@@ -82,7 +82,7 @@ public static class StaticHelper
         return result;
     }
 
-    public static T GetSet<T>(this GameObject go) where T : MonoBehaviour
+    public static T GetAdd<T>(this GameObject go) where T : MonoBehaviour
     {
         var component = go.GetComponent<T>() ?? go.AddComponent<T>();
         return component;

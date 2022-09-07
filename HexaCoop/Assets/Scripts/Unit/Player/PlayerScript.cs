@@ -23,7 +23,7 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUn
 
     public int Index;
     public void SetCurrentHexTile(Hex hex) => CurrentHexTile = hex;
-    public void MoveToNewDestination(Hex tile) => gameObject.GetSet<UnitMovement>().GoToDestination(tile, 2f);
+    public void MoveToNewDestination(Hex tile) => gameObject.GetAdd<UnitMovement>().GoToDestination(tile, 2f);
     public int GetVision() => this.baseVisionRange + GetComponents<PlayerExtraVisionRangeScript>().Sum(x => x.AdditionalRange);
     public bool CanDoAbility(Hex hex, AbilityType abilityType) => playerAbilityHandler.CanDoAbility(hex, abilityType);
 
@@ -62,4 +62,6 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUn
         PlayerName = name;
         PlayerModel.gameObject.SetActive(false); // begin met onzichtbaar model
     }
+
+    
 }

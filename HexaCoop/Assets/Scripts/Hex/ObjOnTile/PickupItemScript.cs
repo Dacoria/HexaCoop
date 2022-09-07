@@ -1,12 +1,12 @@
 public class PickupItemScript : HexaEventCallback
 {
-    [ComponentInject] private Hex hex;
+    [ComponentInject] private Hex hexOfPickupItem;
 
-    protected override void OnPlayerMovingFinished(PlayerScript player)
+    protected override void OnPlayerMovingFinished(PlayerScript player, Hex hexMovedTo)
     {
-        if (player.CurrentHexTile == hex)
+        if (hexMovedTo == hexOfPickupItem)
         {
-            switch (hex.HexObjectOnTileType)
+            switch (hexOfPickupItem.HexObjectOnTileType)
             {
                 case HexObjectOnTileType.Artillery_Pickup:
                     player.GetComponent<PlayerAbilityPickups>().AddPickupAbility(AbilityType.Artillery);

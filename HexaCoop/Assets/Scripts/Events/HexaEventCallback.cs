@@ -85,7 +85,7 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId) { }
     protected virtual void OnPlayerAbilityNotExecuted(PlayerScript player, Hex hex, AbilityType abilityType, int queueId) { }
     protected virtual void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType abilityType) { }
-    protected virtual void OnUnitMovingFinished(IUnit unit) { }
+    protected virtual void OnUnitMovingFinished(IUnit unit, Hex hexMovedTo) { }
     protected virtual void OnPlayerDamageObjectHitTile(PlayerScript player, Hex hex, DamageObjectType doType) { }
     protected virtual void OnPlayerBeartrapHitPlayer(PlayerScript playerOwnsTrap, Hex hex, PlayerScript playerHit) { }
     protected virtual void OnUnitAttackHit(IUnit player, Hex hexWithTargetHit, int damage) { }
@@ -96,8 +96,8 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnDieAnimationFinished(Animator animator) { }
     protected virtual void OnAttackAnimationFinished(GameObject animatorGo) { }
     protected virtual void OnPlayerScriptHasTeleported(PlayerScript player, Hex hex) { }
-    protected virtual void OnPlayerMovingFinished(PlayerScript player) { }
-    protected virtual void OnEnemyMovingFinished(EnemyScript enemy) { }
+    protected virtual void OnPlayerMovingFinished(PlayerScript player, Hex hexMovedTo) { }
+    protected virtual void OnEnemyMovingFinished(EnemyScript enemy, Hex hexMovedTo) { }
     protected virtual void OnPlayerAttackHit(PlayerScript player, Hex hex, int damage) { }
     protected virtual void OnRemoveQueueItems(List<AbilityQueueItem> queueItems) { }
     protected virtual void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueueItems) { }

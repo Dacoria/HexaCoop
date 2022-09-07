@@ -66,10 +66,10 @@ public class ResetCameraPosition : HexaEventCallback
         }
 
         // geleidelijk bewegen + draaien naar target plek+rot
-        var lerpMovement = gameObject.GetSet<LerpMovement>();
+        var lerpMovement = gameObject.GetAdd<LerpMovement>();
         lerpMovement.MoveToDestination(endPosition: targetPos, duration: 0.6f, destroyGoOnFinished: false);
 
-        var lerpRotation = gameObject.GetSet<LerpRotation>();
+        var lerpRotation = gameObject.GetAdd<LerpRotation>();
         lerpRotation.RotateTowardsAngle(endRotation: targetRot, duration: 0.6f, destroyGoOnFinished: false);
     }
 }

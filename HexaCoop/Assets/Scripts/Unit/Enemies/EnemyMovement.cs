@@ -18,7 +18,7 @@ public class EnemyMovement : HexaEventCallback
         }
     }
 
-    protected override void OnEnemyMovingFinished(EnemyScript enemy)
+    protected override void OnEnemyMovingFinished(EnemyScript enemy, Hex hex)
     {
         if (enemy.Id == enemyScript.Id)
         {

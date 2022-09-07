@@ -17,7 +17,7 @@ public class UnitAttack : HexaEventCallback
     private void RotateTowardsDestination(Vector3 endPosition)
     {
         var targetDirection = endPosition - transform.position;
-        var lerpRotation = gameObject.GetSet<LerpRotation>();
+        var lerpRotation = gameObject.GetAdd<LerpRotation>();
         lerpRotation.RotateTowardsDestination(endPosition, callbackOnFinished: StartAttack);
     }
 

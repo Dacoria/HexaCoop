@@ -43,7 +43,7 @@ public class TooltipUIHandler : HexaEventCallback
 
     private void SetOutline()
     {
-        OutlineComponent = gameObject.GetSet<Outline>();
+        OutlineComponent = gameObject.GetAdd<Outline>();
         OutlineComponent.OutlineColor = new Color(23 / 255f, 171 / 255f, 178 / 255f);
         OutlineComponent.OutlineWidth = 6.5f;
     }

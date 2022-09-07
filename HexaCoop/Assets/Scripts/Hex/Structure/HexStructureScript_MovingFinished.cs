@@ -2,9 +2,9 @@ using UnityEngine;
 
 public partial class HexStructureScript: HexaEventCallback
 {
-    protected override void OnPlayerMovingFinished(PlayerScript player)
+    protected override void OnPlayerMovingFinished(PlayerScript player, Hex hexMovedTo)
     {
-        if(player.CurrentHexTile == hex)
+        if(hexMovedTo == hex)
         {
             switch(hex.HexStructureType)
             {
@@ -22,7 +22,7 @@ public partial class HexStructureScript: HexaEventCallback
                 case HexStructureType.Crystal:
 
                     // text update gaat via crystals reached script
-                    var crystalReachedScript = player.gameObject.GetSet<PlayerCrystalsReached>();
+                    var crystalReachedScript = player.gameObject.GetAdd<PlayerCrystalsReached>();
                     crystalReachedScript.ReachedCrystal(hex);
                     break;
 

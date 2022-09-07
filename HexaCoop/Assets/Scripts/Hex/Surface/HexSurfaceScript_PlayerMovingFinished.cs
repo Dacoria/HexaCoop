@@ -2,9 +2,9 @@ using UnityEngine;
 
 public partial class HexSurfaceScript : HexaEventCallback
 {
-    protected override void OnPlayerMovingFinished(PlayerScript player)
+    protected override void OnPlayerMovingFinished(PlayerScript player, Hex hexMovedTo)
     {
-        if (player.CurrentHexTile == hex)
+        if (player.CurrentHexTile == hexMovedTo)
         {
             switch (hex.HexSurfaceType)
             {

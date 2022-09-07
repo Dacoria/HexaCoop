@@ -23,11 +23,16 @@ public static class ActionEvents
     public static Action<EnemyScript, PlayerScript> EnemyAttack;
     public static Action<PlayerScript> PlayerDied;
     public static Action<List<PlayerScript>> NewSimTurnsPlayOrder;
+    public static Action<IUnit, Hex> UnitMovingFinished;
+
+
+    // afgeleiden
+    public static Action<PlayerScript, Hex> PlayerMovingFinished;
+    public static Action<EnemyScript, Hex> EnemyMovingFinished;
 
     // local
     public static Action GridLoaded;
 
-    public static Action<IUnit> UnitMovingFinished;
     public static Action<IUnit, Hex, int> UnitAttackHit;
     public static Action<PlayerScript, Hex> PlayerHasTeleported;
 
@@ -39,9 +44,7 @@ public static class ActionEvents
 
 
 
-    // afgeleiden
-    public static Action<PlayerScript> PlayerMovingFinished;
-    public static Action<EnemyScript> EnemyMovingFinished;
+    
     public static Action<PlayerScript, Hex, int> PlayerAttackHit;
     public static Action<EnemyScript, Hex, int> EnemyAttackHit;
 }

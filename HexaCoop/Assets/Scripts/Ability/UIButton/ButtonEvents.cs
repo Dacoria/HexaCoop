@@ -121,7 +121,7 @@ public class ButtonEvents : HexaEventCallback
         UpdateEndTurnButton(interactable: true);
     }
 
-    protected override void OnUnitMovingFinished(IUnit unit)
+    protected override void OnUnitMovingFinished(IUnit unit, Hex hex)
     {
         if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
         StartCoroutine(UpdatePlayerAbilityButtons());

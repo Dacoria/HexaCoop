@@ -32,9 +32,9 @@ public class BearTrapScript : HexaEventCallback
         turnPlaced = GameHandler.instance.CurrentTurn;
     }
 
-    protected override void OnPlayerMovingFinished(PlayerScript playerMoved)
+    protected override void OnPlayerMovingFinished(PlayerScript playerMoved, Hex hexMovedTo)
     {
-        if(playerMoved.IsOnMyNetwork() && playerMoved.CurrentHexTile.HexCoordinates == Hex.HexCoordinates)
+        if(playerMoved.IsOnMyNetwork() && hexMovedTo.HexCoordinates == Hex.HexCoordinates)
         {
             ActivateBearTrap(playerMoved);
         }

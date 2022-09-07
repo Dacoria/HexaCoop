@@ -46,7 +46,7 @@ public class TemperaryMountainScript : HexaEventCallback
         if (mountainGo != null)
         {
             var mountainCopy = Instantiate(mountainGo, mountainGo.transform.position, Quaternion.identity);
-            var lerpMovement = mountainCopy.GetSet<LerpMovement>();
+            var lerpMovement = mountainCopy.GetAdd<LerpMovement>();
             lerpMovement.MoveDown(distance: 2, duration: 2, destroyGoOnFinished: true);
         }
 

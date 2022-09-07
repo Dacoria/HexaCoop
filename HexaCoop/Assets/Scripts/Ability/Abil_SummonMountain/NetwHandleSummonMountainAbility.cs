@@ -31,7 +31,7 @@ public class NetwHandleSummonMountainAbility : HexaEventCallback, IAbilityNetwor
     private void InitMountainAppearFromGround(PlayerScript player, Hex target)
     {
         var mountainGo = Utils.GetStructureGoFromHex(target);
-        var lerpScript = mountainGo.GetSet<LerpMovement>();
+        var lerpScript = mountainGo.GetAdd<LerpMovement>();
         lerpScript.AppearFromDown(distance: 1.8f, duration: 1f);
 
         var temperaryMountainScript = target.gameObject.AddComponent<TemperaryMountainScript>();

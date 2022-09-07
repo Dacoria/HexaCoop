@@ -78,5 +78,5 @@ public class EnemyScript : HexaEventCallback, IUnit
     }
 
     public void SetVisible(bool isVisible) => modelGo.SetActive(isVisible);
-    public void MoveToNewDestination(Hex tile) => gameObject.GetSet<UnitMovement>().GoToDestination(tile, 1);
+    public void MoveToNewDestination(Hex tile) => gameObject.GetAdd<UnitMovement>().GoToDestination(tile, 1);
 }

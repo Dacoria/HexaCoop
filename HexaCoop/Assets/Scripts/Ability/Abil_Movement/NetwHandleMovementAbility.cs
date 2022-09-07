@@ -10,11 +10,11 @@ public class NetwHandleMovementAbility : HexaEventCallback, IAbilityNetworkHandl
     {
         if (target.HasUnit())
         {
-            gameObject.GetSet<UnitAttack>().AttackUnitOnHex(target);
+            gameObject.GetAdd<UnitAttack>().AttackUnitOnHex(target);
         }
         else
         {
-            gameObject.GetSet<UnitMovement>().GoToDestination(target, 1.3f);
+            gameObject.GetAdd<UnitMovement>().GoToDestination(target, 1.3f);
         }
     }   
 }
