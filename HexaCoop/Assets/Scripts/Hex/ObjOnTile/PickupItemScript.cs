@@ -9,14 +9,20 @@ public class PickupItemScript : HexaEventCallback
             switch (hexOfPickupItem.HexObjectOnTileType)
             {
                 case HexObjectOnTileType.Artillery_Pickup:
-                    player.GetComponent<PlayerAbilityPickups>().AddPickupAbility(AbilityType.Artillery);
-                    Destroy(gameObject);
+                    PickupAbility(player, hexMovedTo, AbilityType.Artillery);
                     break;
                 case HexObjectOnTileType.MeteorStrike_Pickup:
-                    player.GetComponent<PlayerAbilityPickups>().AddPickupAbility(AbilityType.MeteorStrike);
-                    Destroy(gameObject);
+                    PickupAbility(player, hexMovedTo, AbilityType.MeteorStrike);                    
                     break;
             }
         }
+    }
+
+    private void PickupAbility(PlayerScript player, Hex hexMovedTo, AbilityType ability)
+    {
+        player.GetComponent<PlayerAbilityPickups>().AddPickupAbility(ability);
+        ActionEvents.AbilityPickedUp?.Invoke(player, hexMovedTo, ability);
+
+        Destroy(gameObject);
     }
 }

@@ -26,7 +26,10 @@ public class ButtonUpdater : MonoBehaviour
     {
         abilityScripts.Single(x => x.Type == type).Button.interactable = value;
 
-        if(!value) { AbilitySelectionInProgress = false; }
+        if(!value) 
+        { 
+            AbilitySelectionInProgress = false; 
+        }
     }
 
     public void SetToUnselected(AbilityType type)

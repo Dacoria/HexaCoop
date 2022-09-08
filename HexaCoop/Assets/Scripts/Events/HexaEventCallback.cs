@@ -34,7 +34,8 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnRemoveQueueItems")) ActionEvents.RemoveQueueItems += OnRemoveQueueItems;
         if (IsOverwritten("OnStartAbilityQueue")) ActionEvents.StartAbilityQueue += OnStartAbilityQueue;
         if (IsOverwritten("OnPlayerDied")) ActionEvents.PlayerDied += OnPlayerDied;
-        if (IsOverwritten("OnNewSimTurnsPlayOrder")) ActionEvents.NewSimTurnsPlayOrder += OnNewSimTurnsPlayOrder;        
+        if (IsOverwritten("OnNewSimTurnsPlayOrder")) ActionEvents.NewSimTurnsPlayOrder += OnNewSimTurnsPlayOrder;
+        if (IsOverwritten("OnAbilityPickedUp")) ActionEvents.AbilityPickedUp += OnAbilityPickedUp;
 
         if (IsOverwritten("OnEnemyAttackHit")) ActionEvents.EnemyAttackHit += OnEnemyAttackHit;
         if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit += OnPlayerAttackHit;
@@ -68,12 +69,13 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnStartAbilityQueue")) ActionEvents.StartAbilityQueue -= OnStartAbilityQueue;
         if (IsOverwritten("OnPlayerDied")) ActionEvents.PlayerDied -= OnPlayerDied;
         if (IsOverwritten("OnNewSimTurnsPlayOrder")) ActionEvents.NewSimTurnsPlayOrder -= OnNewSimTurnsPlayOrder;
+        if (IsOverwritten("OnAbilityPickedUp")) ActionEvents.AbilityPickedUp -= OnAbilityPickedUp;
 
         if (IsOverwritten("OnEnemyAttackHit")) ActionEvents.EnemyAttackHit -= OnEnemyAttackHit;
         if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit -= OnPlayerAttackHit;
         if (IsOverwritten("OnEnemyMovingFinished")) ActionEvents.EnemyMovingFinished -= OnEnemyMovingFinished;
         if (IsOverwritten("OnPlayerMovingFinished")) ActionEvents.PlayerMovingFinished -= OnPlayerMovingFinished;
-    }  
+    }
 
     protected virtual void OnGridLoaded() { }    
     protected virtual void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) { }
@@ -103,6 +105,8 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueueItems) { }
     protected virtual void OnPlayerDied(PlayerScript player) { }
     protected virtual void OnNewSimTurnsPlayOrder(List<PlayerScript> players) { }
+    protected virtual void OnAbilityPickedUp(PlayerScript player, Hex hex, AbilityType abilityType) { }
+
 
 
     private bool IsOverwritten(string functionName)

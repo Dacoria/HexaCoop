@@ -43,8 +43,9 @@ public static class ActionEvents
     public static Action<PlayerScript, Hex, AbilityType> PlayerAbilityQueue;
 
 
+    public static Action<PlayerScript, Hex, AbilityType> AbilityPickedUp;
 
-    
+
     public static Action<PlayerScript, Hex, int> PlayerAttackHit;
     public static Action<EnemyScript, Hex, int> EnemyAttackHit;
 }

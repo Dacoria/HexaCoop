@@ -1,8 +1,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
-public class ButtonAbilityDisplay : MonoBehaviour
+public class ButtonAbilityDisplay : HexaEventCallback
 {
     public AbilityType Type;
     [ComponentInject] private TMP_Text costText;
@@ -16,9 +17,9 @@ public class ButtonAbilityDisplay : MonoBehaviour
     public Image ImageAbility;
     private Sprite buttonNotPressed;
 
-    private void Awake()
+    private new void Awake()
     {
-        this.ComponentInject();
+        base.Awake();
         ImageAbility = this.GetComponentOnlyInDirectChildren<Image>();
         this.buttonNotPressed = imageButton.sprite;
     }
@@ -43,9 +44,18 @@ public class ButtonAbilityDisplay : MonoBehaviour
         }
     }
 
+    protected override void OnNewPlayerTurn(PlayerScript player)
+    {
+        //RefreshPickupAbility
+        var pickupsOfPlayer = player.GetComponent<PlayerAbilityPickups>();
+        hasPickupAbility = pickupsOfPlayer.HasPickupAbility(Type);
+    }
+
+    private bool hasPickupAbility;
+
     private void Update()
     {
-        if(Type.IsPickup() && !Button.interactable)
+        if(!hasPickupAbility && Type.IsPickup() && !Button.interactable)
         {
             canvasGroup.alpha = 0;
             return;
