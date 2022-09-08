@@ -7,11 +7,12 @@ public class NetwHandleMeteorStrikeAbility : HexaEventCallback, IAbilityNetworkH
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex selectedHex)
     {
         var allTiles = HexGrid.instance.GetAllTiles();
+        var allNonWaterTiles = allTiles.Where(x => !x.HexSurfaceType.IsObstacle()).ToList();
 
         playerDoingAbility.gameObject.AddComponent<PlayerFireImmumeScript>();
 
-        allTiles.Shuffle();
-        var targets = allTiles.Where(x => x != playerDoingAbility.CurrentHexTile).Take(10);
+        allNonWaterTiles.Shuffle();
+        var targets = allNonWaterTiles.Where(x => x != playerDoingAbility.CurrentHexTile).Take(8);
 
         var waitTimeToSummonMeteorStrike = 0f;
         

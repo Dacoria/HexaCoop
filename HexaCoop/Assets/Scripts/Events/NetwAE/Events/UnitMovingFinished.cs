@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class NetworkAE : MonoBehaviour
 {
-    public void UnitMovingFinished(IUnit unit, Hex hexTile)
+    public void UnitMovingFinished__NON_NETWORK(IUnit unit, Hex hexTile)
     {
         photonView.RPC("RPC_AE_UnitMovingFinished", RpcTarget.All, unit.Id, (Vector3)hexTile.HexCoordinates);
     }   
