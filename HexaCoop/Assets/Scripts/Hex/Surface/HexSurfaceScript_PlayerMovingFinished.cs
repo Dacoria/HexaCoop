@@ -4,7 +4,7 @@ public partial class HexSurfaceScript : HexaEventCallback
 {
     protected override void OnPlayerMovingFinished(PlayerScript player, Hex hexMovedTo)
     {
-        if (player.CurrentHexTile == hexMovedTo)
+        if (hex == hexMovedTo)
         {
             switch (hex.HexSurfaceType)
             {

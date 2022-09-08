@@ -1,10 +1,13 @@
 public partial class HexStructureScript: HexaEventCallback
 {
-    protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hex, DamageObjectType doType)
+    protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hexTileHit, DamageObjectType doType)
     {
-        if (hex.HexStructureType == HexStructureType.Mountain)
+        if (hex == hexTileHit)
         {
-            DestroyMountain(hex);
+            if (hex.HexStructureType == HexStructureType.Mountain)
+            {
+                DestroyMountain(hex);
+            }
         }
     }
 

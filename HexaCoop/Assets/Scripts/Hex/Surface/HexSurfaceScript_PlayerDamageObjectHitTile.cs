@@ -2,11 +2,14 @@ using UnityEngine;
 
 public partial class HexSurfaceScript : HexaEventCallback
 {
-    protected override void OnPlayerDamageObjectHitTile(PlayerScript player, Hex hex, DamageObjectType doType)
+    protected override void OnPlayerDamageObjectHitTile(PlayerScript player, Hex hexTileHit, DamageObjectType doType)
     {
-        if(doType == DamageObjectType.MeteorStrike)
+        if (hex == hexTileHit)
         {
-            hex.ChangeHexSurfaceType(HexSurfaceType.Magma);
+            if (doType == DamageObjectType.MeteorStrike)
+            {
+                hex.ChangeHexSurfaceType(HexSurfaceType.Magma);
+            }
         }
     }
 }
