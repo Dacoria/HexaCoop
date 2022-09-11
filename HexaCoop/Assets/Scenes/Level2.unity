@@ -1998,6 +1998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowOnMobile: 0
+  AlwaysShow: 0
 --- !u!225 &160928230
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -19171,6 +19172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowOnMobile: 1
+  AlwaysShow: 0
 --- !u!225 &1580325325
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -20853,6 +20855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowOnMobile: 1
+  AlwaysShow: 0
 --- !u!225 &1743758830
 CanvasGroup:
   m_ObjectHideFlags: 0

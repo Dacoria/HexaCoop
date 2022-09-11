@@ -7,8 +7,8 @@ public class MobileMoveController : MonoBehaviour {
     public SimpleTouchController rightController;
     public Transform headTrans;
 
-    private float speedMovements = 40f;
-    private float speedProgressiveLook = 120f;
+    private float speedMovements = 30f;
+    private float speedProgressiveLook = 100f;
     private Rigidbody _rigidbody;
 
     void Awake()
@@ -23,19 +23,33 @@ public class MobileMoveController : MonoBehaviour {
             return;
         }
 
-        UpdateMove(leftController.GetTouchPosition);
-        UpdateAim(rightController.GetTouchPosition);
+        UpdateMove(leftController.GetTouchPosition, rightController.GetTouchPosition);
+        //UpdateAim(rightController.GetTouchPosition);
 
     }
 
-    private void UpdateMove(Vector2 lTouchPosition)
+    private void UpdateMove(Vector2 lTouchPosition, Vector2 rTouchPosition)
     {
         // move
         var origPosRB = _rigidbody.transform.position;
+
+        // left controller
         _rigidbody.MovePosition(transform.position + (transform.forward * lTouchPosition.y * Time.fixedDeltaTime * speedMovements) +
             (transform.right * lTouchPosition.x * Time.fixedDeltaTime * speedMovements));
-        _rigidbody.position = new Vector3(_rigidbody.position.x, origPosRB.y, _rigidbody.position.z);
-    }
+
+        var resx = _rigidbody.position.x;
+        var resz = _rigidbody.position.z;
+
+        _rigidbody.transform.position = origPosRB;
+
+        // Right controller
+        _rigidbody.MovePosition(transform.position + (transform.forward * rTouchPosition.y * Time.fixedDeltaTime * speedMovements) +
+            (transform.right * rTouchPosition.x * Time.fixedDeltaTime * speedMovements));
+
+
+        // combined result
+        _rigidbody.position = new Vector3(resx, _rigidbody.position.y, resz);
+    }   
 
     void UpdateAim(Vector2 rTouchPosition)
     {

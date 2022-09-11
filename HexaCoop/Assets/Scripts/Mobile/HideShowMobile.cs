@@ -6,6 +6,7 @@ public class HideShowMobile: MonoBehaviour
     [ComponentInject] private CanvasGroup canvasGroup;
 
     public bool ShowOnMobile = false;
+    public bool AlwaysShow = false;
 
     private void Start()
     {
@@ -24,6 +25,10 @@ public class HideShowMobile: MonoBehaviour
     private void UpdateMobShowStatus()
     {
         var show = ShowOnMobile ? MobileShower.IsShowingMobile : !MobileShower.IsShowingMobile;
+        if(AlwaysShow)
+        {
+            show = true;
+        }
 
         canvasGroup.alpha = show ? 1 : 0;
         canvasGroup.interactable = show ? false : true;
