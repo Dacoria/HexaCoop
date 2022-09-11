@@ -6,7 +6,7 @@
     public static bool ShowOnlyPlainHexesBeforeGameStart = false;
     public static bool ShowEverything = true;
 
-    public static string LevelName = Statics.SCENE_LEVEL2;
+    public static string DefaultLevelName = Statics.SCENE_LEVEL2; // let op, kan overschreven worden uit level load UI
     public static bool ShowPunMcButtons = false;
     public static bool UseQueueAbilities = true;
     public static bool UseSimultaniousTurns = true;

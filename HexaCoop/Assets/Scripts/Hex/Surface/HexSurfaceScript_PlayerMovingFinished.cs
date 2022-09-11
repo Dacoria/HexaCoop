@@ -27,7 +27,7 @@ public partial class HexSurfaceScript : HexaEventCallback
                     Textt.GameLocal("Darkness surface: Lose 1 Vision till end of next turn", playerFilter: player);
                     break;
                 case HexSurfaceType.Magma:
-                case HexSurfaceType.Lave_Stones:
+                case HexSurfaceType.Lava_Stones:
 
                     // TODO Netter oplossen tzt
                     if (player.GetComponent<PlayerFireImmumeScript>() != null)

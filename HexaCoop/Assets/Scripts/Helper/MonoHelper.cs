@@ -130,6 +130,7 @@ public class MonoHelper : MonoBehaviour
     {
         AbilityType.Jump => Rsc.SpriteMap.Get(abilityType.ToString() + GetDirString(from, to)),
         AbilityType.Movement => Rsc.SpriteMap.Get(abilityType.ToString() + GetDirString(from, to)),
+        AbilityType.Artillery => Rsc.SpriteMap.Get(abilityType.ToString() + GetDirString(from, to)),
         _ => Rsc.SpriteMap.Get(abilityType.ToString())
     };
 

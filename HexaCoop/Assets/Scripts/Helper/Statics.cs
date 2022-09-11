@@ -2,9 +2,10 @@
 {
     public static string TAG_PLAYER = "Player";
 
-    public static string SCENE_LEVEL1 = "Level1";
-    public static string SCENE_LEVEL2 = "Level2";
-    public static string SCENE_LOADING = "Loading";
+    public const string SCENE_LEVEL1 = "Level1";
+    public const string SCENE_LEVEL2 = "Level2";
+    public const string SCENE_LEVEL3 = "Level3";
+    public const string SCENE_LOADING = "Loading";
 
     public static string LAYER_MASK_HEXTILE = "HexTile";
 

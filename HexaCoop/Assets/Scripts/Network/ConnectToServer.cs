@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
@@ -14,11 +15,16 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     public bool AutoStartOnline;
     public bool AutoStartOffline;
 
+    public bool HasStartedGame;
+
+
     private IEnumerator Start()
     {
         yield return Wait4Seconds.Get(0.1f);
+        levelName = null;
+        NameInputField.text = NameGen.Get();
 
-        if(AutoStartOnline)
+        if (AutoStartOnline)
         {
             NameInputField.text = NameGen.Get();
             StartGameOnlineFast();
@@ -28,6 +34,16 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
             NameInputField.text = NameGen.Get();
             StartGameOffline();
         }
+
+        
+    }
+
+    private string levelName;
+
+    public void StartGameOnClick(string level)
+    {
+        levelName = level;
+        StartGameOnlineFast();
     }
 
 
@@ -47,8 +63,6 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
             prevLengthName = NameInputField.text.Length;
         }
     }
-
-    private bool HasStartedGame;
 
     public void StartGameOnlineFast()
     {
@@ -81,7 +95,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         if (ConnectMethod == ConnectMethod.Offline)
         {
             PhotonNetwork.JoinRandomRoom();
-            LevelLoader.instance.LoadScene(Settings.LevelName);
+            LevelLoader.instance.LoadScene(Settings.DefaultLevelName);
         }
         else
         {
@@ -97,7 +111,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         {
             //PhotonNetwork.JoinRandomOrCreateRoom();
             var roomOptions = new RoomOptions { };
-            PhotonNetwork.JoinOrCreateRoom("Testrun", roomOptions, TypedLobby.Default);
+            var punRoomName = string.IsNullOrEmpty(levelName) ? "Randomm" : levelName;
+            PhotonNetwork.JoinOrCreateRoom(punRoomName, roomOptions, TypedLobby.Default);
         }        
     }
 
@@ -110,7 +125,26 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
             PhotonNetwork.NickName = NameInputField.text;
         }
 
-        PhotonNetwork.LoadLevel(Settings.LevelName);
+        var sceneName = GetSceneName();
+        PhotonNetwork.LoadLevel(sceneName);
+    }
+
+    private string GetSceneName()
+    {
+        if(string.IsNullOrEmpty(levelName))
+        {
+            return Settings.DefaultLevelName;
+        }
+
+        var buildIndex = SceneUtility.GetBuildIndexByScenePath(levelName);
+        if (buildIndex < 0)
+        {
+            Debug.Log("GEEN SCENE GEVONDEN VOOR " + levelName + ", PAK DE DEFAULT");
+            return Settings.DefaultLevelName;
+        }
+
+        return levelName;
+
     }
 }
 

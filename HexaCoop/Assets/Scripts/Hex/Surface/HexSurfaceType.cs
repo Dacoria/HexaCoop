@@ -9,11 +9,11 @@ public enum HexSurfaceType
     Big_Brown_Stones,
     Bricks,
     Desert_Sand,
-    Dirt_Leave_Stones,
     Flowers,
     Grass,
     Ice,
-    Lave_Stones,
+    Lava_Stones,
+    Lava_Stones_Remains,
     Light_Grey_Stone,
     Magma,
     Poison,
@@ -29,7 +29,6 @@ public enum HexSurfaceType
 
     SandRock,
     Water_Light,
-    Grass2,
     Blue_3D_Blocks,
 }
 

@@ -29,7 +29,7 @@ public class SceneHandler : MonoBehaviour
 
     public void GoToLoadingScene()
     {
-        Settings.LevelName = SceneManager.GetActiveScene().name;
+        Settings.DefaultLevelName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(Statics.SCENE_LOADING);
     }
 }

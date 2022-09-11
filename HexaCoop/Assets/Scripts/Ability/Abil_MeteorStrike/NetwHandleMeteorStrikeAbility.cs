@@ -9,8 +9,6 @@ public class NetwHandleMeteorStrikeAbility : HexaEventCallback, IAbilityNetworkH
         var allTiles = HexGrid.instance.GetAllTiles();
         var allNonWaterTiles = allTiles.Where(x => !x.HexSurfaceType.IsObstacle()).ToList();
 
-        playerDoingAbility.gameObject.AddComponent<PlayerFireImmumeScript>();
-
         allNonWaterTiles.Shuffle();
         var targets = allNonWaterTiles.Where(x => x != playerDoingAbility.CurrentHexTile).Take(8);
 
