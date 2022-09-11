@@ -8,8 +8,15 @@ public class SelectForcefieldAbility : MonoBehaviour, IAbilityAction
     public void InitAbilityAction()
     {
         DeselectAbility();
-        //Textt.GameLocal("Select yourself to initialize Forcefield");
-        StartCoroutine(SetTileSelectionInXSeconds(0.1f));
+
+        if (Settings.UseQueueAbilities)
+        {
+            Netw.CurrPlayer().Ability(Netw.CurrPlayer().CurrentHexTile, AbilityType);
+        }
+        else
+        {
+            StartCoroutine(SetTileSelectionInXSeconds(0.1f));
+        }
     }
 
     private IEnumerator SetTileSelectionInXSeconds(float seconds)

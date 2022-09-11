@@ -14,7 +14,7 @@ public class PlayerForcefieldScript : HexaEventCallback
     private new void Awake()
     {
         base.Awake();
-        InitHitPoints = 2;
+        InitHitPoints = 1;
         CurrentHitPoints = InitHitPoints;
         TurnActivated = GameHandler.instance.CurrentTurn;
 
@@ -22,8 +22,12 @@ public class PlayerForcefieldScript : HexaEventCallback
         forcefieldGo = Instantiate(Rsc.GoEnemiesOrObjMap["Forcefield"], playerModel.transform);
     }
 
+
+
     protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
     {
+        if(Settings.UseSimultaniousTurns) { return; }
+
         if(playerScript == player)
         {
             // beurt van activatie + 1 andere beurt actief!
@@ -31,6 +35,16 @@ public class PlayerForcefieldScript : HexaEventCallback
             {
                 DestroyForcefield();
             }
+        }
+    }
+
+    protected override void OnAllPlayersFinishedTurn()
+    {
+        if (!Settings.UseSimultaniousTurns) { return; }
+
+        if (GameHandler.instance.CurrentTurn >= TurnActivated + 1) // direct weg
+        {
+            DestroyForcefield();
         }
     }
 

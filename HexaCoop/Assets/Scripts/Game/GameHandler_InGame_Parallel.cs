@@ -90,7 +90,7 @@ public partial class GameHandler : HexaEventCallback
         }        
     }
 
-    private Hex DetermineHexForAbil(PlayerScript player, AbilityType abilityType, Hex hexSubmitted, UnityEngine.Vector3Int hexCoorPlayerStartTurn)
+    private Hex DetermineHexForAbil(PlayerScript player, AbilityType abilityType, Hex hexSubmitted, Vector3Int hexCoorPlayerStartTurn)
     {
         // voor movement --> directie ipv hex-resultaat --> hier bepalen (voor nu)
 
