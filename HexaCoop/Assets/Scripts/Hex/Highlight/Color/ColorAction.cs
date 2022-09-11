@@ -5,7 +5,7 @@ public static class ColorAction
         HighlightActionType.SelectTile => HighlightColorType.White,
         HighlightActionType.VisionOption => HighlightColorType.Yellow,
         HighlightActionType.RadarOption => HighlightColorType.Blue,
-        HighlightActionType.MoveOption => HighlightColorType.LightBlue,
+        HighlightActionType.MoveOption => HighlightColorType.White,
         HighlightActionType.RocketHit => HighlightColorType.Red,
         HighlightActionType.EnemyOption => HighlightColorType.Orange,
         _ => throw new System.Exception("HighlightActionType " + actionType + " is not supported")

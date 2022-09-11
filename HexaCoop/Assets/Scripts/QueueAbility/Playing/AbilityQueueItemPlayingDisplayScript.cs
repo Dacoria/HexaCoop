@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,17 +12,18 @@ public class AbilityQueueItemPlayingDisplayScript : HexaEventCallback
     
     public int QueueItemId;
 
-    public void SetAbility(int id, AbilityType abilityType, Color colorBg)
+
+    private bool isActivated;
+
+    public void SetAbility(AbilityQueueItem abilityQueueItem)
     {
-        QueueItemId = id;
-        AbilityImage.sprite = Rsc.SpriteMap.Get(abilityType.ToString());
-        BackgroundAbility.color = colorBg;
+        QueueItemId = abilityQueueItem.Id;
+        AbilityImage.sprite = MonoHelper.instance.GetAbilitySprite(abilityQueueItem.AbilityType, abilityQueueItem.Player.CurrentHexTile.HexCoordinates, abilityQueueItem.Hex.HexCoordinates);
+        BackgroundAbility.color = abilityQueueItem.Player.Color;
 
         SetIsActiveAbility(false);
         NotExecutedCross.gameObject.SetActive(false);
     }
-
-    private bool isActivated;
 
     public void SetIsActiveAbility(bool isActive)
     {

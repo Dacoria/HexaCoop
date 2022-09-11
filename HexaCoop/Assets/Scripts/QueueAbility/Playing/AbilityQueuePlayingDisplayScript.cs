@@ -21,7 +21,7 @@ public class AbilityQueuePlayingDisplayScript : HexaEventCallback
         foreach (var abilityQueueItem in abilityQueue)
         {
             var queueItemGo = Instantiate(QueueAbilityDisplayPrefab, transform);
-            queueItemGo.SetAbility(abilityQueueItem.Id, abilityQueueItem.AbilityType, abilityQueueItem.Player.Color);
+            queueItemGo.SetAbility(abilityQueueItem);
             AbilityDisplayGOs.Add(queueItemGo);            
         }
     }

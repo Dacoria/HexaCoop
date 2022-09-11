@@ -46,7 +46,7 @@ public static class Direction
 
     public static List<DirectionType> DeriveDirections(this Vector3Int hexFromCoor, Vector3Int hexToCoor)
     {
-        if(hexFromCoor == hexToCoor) { return new List<DirectionType>(); }
+        if (hexFromCoor == hexToCoor) { return new List<DirectionType>(); }
 
         var path = GetPathToHex(hexFromCoor, hexToCoor);
         var result = new List<DirectionType> { GetDirectionFromCoordinates(hexFromCoor, path[0]) };
@@ -56,7 +56,7 @@ public static class Direction
             var nextDirection = GetDirectionFromCoordinates(path[i - 1], path[i - 0]);
             result.Add(nextDirection);
         }
-        
+
         return result;
     }
 
@@ -68,6 +68,8 @@ public static class Direction
         var result = directionDic.Single(x => x.Value == diffV3).Key;
         return result;
     }
+
+    public static int GetRangeFromCoordinates(Vector3Int from, Vector3Int to) => GetPathToHex(from, to).Count();
 
     private static List<Vector3Int> GetPathToHex(Vector3Int from, Vector3Int to)
     {
@@ -104,6 +106,8 @@ public static class Direction
         var result = hexFromCoor + directionDic[dir];
         return result;
     }
+
+    public static string GetDirString(DirectionType dirType) => string.Concat(dirType.ToString().Where(x => char.IsUpper(x)));
 }
 
 public enum DirectionType

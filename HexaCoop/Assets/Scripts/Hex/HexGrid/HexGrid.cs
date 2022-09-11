@@ -75,16 +75,20 @@ public class HexGrid : MonoBehaviour
         return result;
     }
 
-    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range = 1, bool excludeObstacles = true, bool? withUnitOnTile = null, bool onlyMoveInOneDirection = false)
+    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range = 1, bool excludeObstacles = true, bool? withUnitOnTile = null, bool onlyMoveInOneDirection = false, bool showOnlyFurthestRange = false)
     {
         var neighbours = GetNeighboursFor(hexCoordinates, range, onlyMoveInOneDirection);
+        if (showOnlyFurthestRange)
+        {            
+            neighbours = neighbours.Where(neighbour => Direction.GetRangeFromCoordinates(hexCoordinates, neighbour) == range).ToList();
+        }
         if(excludeObstacles)
         {
-            neighbours = neighbours.Where(x => !x.GetHex().IsObstacle()).ToList();
+            neighbours = neighbours.Where(neighbour => !neighbour.GetHex().IsObstacle()).ToList();
         }
         if(withUnitOnTile.HasValue)
         {
-            neighbours = neighbours.Where(x => x.GetHex().HasUnit() == withUnitOnTile.Value).ToList();
+            neighbours = neighbours.Where(neighbour => neighbour.GetHex().HasUnit() == withUnitOnTile.Value).ToList();
         }
 
         return neighbours;

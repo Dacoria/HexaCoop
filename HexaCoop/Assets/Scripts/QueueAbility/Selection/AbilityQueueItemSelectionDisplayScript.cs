@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,16 +14,9 @@ public class AbilityQueueItemSelectionDisplayScript : MonoBehaviour
         this.ComponentInject();
     }
 
-    private int QueueItemId;        
-
-    public void SetAbility(int id, AbilityType abilityType, Color colorBg)
+    public void SetAbility(AbilityQueueItem abilityQueueItem)
     {
-        QueueItemId = id;
-        AbilityImage.sprite = Rsc.SpriteMap.Get(abilityType.ToString());
-        BackgroundAbility.color = colorBg;
+        AbilityImage.sprite = MonoHelper.instance.GetAbilitySprite(abilityQueueItem.AbilityType, abilityQueueItem.Player.CurrentHexTile.HexCoordinates, abilityQueueItem.Hex.HexCoordinates);
+        BackgroundAbility.color = abilityQueueItem.Player.Color;
     }
-
-    // click on item
-    //public void RemoveAbility() => ActionEvents.RemoveQueueItem?.Invoke(Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().Get(QueueItemId));
-    public void RemoveAbility() { }
 }

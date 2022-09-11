@@ -16,11 +16,11 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         instance = this;
     }
 
-    public void HighlightMovementOptionsAroundPlayer(PlayerScript player, bool excludeObstacles, bool onlyMoveInOneDirection, int range = 1)
+    public void HighlightMovementOptionsAroundPlayer(PlayerScript player, bool excludeObstacles, bool onlyMoveInOneDirection, int range = 1, bool showOnlyFurthestRange = false)
     {
         SelectedPlayer = player;
         onlyHighlightColor = false;
-        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: excludeObstacles, onlyMoveInOneDirection: onlyMoveInOneDirection, range: range);
+        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: excludeObstacles, onlyMoveInOneDirection: onlyMoveInOneDirection, range: range, showOnlyFurthestRange: showOnlyFurthestRange);
     }
 
     private bool onlyHighlightColor = false;
@@ -77,9 +77,9 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         }
     }
 
-    private void HightlightValidNeighbourTiles(Hex selectedHex, bool excludeObstacles, int range, bool onlyMoveInOneDirection = false)
+    private void HightlightValidNeighbourTiles(Hex selectedHex, bool excludeObstacles, int range, bool onlyMoveInOneDirection = false, bool showOnlyFurthestRange = false)
     {
-        var neighboursToTryToHightlight = HexGrid.GetNeighboursFor(selectedHex.HexCoordinates, excludeObstacles: excludeObstacles, range: range, onlyMoveInOneDirection: onlyMoveInOneDirection);
+        var neighboursToTryToHightlight = HexGrid.GetNeighboursFor(selectedHex.HexCoordinates, excludeObstacles: excludeObstacles, range: range, onlyMoveInOneDirection: onlyMoveInOneDirection, showOnlyFurthestRange: showOnlyFurthestRange);
         validNeighboursHightlighted = new List<Vector3Int>();
 
         foreach (var neightbour in neighboursToTryToHightlight)

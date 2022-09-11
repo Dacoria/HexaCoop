@@ -63,7 +63,7 @@ public class AbilityQueueSelectionDisplayScript : HexaEventCallback
         foreach (var abilityQueueItem in abilityQueueItems)
         {
             var queueItemGo = Instantiate(QueueAbilityDisplayPrefab, transform);
-            queueItemGo.SetAbility(abilityQueueItem.Id, abilityQueueItem.AbilityType, player.Color);
+            queueItemGo.SetAbility(abilityQueueItem);
             AbilityDisplayGOs.Add(queueItemGo);
 
             if(interactable.HasValue)
