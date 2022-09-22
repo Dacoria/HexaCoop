@@ -20,12 +20,7 @@ public partial class HexSurfaceScript : HexaEventCallback
                 case HexSurfaceType.Sand_Dirt:
                     player.GetComponent<PlayerActionPoints>().DecreaseAP(2);
                     Textt.GameLocal("Dirt surface: Lose 2 Actionpoints", playerFilter: player);
-                    break;
-                case HexSurfaceType.Purple_Cracks:
-                    var visionScript = player.gameObject.AddComponent<PlayerExtraVisionRangeScript>();
-                    visionScript.AdditionalRange = -1;
-                    Textt.GameLocal("Darkness surface: Lose 1 Vision till end of next turn", playerFilter: player);
-                    break;
+                    break;               
                 case HexSurfaceType.Magma:
                 case HexSurfaceType.Lava_Stones:
 

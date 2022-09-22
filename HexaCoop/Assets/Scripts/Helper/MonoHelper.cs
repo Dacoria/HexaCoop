@@ -126,17 +126,23 @@ public class MonoHelper : MonoBehaviour
         damageObjectGo.GetComponent<FallingDamageObjectScript>().HexTarget = target;
     }
 
-    public Sprite GetAbilitySprite(AbilityType abilityType, Vector3Int from, Vector3Int to) => abilityType switch
+    public Sprite GetAbilitySprite(AbilityType abilityType, Vector3Int from, Vector3Int to)
     {
-        AbilityType.Jump => Rsc.SpriteMap.Get(abilityType.ToString() + GetDirString(from, to)),
-        AbilityType.Movement => Rsc.SpriteMap.Get(abilityType.ToString() + GetDirString(from, to)),
-        AbilityType.Artillery => Rsc.SpriteMap.Get(abilityType.ToString() + GetDirString(from, to)),
-        _ => Rsc.SpriteMap.Get(abilityType.ToString())
-    };
+        var directionRange = abilityType.GetSpriteDirectionRange();
+        if (directionRange > 0)
+        {
+            return Rsc.SpriteMap.Get(abilityType.ToString() + GetDirString(from, to, directionRange));
+        }
+        else
+        {
+            return Rsc.SpriteMap.Get(abilityType.ToString());
+        }
+    }
 
-    private string GetDirString(Vector3Int from, Vector3Int to)
+    private string GetDirString(Vector3Int from, Vector3Int to, int directionRange)
     {
-        var direction = from.DeriveDirections(to).First();
-        return Direction.GetDirString(direction);
+        var directionsToLocation = from.DeriveDirections(to).Take(directionRange).ToList();
+        var result = Direction.GetDirString(directionsToLocation);
+        return result;
     }
 }

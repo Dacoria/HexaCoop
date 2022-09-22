@@ -7,6 +7,13 @@ using System.Collections;
 public class PlayerCrystalsReached : HexaEventCallback
 {
     [ComponentInject] private PlayerScript playerScript;
+    private int cystalCountOnMap;
+
+    private new void Awake()
+    {
+        base.Awake();
+        cystalCountOnMap = GameObject.FindObjectsOfType<CrystalScript>().Count();
+    }
 
     public List<Hex> CrystalHexesReached = new List<Hex>();
 
@@ -22,9 +29,17 @@ public class PlayerCrystalsReached : HexaEventCallback
         {
             Textt.GameLocal(playerScript.PlayerName + " has reached his/her first Crystal!");
         }
-        else if (CrystalHexesReached.Count() >= 2)
+        else if (CrystalHexesReached.Count() == 2)
         {
-            Textt.GameLocal(playerScript.PlayerName + " has reached the 2 Crystals first!");
+            Textt.GameLocal(playerScript.PlayerName + " has reached his/her second Crystal!");
+        }
+        else if (CrystalHexesReached.Count() == 3)
+        {
+            Textt.GameLocal(playerScript.PlayerName + " has reached his/her third Crystal!");
+        }
+        else if (CrystalHexesReached.Count() >= cystalCountOnMap)
+        {
+            Textt.GameLocal(playerScript.PlayerName + " has reached all the Crystals first!");
             GameHandler.instance.GameStatus = GameStatus.RoundEnded;
 
             // op MC

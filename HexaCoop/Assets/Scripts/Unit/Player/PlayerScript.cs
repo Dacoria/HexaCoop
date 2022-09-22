@@ -24,7 +24,7 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUn
     public int Index;
     public void SetCurrentHexTile(Hex hex) => CurrentHexTile = hex;
     public void MoveToNewDestination(Hex tile) => gameObject.GetAdd<UnitMovement>().GoToDestination(tile, 2f);
-    public int GetVision() => this.baseVisionRange + GetComponents<PlayerExtraVisionRangeScript>().Sum(x => x.AdditionalRange);
+    public int GetVision() => this.baseVisionRange;
     public bool CanDoAbility(Hex hex, AbilityType abilityType) => playerAbilityHandler.CanDoAbility(hex, abilityType);
 
 

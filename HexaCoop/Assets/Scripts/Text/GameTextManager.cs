@@ -150,11 +150,7 @@ public class GameTextManager : HexaEventCallback
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type, int queueId)
     {
         if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
-        
-        else if (type == AbilityType.Vision)
-        {
-            Textt.GameLocal(player.PlayerName + " is watching a tile...");
-        }
+                
         else if (type == AbilityType.BearTrap)
         {
             Textt.GameLocal(player.PlayerName + " has placed a bear trap!");
@@ -162,14 +158,6 @@ public class GameTextManager : HexaEventCallback
         else if (type == AbilityType.Meditate)
         {
             Textt.GameLocal(player.PlayerName + " sacrifices his location for extra 2 AP next turn");
-        }        
-        else if (type == AbilityType.Binocular)
-        {
-            // verder niet moves updaten; moet lastig te zijn te bepalen zijn of je extra range hebt
-            if (player.IsOnMyNetwork())
-            {
-                Textt.GameLocal(player.PlayerName + " has one extra vision till end of next turn");
-            }
         }
     }
 }

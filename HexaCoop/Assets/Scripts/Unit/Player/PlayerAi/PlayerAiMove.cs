@@ -39,15 +39,7 @@ public class PlayerAiMove : HexaEventCallback
         else if (randomChoice == 1 && AbilityType.Movement.IsAvailable(player))
         {
             DoMovement();
-        }
-        else if (randomChoice == 2 && AbilityType.Radar.IsAvailable(player))
-        {
-            DoRadar();
-        }
-        else if (randomChoice == 3 && AbilityType.Vision.IsAvailable(player))
-        {
-            DoVision();
-        }
+        }        
         else
         {
             // als ability niet kan? retry!
@@ -58,19 +50,8 @@ public class PlayerAiMove : HexaEventCallback
     private void DoRocket()
     {
         var tilesForTarget = HexGrid.instance.GetTiles(HighlightColorType.Blue);
-        if(!tilesForTarget.Any())
-        {
-            if(AbilityType.Rocket.GetCost() + AbilityType.Radar.GetCost() <= player.CurrentAP)
-            {
-                currentCallbackAfterAction = DoRocket;
-                DoRadar();
-                return;
-            }
-            else
-            {
-                tilesForTarget = HexGrid.instance.GetAllTiles();
-            }
-        }
+
+        tilesForTarget = HexGrid.instance.GetAllTiles();        
 
         tilesForTarget.Shuffle();
         var targetTile = tilesForTarget[0];
@@ -104,30 +85,5 @@ public class PlayerAiMove : HexaEventCallback
         player.Ability(targetTile, AbilityType.Movement);
 
         StartCoroutine(WaitThenAction(6));
-    }
-
-    private void DoRadar()
-    {
-        var targetTile = HexGrid.instance.GetAllTiles()[0];
-
-        player.Ability(targetTile, AbilityType.Radar);
-
-        StartCoroutine(WaitThenAction(4));
-    }
-
-    private void DoVision()
-    {
-        var tilesForTarget = HexGrid.instance.GetTiles(HighlightColorType.Blue);
-        if (!tilesForTarget.Any())
-        {
-            tilesForTarget = HexGrid.instance.GetAllTiles();
-        }
-
-        tilesForTarget.Shuffle();
-        var targetTile = tilesForTarget[0];
-
-        player.Ability(targetTile, AbilityType.Vision);
-
-        StartCoroutine(WaitThenAction(3));
-    }
+    }   
 }
