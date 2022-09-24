@@ -36,12 +36,13 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnPlayerDied")) ActionEvents.PlayerDied += OnPlayerDied;
         if (IsOverwritten("OnNewSimTurnsPlayOrder")) ActionEvents.NewSimTurnsPlayOrder += OnNewSimTurnsPlayOrder;
         if (IsOverwritten("OnAbilityPickedUp")) ActionEvents.AbilityPickedUp += OnAbilityPickedUp;
+        if (IsOverwritten("OnBombExplosionHit")) ActionEvents.BombExplosionHit += OnBombExplosionHit;
 
         if (IsOverwritten("OnEnemyAttackHit")) ActionEvents.EnemyAttackHit += OnEnemyAttackHit;
         if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit += OnPlayerAttackHit;
         if (IsOverwritten("OnEnemyMovingFinished")) ActionEvents.EnemyMovingFinished += OnEnemyMovingFinished;
         if (IsOverwritten("OnPlayerMovingFinished")) ActionEvents.PlayerMovingFinished += OnPlayerMovingFinished;
-    }   
+    }
 
     protected void OnDisable()
     {
@@ -70,6 +71,7 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnPlayerDied")) ActionEvents.PlayerDied -= OnPlayerDied;
         if (IsOverwritten("OnNewSimTurnsPlayOrder")) ActionEvents.NewSimTurnsPlayOrder -= OnNewSimTurnsPlayOrder;
         if (IsOverwritten("OnAbilityPickedUp")) ActionEvents.AbilityPickedUp -= OnAbilityPickedUp;
+        if (IsOverwritten("OnBombExplosionHit")) ActionEvents.BombExplosionHit -= OnBombExplosionHit;
 
         if (IsOverwritten("OnEnemyAttackHit")) ActionEvents.EnemyAttackHit -= OnEnemyAttackHit;
         if (IsOverwritten("OnPlayerAttackHit")) ActionEvents.PlayerAttackHit -= OnPlayerAttackHit;
@@ -106,6 +108,7 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnPlayerDied(PlayerScript player) { }
     protected virtual void OnNewSimTurnsPlayOrder(List<PlayerScript> players) { }
     protected virtual void OnAbilityPickedUp(PlayerScript player, Hex hex, AbilityType abilityType) { }
+    protected virtual void OnBombExplosionHit(List<Hex> tiles, int damage) { }
 
 
 

@@ -16,7 +16,7 @@ public class ObjectNetworkInitManager : MonoBehaviourPunCallbacks
 
     public InstantiationInfo InstantiatePunObject(GameObject go)
     {
-        var hextile = go.GetComponent<IUnit>()?.CurrentHexTile;
+        var hextile = go.GetComponent<IObjectOnTile>()?.CurrentHexTile;
         if(hextile != null)
         {
             return InstantiatePunObject(go.name.Replace("(Clone)", "").Trim(), hextile.OrigPosition + new Vector3(0,1,0), go.transform.rotation, currentHex: hextile);

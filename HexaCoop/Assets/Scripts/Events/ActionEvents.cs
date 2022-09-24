@@ -33,6 +33,8 @@ public static class ActionEvents
     // local
     public static Action GridLoaded;
 
+    public static Action<List<Hex>, int> BombExplosionHit;
+
     public static Action<IUnit, Hex, int> UnitAttackHit;
     public static Action<PlayerScript, Hex> PlayerHasTeleported;
 

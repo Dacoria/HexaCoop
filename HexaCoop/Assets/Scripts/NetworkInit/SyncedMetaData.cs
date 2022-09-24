@@ -14,12 +14,11 @@ public class SyncedMetaData : MonoBehaviourPunCallbacks, IPunInstantiateMagicCal
         // OnPhotonInstantiate seems to always go after awake but before start
         object[] instantiationData = info.photonView.InstantiationData;
         this.Id = (int)instantiationData[0];
-        var test = instantiationData[1];
         Vector3? hexCoordinates = string.IsNullOrEmpty(instantiationData[1].ToString()) ? null : instantiationData[1].ToString().ToVector3();
 
-        if (GetComponent<IUnit>() != null  && hexCoordinates.HasValue)
+        if (GetComponent<IObjectOnTile>() != null  && hexCoordinates.HasValue)
         {
-            GetComponent<IUnit>().SetCurrentHexTile(hexCoordinates.Value.GetHex());
+            GetComponent<IObjectOnTile>().SetCurrentHexTile(hexCoordinates.Value.GetHex());
             StartSpawnHex = hexCoordinates.Value.GetHex();
         }
 

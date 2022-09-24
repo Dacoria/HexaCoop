@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerHealth : HexaEventCallback
 {
@@ -49,6 +50,14 @@ public class PlayerHealth : HexaEventCallback
     protected override void OnEnemyAttackHit(EnemyScript enemy, Hex hex, int damage)
     {       
         if (hex.GetPlayer()?.Id == player.Id)
+        {
+            TakeDamage(damage);
+        }
+    }
+
+    protected override void OnBombExplosionHit(List<Hex> tiles, int damage)
+    {
+        if(tiles.Any(tile => tile == player.CurrentHexTile))
         {
             TakeDamage(damage);
         }

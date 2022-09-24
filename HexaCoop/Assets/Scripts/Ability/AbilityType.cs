@@ -32,7 +32,7 @@ public static class AbilitySetup
         new AbilitySetting{Type = AbilityType.Wait,           Cost = 0,   AvailableFromTurn = 1,   EventImmediatelyFinished = true,  Duration = 1.8f, IsPickup = false, AvailableFromQueuePlace = 0, SpriteDirectionRange = 0},
         new AbilitySetting{Type = AbilityType.SummonMountain, Cost = 2,   AvailableFromTurn = 1,   EventImmediatelyFinished = true,  Duration = 2.3f, IsPickup = false, AvailableFromQueuePlace = 0, SpriteDirectionRange = 0},
         new AbilitySetting{Type = AbilityType.Forcefield,     Cost = 1,   AvailableFromTurn = 1,   EventImmediatelyFinished = true,  Duration = 2.0f, IsPickup = false, AvailableFromQueuePlace = 0, SpriteDirectionRange = 0},
-        new AbilitySetting{Type = AbilityType.BombExplosion,  Cost = 1,   AvailableFromTurn = 1,   EventImmediatelyFinished = true,  Duration = 2.0f, IsPickup = false, AvailableFromQueuePlace = 0, SpriteDirectionRange = 2},
+        new AbilitySetting{Type = AbilityType.BombExplosion,  Cost = 3,   AvailableFromTurn = 1,   EventImmediatelyFinished = true,  Duration = 1.5f, IsPickup = false, AvailableFromQueuePlace = 0, SpriteDirectionRange = 2},
 
 
         new AbilitySetting{Type = AbilityType.BearTrap,       Cost = 2,   AvailableFromTurn = 999, EventImmediatelyFinished = true,  Duration = 2.0f, IsPickup = false, AvailableFromQueuePlace = 0, SpriteDirectionRange = 0},
