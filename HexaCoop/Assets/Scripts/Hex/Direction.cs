@@ -106,19 +106,6 @@ public static class Direction
         var result = hexFromCoor + directionDic[dir];
         return result;
     }
-
-    public static string GetDirString(List<DirectionType> dirTypes)
-    {
-        var result = "";
-        foreach (var dirType in dirTypes)
-        {
-            result += GetDirString(dirType);
-        }
-
-        return result;
-    }
-
-    public static string GetDirString(DirectionType dirType) => string.Concat(dirType.ToString().Where(x => char.IsUpper(x)));
 }
 
 public enum DirectionType

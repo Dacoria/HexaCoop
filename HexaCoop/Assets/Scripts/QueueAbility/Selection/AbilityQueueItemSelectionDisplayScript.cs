@@ -6,6 +6,7 @@ public class AbilityQueueItemSelectionDisplayScript : MonoBehaviour
 {
     [SerializeField] private Image AbilityImage;
     [SerializeField] private Image BackgroundAbility;
+    [SerializeField] private Image DirectionImage;
 
     [HideInInspector][ComponentInject] public Button Button;
 
@@ -16,7 +17,9 @@ public class AbilityQueueItemSelectionDisplayScript : MonoBehaviour
 
     public void SetAbility(AbilityQueueItem abilityQueueItem)
     {
-        AbilityImage.sprite = MonoHelper.instance.GetAbilitySprite(abilityQueueItem.AbilityType, abilityQueueItem.Player.CurrentHexTile.HexCoordinates, abilityQueueItem.Hex.HexCoordinates);
+        AbilityImage.sprite = Rsc.SpriteMap.Get(abilityQueueItem.AbilityType.ToString());
         BackgroundAbility.color = abilityQueueItem.Player.Color;
+
+        MonoHelper.instance.SetSpriteDirectionOnImage(DirectionImage, abilityQueueItem.AbilityType, abilityQueueItem.Player.CurrentHexTile.HexCoordinates, abilityQueueItem.Hex.HexCoordinates);
     }
 }

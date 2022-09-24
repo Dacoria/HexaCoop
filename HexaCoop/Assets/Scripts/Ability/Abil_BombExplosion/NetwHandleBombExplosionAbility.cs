@@ -6,7 +6,8 @@ public class NetwHandleBombExplosionAbility : HexaEventCallback, IAbilityNetwork
 {
     public bool CanDoAbility(PlayerScript playerDoingAbility, Hex target)
     {
-        return !target.IsObstacle() && !target.HasUnit();
+        var allBombs = GameObject.FindObjectsOfType<BombScript>();
+        return !target.IsObstacle() && !target.HasUnit() && !allBombs.Any(x => x.CurrentHexTile == target);
     }
 
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)

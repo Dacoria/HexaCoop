@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonoHelper : MonoBehaviour
 {
@@ -31,6 +32,56 @@ public class MonoHelper : MonoBehaviour
 
         highlightScripts[0].Reset();
         return highlightScripts[0];
+    }
+
+    public void SetSpriteDirectionOnImage(Image directionImage, AbilityType abilityType, Vector3Int from, Vector3Int to)
+    {
+        var targetIsRelativeToPlayer = abilityType.GetTargetHexIsRelativeToPlayer();
+        if (targetIsRelativeToPlayer)
+        {
+            var directionsToLocation = from.DeriveDirections(to);
+            SetSpriteDirectionOnImage(directionImage, directionsToLocation.First(), directionsToLocation.Count);
+        }
+    }
+
+    private void SetSpriteDirectionOnImage(Image directionImage, DirectionType direction, int spriteDirectionRange)
+    {
+        switch (direction)
+        {
+            case DirectionType.West:
+            case DirectionType.East:
+                directionImage.sprite = Rsc.SpriteMap.Get("ArrowUp" + spriteDirectionRange);
+                break;
+            case DirectionType.NorthEast:
+            case DirectionType.NorthWest:
+            case DirectionType.SouthEast:
+            case DirectionType.SouthWest:
+                directionImage.sprite = Rsc.SpriteMap.Get("ArrowRightUpCorner" + spriteDirectionRange);
+                break;
+            default:
+                throw new System.Exception("MonoHelper -> SetSpriteDirectionOnImage -> Exception");
+        }
+
+        switch (direction)
+        {                
+            case DirectionType.West:
+            case DirectionType.NorthWest:
+                directionImage.transform.rotation = Quaternion.Euler(0, 0, 90);
+                break;
+            case DirectionType.East:
+            case DirectionType.SouthEast:
+                directionImage.transform.rotation = Quaternion.Euler(0, 0, -90);
+                break;
+            case DirectionType.NorthEast:
+                directionImage.transform.rotation = Quaternion.Euler(0, 0, 0);
+                break;              
+            case DirectionType.SouthWest:
+                directionImage.transform.rotation = Quaternion.Euler(0, 0, 180);
+                break;
+            default:
+                throw new System.Exception("MonoHelper -> SetSpriteDirectionOnImage -> Exception");
+        }
+        
     }
 
     public bool FindTile(Vector3 mousePosition, out List<Hex> result)
@@ -124,25 +175,5 @@ public class MonoHelper : MonoBehaviour
         var damageObjectGo = Instantiate(damageObjectPrefab, destination, Quaternion.Euler(0, 0, 180f));
         damageObjectGo.GetComponent<FallingDamageObjectScript>().Player = playerWhoOwnsObject;
         damageObjectGo.GetComponent<FallingDamageObjectScript>().HexTarget = target;
-    }
-
-    public Sprite GetAbilitySprite(AbilityType abilityType, Vector3Int from, Vector3Int to)
-    {
-        var directionRange = abilityType.GetSpriteDirectionRange();
-        if (directionRange > 0)
-        {
-            return Rsc.SpriteMap.Get(abilityType.ToString() + GetDirString(from, to, directionRange));
-        }
-        else
-        {
-            return Rsc.SpriteMap.Get(abilityType.ToString());
-        }
-    }
-
-    private string GetDirString(Vector3Int from, Vector3Int to, int directionRange)
-    {
-        var directionsToLocation = from.DeriveDirections(to).Take(directionRange).ToList();
-        var result = Direction.GetDirString(directionsToLocation);
-        return result;
-    }
+    }   
 }

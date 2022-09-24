@@ -98,7 +98,7 @@ public partial class GameHandler : HexaEventCallback
         {
             return hexSubmitted;
         }
-        if(abilityType != AbilityType.Movement && abilityType != AbilityType.Jump && abilityType != AbilityType.Artillery)
+        if(!abilityType.GetTargetHexIsRelativeToPlayer())
         {
             return hexSubmitted;
         }
