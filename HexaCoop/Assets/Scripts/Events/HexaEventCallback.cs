@@ -78,7 +78,7 @@ public abstract class HexaEventCallback : MonoBehaviour
         if (IsOverwritten("OnEnemyMovingFinished")) ActionEvents.EnemyMovingFinished -= OnEnemyMovingFinished;
         if (IsOverwritten("OnPlayerMovingFinished")) ActionEvents.PlayerMovingFinished -= OnPlayerMovingFinished;
     }
-
+    
     protected virtual void OnGridLoaded() { }    
     protected virtual void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) { }
     protected virtual void OnNewPlayerTurn(PlayerScript player) { }
@@ -109,7 +109,6 @@ public abstract class HexaEventCallback : MonoBehaviour
     protected virtual void OnNewSimTurnsPlayOrder(List<PlayerScript> players) { }
     protected virtual void OnAbilityPickedUp(PlayerScript player, Hex hex, AbilityType abilityType) { }
     protected virtual void OnBombExplosionHit(List<Hex> tiles, int damage) { }
-
 
 
     private bool IsOverwritten(string functionName)

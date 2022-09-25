@@ -175,5 +175,16 @@ public class MonoHelper : MonoBehaviour
         var damageObjectGo = Instantiate(damageObjectPrefab, destination, Quaternion.Euler(0, 0, 180f));
         damageObjectGo.GetComponent<FallingDamageObjectScript>().Player = playerWhoOwnsObject;
         damageObjectGo.GetComponent<FallingDamageObjectScript>().HexTarget = target;
-    }   
+    }
+
+    public void DestroyAllComponents(GameObject go)
+    {
+        foreach (var comp in go.GetComponents<Component>())
+        {
+            if (comp is not Transform)
+            {
+                Destroy(comp);
+            }
+        }
+    }
 }

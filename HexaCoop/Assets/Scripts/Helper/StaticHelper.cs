@@ -86,5 +86,5 @@ public static class StaticHelper
     {
         var component = go.GetComponent<T>() ?? go.AddComponent<T>();
         return component;
-    }
+    }    
 }

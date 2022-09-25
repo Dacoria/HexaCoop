@@ -202,4 +202,14 @@ public static class Utils
 
         return null;
     }
+
+    public static GameObject GetStructurePrefabFromRrc(this HexStructureType hexStructure)
+    {
+        if(hexStructure.HasStructure())
+        {
+            return Rsc.GoStructureMap.First(x => x.Key == hexStructure.ToString() + "Structure").Value;
+        }
+
+        return null;
+    }
 }

@@ -6,7 +6,7 @@ public partial class HexStructureScript: HexaEventCallback
         {
             if (hex.HexStructureType == HexStructureType.Mountain)
             {
-                DestroyMountain(hex);
+                hex.DestroyStructure();
             }
         }
     }    

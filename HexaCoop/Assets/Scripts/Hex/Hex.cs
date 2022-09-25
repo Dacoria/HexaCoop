@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections;
 using UnityEngine;
+using System;
 
 [SelectionBase]
 public class Hex : MonoBehaviour
@@ -65,7 +66,6 @@ public class Hex : MonoBehaviour
 
         ChangeHexSurfaceType(Settings.ShowSurfacesInFog || !fogEnabled ? HexSurfaceType : HexSurfaceType.Simple_Plain, alsoChangeType: false);
         ChangeHexStructureType(Settings.ShowStructuresInFog || !fogEnabled ? HexStructureType : HexStructureType.None, alsoChangeType: false);
-        UpdateHexStructureVisibilityStatus(!fogEnabled);
     }   
    
     public bool IsObstacle() => HexSurfaceType.IsObstacle() || HexStructureType.IsObstacle();
@@ -77,6 +77,23 @@ public class Hex : MonoBehaviour
         if (alsoChangeType)
         {
             HexSurfaceType = changeToType;
+        }
+    }
+
+    public void DestroyStructure()
+    {
+        if(HexStructureType == HexStructureType.Mountain)
+        {
+            var structureGo = Utils.GetStructureGoFromHex(this);
+            if (structureGo != null)
+            {
+                var mountainScript = structureGo.GetComponentInChildren<MountainScript>();
+                mountainScript.Destroy();
+            }
+        }
+        else
+        {
+            throw new Exception("Alleen mountain vernietigen wordt nog ondersteund!");
         }
     }
 
@@ -99,15 +116,4 @@ public class Hex : MonoBehaviour
             }
         }
     }
-
-    private void UpdateHexStructureVisibilityStatus(bool isVisible)
-    {
-        // alleen hiden/showen van model
-        var structureGo = Utils.GetStructureGoFromHex(this);
-        if (structureGo != null)
-        {
-            var structureScript = structureGo.GetComponentInChildren<IStructure>();
-            structureScript?.SetIsVisible(isVisible);
-        }
-    }    
 }

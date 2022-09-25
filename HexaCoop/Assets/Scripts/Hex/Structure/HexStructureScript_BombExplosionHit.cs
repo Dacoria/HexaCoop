@@ -10,7 +10,7 @@ public partial class HexStructureScript: HexaEventCallback
             switch (hex.HexStructureType)
             {
                 case HexStructureType.Mountain:
-                    DestroyMountain(hex);
+                    hex.DestroyStructure();
                     break;                
             }
         }

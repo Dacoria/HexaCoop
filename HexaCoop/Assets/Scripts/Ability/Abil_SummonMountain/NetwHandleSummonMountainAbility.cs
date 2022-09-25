@@ -35,10 +35,9 @@ public class NetwHandleSummonMountainAbility : HexaEventCallback, IAbilityNetwor
         var lerpScript = mountainGo.GetAdd<LerpMovement>();
         lerpScript.AppearFromDown(distance: 1.8f, duration: 1f);
 
-        var temperaryMountainScript = target.gameObject.AddComponent<TemperaryMountainScript>();
-        temperaryMountainScript.PlayerThatSummonedMountain = player;
+        mountainGo.AddComponent<TemperaryMountainScript>();
 
-        StartCoroutine(ShowTurnsLeftInXSeconds(1f, target.gameObject.transform));
+        StartCoroutine(ShowTurnsLeftInXSeconds(1f, mountainGo.transform));
     }
 
     private IEnumerator ShowTurnsLeftInXSeconds(float waitTime, Transform parent)

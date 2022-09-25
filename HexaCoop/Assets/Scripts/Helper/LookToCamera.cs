@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LookToCamera : MonoBehaviour
@@ -14,7 +12,7 @@ public class LookToCamera : MonoBehaviour
 
     void Update()
     {        
-        var lookDestination = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+        var lookDestination = new Vector3(m_Camera.transform.position.x, 0, m_Camera.transform.position.z);
         var targetDirection = lookDestination - transform.position;
         transform.rotation = Quaternion.LookRotation(-targetDirection);
     }

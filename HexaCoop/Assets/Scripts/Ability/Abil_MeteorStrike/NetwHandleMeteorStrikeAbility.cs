@@ -10,14 +10,14 @@ public class NetwHandleMeteorStrikeAbility : HexaEventCallback, IAbilityNetworkH
         var allNonWaterTiles = allTiles.Where(x => !x.HexSurfaceType.IsObstacle()).ToList();
 
         allNonWaterTiles.Shuffle();
-        var targets = allNonWaterTiles.Where(x => x != playerDoingAbility.CurrentHexTile).Take(8);
+        var targets = allNonWaterTiles.Where(x => x != playerDoingAbility.CurrentHexTile).Take(allNonWaterTiles.Count / 3);
 
         var waitTimeToSummonMeteorStrike = 0f;
         
         foreach (var targetHexForMeteor in targets)
         {
             StartCoroutine(MonoHelper.instance.SummonFallingDamageObject(waitTimeToSummonMeteorStrike, targetHexForMeteor, playerDoingAbility, DamageObjectType.MeteorStrike));
-            waitTimeToSummonMeteorStrike += 0.3f;
+            waitTimeToSummonMeteorStrike += 0.2f;
         }
     }
 }
