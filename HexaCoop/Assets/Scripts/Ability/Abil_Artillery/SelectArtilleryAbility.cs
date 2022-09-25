@@ -14,7 +14,7 @@ public class SelectArtilleryAbility : MonoBehaviour, IAbilityAction
 
     public void InitAbilityAction()
     {
-        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(Netw.CurrPlayer(), excludeObstacles: !Settings.UseQueueAbilities, onlyMoveInOneDirection: true, range: 20);
+        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(Netw.CurrPlayer(), excludeObstacles: false, onlyMoveInOneDirection: true, range: 20);
         abilIsActive = true;
     }
 

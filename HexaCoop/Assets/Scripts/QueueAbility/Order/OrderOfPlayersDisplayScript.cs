@@ -4,15 +4,7 @@ public class OrderOfPlayersDisplayScript : HexaEventCallback
 {
     public PlayerColorOrderDisplay PlayerColorOrderDisplayPrefab;
     public List<PlayerColorOrderDisplay> PlayerColorOrderDisplayGOs = new List<PlayerColorOrderDisplay>();
-
-    private void Start()
-    {
-        if (!Settings.UseQueueAbilities)
-        {
-            Destroy(transform.parent.gameObject);
-        }
-    }
-
+        
     protected override void OnNewSimTurnsPlayOrder(List<PlayerScript> players)
     {       
         DestroyOldOrderItems();

@@ -16,7 +16,7 @@ public class SelectMovementAbility : MonoBehaviour, IAbilityAction
 
     public void InitAbilityAction()
     {
-        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(Netw.CurrPlayer(), excludeObstacles: !Settings.UseQueueAbilities, onlyMoveInOneDirection: false);
+        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(Netw.CurrPlayer(), excludeObstacles: false, onlyMoveInOneDirection: false);
         movementAbilIsActive = true;
     }
 

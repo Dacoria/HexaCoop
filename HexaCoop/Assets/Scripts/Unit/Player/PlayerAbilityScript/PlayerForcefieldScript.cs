@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerForcefieldScript : HexaEventCallback
 {
-    [ComponentInject] private PlayerScript playerScript;
-
     public int CurrentHitPoints;
     public int InitHitPoints;
 
@@ -22,26 +20,8 @@ public class PlayerForcefieldScript : HexaEventCallback
         forcefieldGo = Instantiate(Rsc.GoEnemiesOrObjMap["Forcefield"], playerModel.transform);
     }
 
-
-
-    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
-    {
-        if(Settings.UseSimultaniousTurns) { return; }
-
-        if(playerScript == player)
-        {
-            // beurt van activatie + 1 andere beurt actief!
-            if(GameHandler.instance.CurrentTurn >= TurnActivated + 1)
-            {
-                DestroyForcefield();
-            }
-        }
-    }
-
     protected override void OnAllPlayersFinishedTurn()
     {
-        if (!Settings.UseSimultaniousTurns) { return; }
-
         if (GameHandler.instance.CurrentTurn >= TurnActivated + 1) // direct weg
         {
             DestroyForcefield();

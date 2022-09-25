@@ -1,15 +1,16 @@
 
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TemperaryMountainScript : HexaEventCallback
+public class TemperaryMountainScript : HexaEventCallback, ITurnsLeft
 {
     private int TurnActivated;
 
     [ComponentInject] private Hex hex;
+    private int TotalTurnsActive = 2;
 
     public PlayerScript PlayerThatSummonedMountain;
+
+    public int TurnsLeft => GameHandler.instance.CurrentTurn - (TurnActivated + TotalTurnsActive + 1);
 
     private new void Awake()
     {
@@ -18,26 +19,12 @@ public class TemperaryMountainScript : HexaEventCallback
     }
 
     protected override void OnAllPlayersFinishedTurn()
-    {
-        if(Settings.UseSimultaniousTurns)
+    {        
+        if (TurnsLeft <= 0)
         {
-            if (GameHandler.instance.CurrentTurn >= TurnActivated + 2) // 2 beurten, door sim turns
-            {
-                DestroyMountain();
-            }
-        }
-    }
-
-    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
-    {
-        if (!Settings.UseSimultaniousTurns && PlayerThatSummonedMountain == player)
-        {
-            if (GameHandler.instance.CurrentTurn >= TurnActivated + 1)
-            {
-                DestroyMountain();
-            }
-        }
-    }
+            DestroyMountain();
+        }        
+    }    
 
     private void DestroyMountain()
     {     

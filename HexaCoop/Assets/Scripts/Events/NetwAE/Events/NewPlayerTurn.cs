@@ -12,15 +12,12 @@ public partial class NetworkAE : MonoBehaviour
 
     public void NewPlayerTurn_Sequential(PlayerScript currentPlayer)
     {
-        if (currentPlayer == null && !Settings.UseSimultaniousTurns) { throw new Exception("null = eigen player bij sim turns. dit hoort niet"); }
         photonView.RPC("RPC_AE_NewPlayerTurn", RpcTarget.All, currentPlayer.Id);
     }
 
     [PunRPC]
     public void RPC_AE_NewPlayerTurn(int currentPlayerId)
     {
-        if (currentPlayerId == -1 && !Settings.UseSimultaniousTurns) { throw new Exception("-1 = eigen player bij sim turns. dit hoort niet"); }
-
         // -1 betekent: Eigen netwerk speler
         if(OwnPlayerIsDeadInSimTurns(currentPlayerId))
         {
@@ -34,7 +31,7 @@ public partial class NetworkAE : MonoBehaviour
 
     private bool OwnPlayerIsDeadInSimTurns(int currentPlayerId)
     {
-        return Settings.UseSimultaniousTurns && currentPlayerId == -1 && !Netw.MyPlayer().IsAlive;
+        return currentPlayerId == -1 && !Netw.MyPlayer().IsAlive;
     }
 
     private void TrySetTurnEventToAiOnNetwork()

@@ -35,8 +35,6 @@ public class PlayerIdleFunStuffDisplay : HexaEventCallback
         StartCoroutine(CheckEveryXSeconds(defaultWaitTimeForCheck));
     }
 
-    private Coroutine rotationCoroutine;
-
     private void RotateTowardsCamera()
     {
         var lookDesination = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);

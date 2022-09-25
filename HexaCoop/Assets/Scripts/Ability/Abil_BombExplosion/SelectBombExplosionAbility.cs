@@ -15,7 +15,7 @@ public class SelectBombExplosionAbility : MonoBehaviour, IAbilityAction
 
     public void InitAbilityAction()
     {
-        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(Netw.CurrPlayer(), excludeObstacles: !Settings.UseQueueAbilities, onlyMoveInOneDirection: true, range: 2, showOnlyFurthestRange: false);
+        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(Netw.CurrPlayer(), excludeObstacles: false, onlyMoveInOneDirection: true, range: 2, showOnlyFurthestRange: false);
         abilIsActive = true;
     }
 

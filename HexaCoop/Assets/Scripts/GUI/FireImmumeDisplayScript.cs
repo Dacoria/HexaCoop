@@ -23,7 +23,7 @@ public class FireImmumeDisplayScript : HexaEventCallback
 
         var fireImmumeScript = Netw.CurrPlayer()?.GetComponent<PlayerFireImmumeScript>();
 
-        if (Netw.IsMyNetwTurn() && fireImmumeScript != null)
+        if (fireImmumeScript != null)
         {
             canvasGroup.alpha = 1;
             Text.text = "Turn(s): " + fireImmumeScript.TurnsLeft.ToString();

@@ -76,11 +76,7 @@ public class PlayerHealth : HexaEventCallback
         CurrentHitPoints = (int)Mathf.Max(CurrentHitPoints - damage, 0);
         if(CurrentHitPoints == 0)
         {
-            Die();
-            if(!Settings.UseSimultaniousTurns && Netw.CurrPlayer() == player)
-            {
-                NetworkAE.instance.EndPlayerTurn(player);
-            }
+            Die();            
         }
     }
 

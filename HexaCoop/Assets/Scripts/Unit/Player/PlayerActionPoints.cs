@@ -12,33 +12,19 @@ public class PlayerActionPoints : HexaEventCallback
 
     public void IncreaseAP(int increaseAmount) => CurrentPlayerAP = Mathf.Min(CurrentPlayerAP + increaseAmount, ActionPointsLimit);
     public void DecreaseAP(int decreaseAmount) => CurrentPlayerAP -= decreaseAmount;
-
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type, int queueId)
-    {
-        if(!Settings.UseQueueAbilities)
-        {
-            UpdateOnPlayerAbilityUsed(player, type);
-        }        
-    }
-
+       
     protected override void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType type)
     {
-        if (Settings.UseQueueAbilities)
-        {
-            UpdateOnPlayerAbilityUsed(player, type);
-        }
+        UpdateOnPlayerAbilityUsed(player, type);
     }
 
     protected override void OnRemoveQueueItems(List<AbilityQueueItem> queueItems)
     {
-        if (Settings.UseQueueAbilities)
+        foreach (var queueItem in queueItems)
         {
-            foreach (var queueItem in queueItems)
+            if (queueItem.Player == playerScript)
             {
-                if (queueItem.Player == playerScript)
-                {
-                    IncreaseAP(queueItem.AbilityType.GetCost());
-                }
+                IncreaseAP(queueItem.AbilityType.GetCost());
             }
         }
     }

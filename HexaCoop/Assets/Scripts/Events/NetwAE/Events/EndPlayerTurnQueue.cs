@@ -8,26 +8,18 @@ public partial class NetworkAE : MonoBehaviour
 { 
     public void EndPlayerTurn(PlayerScript currentPlayer)
     {
-        string abilitiesQueueJson = null;
-        if(Settings.UseQueueAbilities)
-        {
-            var netwQueue = GetQueueOfPlayer(currentPlayer);
-            abilitiesQueueJson = JsonUtility.ToJson(netwQueue);
-        }
-        
+        var netwQueue = GetQueueOfPlayer(currentPlayer);
+        var abilitiesQueueJson = JsonUtility.ToJson(netwQueue);
+
         photonView.RPC("RPC_AE_EndPlayerTurn", RpcTarget.All, currentPlayer.Id, abilitiesQueueJson);
     }
 
     [PunRPC]
     public void RPC_AE_EndPlayerTurn(int currentPlayerId, string abilitiesJson)
     {
-        List<AbilityQueueItem> playerAbilityQueue = null;
-        if (Settings.UseQueueAbilities)
-        {
-            var netwPlayerAbilityQueue = JsonUtility.FromJson<NetwPlayerAbilityQueue>(abilitiesJson);
-            playerAbilityQueue = ConvertToConcreteList(netwPlayerAbilityQueue);
-        }
-        
+        var netwPlayerAbilityQueue = JsonUtility.FromJson<NetwPlayerAbilityQueue>(abilitiesJson);
+        var playerAbilityQueue = ConvertToConcreteList(netwPlayerAbilityQueue);
+
         ActionEvents.EndPlayerTurn?.Invoke(currentPlayerId.GetPlayer(), playerAbilityQueue);
     }
 

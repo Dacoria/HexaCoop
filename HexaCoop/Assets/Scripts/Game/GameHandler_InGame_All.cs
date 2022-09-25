@@ -14,15 +14,7 @@ public partial class GameHandler : HexaEventCallback
     protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
-
-        if (Settings.UseQueueAbilities)
-        {
-            EndPlayerTurnWithQueue(player, abilityQueue);
-        }
-        else
-        {
-            EndPlayerTurnSequential(player);
-        }
+        EndPlayerTurnWithQueue(player, abilityQueue);
     }
 
     protected override void OnAllPlayersFinishedTurn()
@@ -45,32 +37,16 @@ public partial class GameHandler : HexaEventCallback
     private void StartNewPlayerTurns()
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
-
-        if (Settings.UseSimultaniousTurns)
-        {
-            NetworkAE.instance.NewPlayerTurn_Simultanious();
-        }
-        else
-        {
-            SetNextCurrentPlayer();
-            NetworkAE.instance.NewPlayerTurn_Sequential(Netw.CurrPlayer());
-        }
+        NetworkAE.instance.NewPlayerTurn_Simultanious();
     }
 
     protected override void OnNewPlayerTurn(PlayerScript player)
     {
-        if (Settings.UseSimultaniousTurns)
-        {
-            SetNewPlayerOrderForSimultaniousTurns();
+        SetNewPlayerOrderForSimultaniousTurns();
 
-            if (player.IsOnMyNetwork())
-            {
-                // alleen op eigen netwerk setten (om zo ook AI te ondersteunen; vandaar zo)
-                SetCurrentPlayer(player);
-            }
-        }
-        else
+        if (player.IsOnMyNetwork())
         {
+            // alleen op eigen netwerk setten (om zo ook AI te ondersteunen; vandaar zo)
             SetCurrentPlayer(player);
         }
     }

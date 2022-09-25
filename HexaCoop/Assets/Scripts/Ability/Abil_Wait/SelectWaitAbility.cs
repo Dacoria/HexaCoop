@@ -13,15 +13,7 @@ public class SelectWaitAbility : MonoBehaviour, IAbilityAction
 
     public void InitAbilityAction()
     {
-        if (Settings.UseQueueAbilities)
-        {
-            Netw.CurrPlayer().Ability(Netw.CurrPlayer().CurrentHexTile, AbilityType);
-        }
-        else
-        {
-            NeighbourHexTileSelectionManager.instance.HighlightNeighbourOptionsAroundPlayer(Netw.CurrPlayer());
-            abilIsActive = true;
-        }
+        Netw.CurrPlayer().Ability(Netw.CurrPlayer().CurrentHexTile, AbilityType);
     }
 
     private void Update()

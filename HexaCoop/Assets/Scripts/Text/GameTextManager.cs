@@ -84,21 +84,8 @@ public class GameTextManager : HexaEventCallback
         }
         Textt.Reset();
 
-        if (Settings.UseSimultaniousTurns)
-        {
-            Textt.GameLocal("New turn! - pick your moves ");
-        }
-        else
-        {
-            if (Netw.MyPlayer() == currentPlayer)
-            {
-                Textt.GameLocal("New turn, your move!");
-            }
-            else
-            {
-                Textt.GameLocal("Turn: " + currentPlayer.PlayerName);
-            }
-        }
+        Textt.GameLocal("New turn! - pick your moves ");
+
     }
 
     protected override void OnEnemyAttack(EnemyScript enemy, PlayerScript player)
@@ -120,30 +107,16 @@ public class GameTextManager : HexaEventCallback
         {
             return;
         }
-        if(Settings.UseSimultaniousTurns)
+        if (player.IsAi)
         {
-            if(player.IsAi) 
+            if (player.IsOnMyNetwork())
             {
-                if(player.IsOnMyNetwork())
-                {
-                    Textt.GameLocal("Pick moves for your AI-player: " + player.PlayerName);
-                }                
+                Textt.GameLocal("Pick moves for your AI-player: " + player.PlayerName);
             }
-            else
-            {
-                Textt.GameLocal("New turn! - pick your moves ");
-            }            
         }
         else
         {
-            if (Netw.MyPlayer() == player)
-            {
-                Textt.GameLocal("New turn, your move!");
-            }
-            else
-            {
-                Textt.GameLocal("Turn: " + player.PlayerName);
-            }
+            Textt.GameLocal("New turn! - pick your moves ");
         }
     }
 

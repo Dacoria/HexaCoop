@@ -4,17 +4,6 @@ using System.Collections.Generic;
 public class PlayerAbilityQueueSelection : HexaEventCallback
 {
     public List<AbilityQueueItem> AbilityQueueItems = new List<AbilityQueueItem>();
-
-    private new void Awake()
-    {
-        base.Awake();
-
-        if (!Settings.UseQueueAbilities)
-        {
-            Destroy(this);
-        }
-    }
-
     public AbilityQueueItem Get(int queueId) => AbilityQueueItems.Single(x => x.Id == queueId);
 
     protected override void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType abilityType) => AbilityQueueItems.Add(new AbilityQueueItem(player, hex, abilityType));

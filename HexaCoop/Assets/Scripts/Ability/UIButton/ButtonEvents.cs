@@ -74,36 +74,15 @@ public class ButtonEvents : HexaEventCallback
         }
     }
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type, int queueId)
-    {
-        if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
-        if (Settings.UseQueueAbilities) { return; }
-                  
-        if (!type.GetEventImmediatelyFinished())
-        {
-            // niet interactable totdat het event voorbij is
-            UpdateAllAbilities(setToUnselected: true, interactable: false);
-            UpdateEndTurnButton(interactable: false);
-        }
-        else
-        {
-            StartCoroutine(UpdatePlayerAbilityButtons());
-        }        
-    }
-
     protected override void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType type)
     {
         if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
-        if (!Settings.UseQueueAbilities) { return; }
-
         StartCoroutine(UpdatePlayerAbilityButtons());
     }
 
     protected override void OnRemoveQueueItems(List<AbilityQueueItem> queueItems)
     {
         if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
-        if (!Settings.UseQueueAbilities) { return; }
-
         StartCoroutine(UpdatePlayerAbilityButtons());
     }
 
@@ -165,26 +144,24 @@ public class ButtonEvents : HexaEventCallback
                 // todo: dat moet anders -> doel Ability zelf weet of hij extra redenen heeft om wel/niet getoond te worden. Bv max aantal keren een raket per keer
                 var canDoAbilityThisTurn = buttonUpdater.abilityScripts.Single(x => x.Type == abilityType).GetComponent<IAbilityAction>().CanDoAbility(Netw.CurrPlayer());
 
-                if(Settings.UseQueueAbilities)
+                if (abilityType.IsPickup())
                 {
-                    if (abilityType.IsPickup())
-                    {
-                        // heeft pickup abil al gezet in queue
-                        if (Netw.CurrPlayer() != null && Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems.Any(x => x.AbilityType == abilityType))
-                        {
-                            canDoAbilityThisTurn = false;
-                        }
-                    }
-                    var currItemsInQueue = Netw.CurrPlayer() == null ? 0 : Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems.Count();
-                    if (currItemsInQueue < abilityType.GetAvailableFromQueuePlace())
-                    {
-                        canDoAbilityThisTurn = false;
-                    }
-                    if(currItemsInQueue >= MaxAbilsInQueuePerTurn)
+                    // heeft pickup abil al gezet in queue
+                    if (Netw.CurrPlayer() != null && Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems.Any(x => x.AbilityType == abilityType))
                     {
                         canDoAbilityThisTurn = false;
                     }
                 }
+                var currItemsInQueue = Netw.CurrPlayer() == null ? 0 : Netw.CurrPlayer().GetComponent<PlayerAbilityQueueSelection>().AbilityQueueItems.Count();
+                if (currItemsInQueue < abilityType.GetAvailableFromQueuePlace())
+                {
+                    canDoAbilityThisTurn = false;
+                }
+                if(currItemsInQueue >= MaxAbilsInQueuePerTurn)
+                {
+                    canDoAbilityThisTurn = false;
+                }
+                
 
                 buttonUpdater.SetAbilityInteractable(abilityType, availableInTurnResult && enoughPointsResult && canDoAbilityThisTurn);
             }
@@ -197,19 +174,12 @@ public class ButtonEvents : HexaEventCallback
     private IEnumerator CheckEnableButtonsNewTurn(PlayerScript currentPlayer)
     {
         yield return Wait4Seconds.Get(0.1f);// wacht tot wijziging is verwerkt
-        if(Settings.UseSimultaniousTurns && !currentPlayer.IsOnMyNetwork()) { yield break; } // AI beurt verandert niet bij andere spelers
+        if(!currentPlayer.IsOnMyNetwork()) { yield break; } // AI beurt verandert niet bij andere spelers
 
         if (GameHandler.instance.GameStatus == GameStatus.PlayerFase) 
         {
             UpdateEndTurnButton(visible: true, interactable: true, waitForSeconds: 0f);
-            if(Settings.UseSimultaniousTurns)
-            {
-                UpdateAllAbilities(interactable: true, setToUnselected: true);
-            }
-            else
-            {
-                UpdateAllAbilities(interactable: currentPlayer.IsOnMyNetwork(), setToUnselected: true);
-            }
+            UpdateAllAbilities(interactable: true, setToUnselected: true);
         }
     }
 }

@@ -5,15 +5,7 @@ public class AbilityQueuePlayingDisplayScript : HexaEventCallback
 {
     public AbilityQueueItemPlayingDisplayScript QueueAbilityDisplayPrefab;
     private List<AbilityQueueItemPlayingDisplayScript> AbilityDisplayGOs = new List<AbilityQueueItemPlayingDisplayScript>();
-
-    private void Start()
-    {
-        if (!Settings.UseQueueAbilities)
-        {
-            Destroy(transform.parent.gameObject);
-        }
-    }
-
+       
     protected override void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueue)
     {
         DestroyOldQueueItems();
