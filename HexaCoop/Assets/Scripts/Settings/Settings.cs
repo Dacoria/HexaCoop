@@ -6,6 +6,6 @@
     public static bool ShowOnlyPlainHexesBeforeGameStart = false;
     public static bool ShowEverything = true;
 
-    public static string DefaultLevelName = Statics.SCENE_LEVEL2; // let op, kan overschreven worden uit level load UI
+    public static string DefaultLevelName = Statics.SCENE_LEVEL3; // let op, kan overschreven worden uit level load UI
     public static bool ShowPunMcButtons = false;
 }

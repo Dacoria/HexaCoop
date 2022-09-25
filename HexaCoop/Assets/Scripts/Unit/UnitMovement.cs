@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class UnitMovement : HexaEventCallback
@@ -22,19 +21,6 @@ public class UnitMovement : HexaEventCallback
         unit.SetCurrentHexTile(originalDestinationHex);
         ActionEvents.UnitMovingFinished?.Invoke(unit, originalDestinationHex);
     }
-
-    //// sync op netwerk, zodat je zeker weet dat dit gebeurt
-    //protected override void OnUnitMovingFinished(IUnit unitMoved, Hex hex)
-    //{
-    //    if(unitMoved.Id == unit.Id)
-    //    {
-    //        if(unit.CurrentHexTile != hex)
-    //        {
-    //            MoveToDestination(hex.transform.position, 0.1f); // dan maar megasnel; fixen dat dit zo gebeurt
-    //            unit.SetCurrentHexTile(hex);
-    //        }            
-    //    }
-    //}
 
     public void RotateTowardsDestination(Vector3 endPosition, Action callbackOnFinished = null)
     {

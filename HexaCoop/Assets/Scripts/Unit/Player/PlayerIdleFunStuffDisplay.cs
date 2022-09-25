@@ -35,10 +35,18 @@ public class PlayerIdleFunStuffDisplay : HexaEventCallback
         StartCoroutine(CheckEveryXSeconds(defaultWaitTimeForCheck));
     }
 
+    private bool allowRotating; // override bestaande rotating -> kan bewegen blokkeren. Vandaar dit
+    protected override void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueueItems) => allowRotating = false;
+    protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player) => allowRotating = true;
+    protected override void OnNewPlayerTurn(PlayerScript player) => allowRotating = true;
+
     private void RotateTowardsCamera()
     {
-        var lookDesination = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
-        playerMovement.RotateTowardsDestination(lookDesination);
+        if (allowRotating)
+        {
+            var lookDesination = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
+            playerMovement.RotateTowardsDestination(lookDesination);
+        }
     }
 
     private void CheckForIdleFunStuff()
