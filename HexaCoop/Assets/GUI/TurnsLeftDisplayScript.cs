@@ -1,16 +1,20 @@
 using UnityEngine;
+using TMPro;
 
-public class TurnsLeftDisplayScript : MonoBehaviour
+public class TurnsLeftDisplayScript : HexaEventCallback
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [ComponentInject(SearchDirection = SearchDirection.PARENT)] private ITurnsLeft TurnsLeftComponent;
+    [ComponentInject(SearchDirection = SearchDirection.CHILDREN)] private TMP_Text Text;
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+        if (Time.frameCount % 10 != 0) return;
+        Text.text = TurnsLeftComponent.TurnsLeft.ToString();
+
+        if(TurnsLeftComponent.TurnsLeft == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

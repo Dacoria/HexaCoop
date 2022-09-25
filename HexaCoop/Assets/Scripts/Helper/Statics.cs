@@ -29,6 +29,7 @@
     public static string RESOURCE_PATH_GO_ENEMIES = "Enemies";
     public static string RESOURCE_PATH_GO_OBJ_ON_TILE = "ObjectsOnTile";
     public static string RESOURCE_PATH_GO_PLAYER_UTIL = "UtilsForPlayer";
+    public static string RESOURCE_PATH_GO_GUI = "GUI";
 
     public static string RESOURCE_PATH_MATERIAL_TILE_TYPES = "Hex/HexTypeMaterials";
     public static string RESOURCE_PATH_MATERIAL_COLORS = "Colors";

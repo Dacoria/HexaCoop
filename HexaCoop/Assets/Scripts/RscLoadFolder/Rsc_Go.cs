@@ -10,7 +10,7 @@ public static partial class Rsc
     {
         Statics.RESOURCE_PATH_GO_ENEMIES,
         Statics.RESOURCE_PATH_GO_OBJ_ON_TILE,
-        Statics.RESOURCE_PATH_GO_PLAYER_UTIL
+        Statics.RESOURCE_PATH_GO_PLAYER_UTIL,
     };
 
     private static Dictionary<string, GameObject> __goEnemiesOrObjMap;
@@ -43,9 +43,30 @@ public static partial class Rsc
         get
         {
             if (__goStructureMap == null)
+            {
                 __goStructureMap = RscHelper.CreateGoDict(goTileStructureList);
+            }
             
             return __goStructureMap;
+        }
+    }
+
+    private static List<string> goGuiList = new List<string>
+    {
+        Statics.RESOURCE_PATH_GO_GUI
+    };
+
+    private static Dictionary<string, GameObject> __goGuiMap;
+    public static Dictionary<string, GameObject> GoGuiMap
+    {
+        get
+        {
+            if (__goGuiMap == null)
+            {
+                __goGuiMap = RscHelper.CreateGoDict(goGuiList);                
+            }
+
+            return __goGuiMap;
         }
     }
 }

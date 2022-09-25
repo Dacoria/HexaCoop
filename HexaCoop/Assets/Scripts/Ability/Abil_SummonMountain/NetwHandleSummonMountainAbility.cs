@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -36,5 +37,15 @@ public class NetwHandleSummonMountainAbility : HexaEventCallback, IAbilityNetwor
 
         var temperaryMountainScript = target.gameObject.AddComponent<TemperaryMountainScript>();
         temperaryMountainScript.PlayerThatSummonedMountain = player;
+
+        StartCoroutine(ShowTurnsLeftInXSeconds(1f, target.gameObject.transform));
+    }
+
+    private IEnumerator ShowTurnsLeftInXSeconds(float waitTime, Transform parent)
+    {
+        yield return Wait4Seconds.Get(waitTime);
+
+        var turnsLeftVisualizerPrefab = Rsc.GoGuiMap.First(x => x.Key == "TurnsLeftVisualizer").Value;
+        var turnsLeftGo = Instantiate(turnsLeftVisualizerPrefab, parent);
     }
 }

@@ -6,11 +6,11 @@ public class TemperaryMountainScript : HexaEventCallback, ITurnsLeft
     private int TurnActivated;
 
     [ComponentInject] private Hex hex;
-    private int TotalTurnsActive = 2;
+    private int TotalTurnsActive = 1;
 
     public PlayerScript PlayerThatSummonedMountain;
 
-    public int TurnsLeft => GameHandler.instance.CurrentTurn - (TurnActivated + TotalTurnsActive + 1);
+    public int TurnsLeft => (TurnActivated + TotalTurnsActive + 1) - GameHandler.instance.CurrentTurn;
 
     private new void Awake()
     {

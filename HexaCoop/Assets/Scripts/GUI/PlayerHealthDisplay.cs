@@ -13,20 +13,10 @@ public class PlayerHealthDisplay : HexaEventCallback
         Text.text = "";
     }
 
-    private int counter;
-
     private void Update()
     {
-        if(counter == 0)
-        {
-            UpdateHealthDisplay();
-        }
-        counter++;
-
-        if(counter > 15)
-        {
-            counter = 0;
-        }
+        if (Time.frameCount % 15 != 0) return;
+        UpdateHealthDisplay();
     }
 
     private void UpdateHealthDisplay()
