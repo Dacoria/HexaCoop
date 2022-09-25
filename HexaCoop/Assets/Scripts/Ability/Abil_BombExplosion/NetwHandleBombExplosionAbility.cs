@@ -13,9 +13,20 @@ public class NetwHandleBombExplosionAbility : HexaEventCallback, IAbilityNetwork
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
     {
         var bombPrefab = Rsc.GoEnemiesOrObjMap.Single(x => x.Key == "Bomb").Value;
-        var bombScript = bombPrefab.GetComponent<BombScript>();
+        var bombGo = Instantiate(bombPrefab);
+        var bombScript = bombGo.GetComponent<BombScript>();
         bombScript.SetCurrentHexTile(target);
 
-        var damageObjectGo = Instantiate(bombPrefab, target.transform.position + new Vector3(0,1.33f,0), Quaternion.identity);
+        var startPos = playerDoingAbility.transform.position += new Vector3(0, 0.33f, 0);
+        var endPos = target.transform.position + new Vector3(0, 1.33f, 0);        
+
+        var lerpScript = bombGo.AddComponent<LerpMovement>();
+        lerpScript.MoveToDestination(
+            startPosition: startPos,
+            endPosition: endPos,
+            duration: 0.5f
+        );
+
+
     }
 }

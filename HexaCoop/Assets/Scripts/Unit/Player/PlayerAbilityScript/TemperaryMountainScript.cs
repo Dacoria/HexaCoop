@@ -51,6 +51,6 @@ public class TemperaryMountainScript : HexaEventCallback
         }
 
         hex.ChangeHexStructureType(HexStructureType.None);
-        
+        Destroy(this);        
     }
 }
