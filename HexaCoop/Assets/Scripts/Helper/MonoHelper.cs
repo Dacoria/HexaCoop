@@ -40,7 +40,7 @@ public class MonoHelper : MonoBehaviour
         if (targetIsRelativeToPlayer)
         {
             var directionsToLocation = from.DeriveDirections(to);
-            SetSpriteDirectionOnImage(directionImage, directionsToLocation.First(), directionsToLocation.Count);
+            SetSpriteDirectionOnImage(directionImage, directionsToLocation.First(), Mathf.Min(2, directionsToLocation.Count));
         }
     }
 

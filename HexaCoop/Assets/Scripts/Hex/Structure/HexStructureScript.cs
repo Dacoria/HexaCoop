@@ -11,7 +11,7 @@ public partial class HexStructureScript: HexaEventCallback
         if (to.HasStructure())
         {        
             var go = Instantiate(to.GetStructurePrefabFromRrc(), structureGo.transform);
-            go.transform.rotation = new Quaternion(0, 180, 0, 0);            
+            go.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
     }    
 }

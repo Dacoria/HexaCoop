@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class AbilityQueuePlayingDisplayScript : HexaEventCallback
 {
     public AbilityQueueItemPlayingDisplayScript QueueAbilityDisplayPrefab;
     private List<AbilityQueueItemPlayingDisplayScript> AbilityDisplayGOs = new List<AbilityQueueItemPlayingDisplayScript>();
-       
+    [ComponentInject] private CanvasGroup canvasGroup;
+
     protected override void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueue)
     {
         DestroyOldQueueItems();
@@ -16,6 +18,7 @@ public class AbilityQueuePlayingDisplayScript : HexaEventCallback
             queueItemGo.SetAbility(abilityQueueItem);
             AbilityDisplayGOs.Add(queueItemGo);            
         }
+        canvasGroup.alpha = 1;
     }
 
     protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId)
@@ -44,6 +47,13 @@ public class AbilityQueuePlayingDisplayScript : HexaEventCallback
         {
             queueItemDisplayGo.SetIsActiveAbility(false);
         }
+        StartCoroutine(HideQueueAfterXSeconds(2f)); // voelt natuurlijker aan met wachttijd
+    }
+
+    private IEnumerator HideQueueAfterXSeconds(float secondsToWait)
+    {
+        yield return Wait4Seconds.Get(secondsToWait);
+        canvasGroup.alpha = 0;
     }
 
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player)

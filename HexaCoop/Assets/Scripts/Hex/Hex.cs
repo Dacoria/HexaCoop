@@ -2,9 +2,10 @@ using System.Linq;
 using System.Collections;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 [SelectionBase]
-public class Hex : MonoBehaviour
+public class Hex : HexaEventCallback
 {
     [ComponentInject] private HexCoordinates hexCoordinates;
     [ComponentInject] private HighlightHexScript highlightMove;
@@ -26,12 +27,19 @@ public class Hex : MonoBehaviour
 
     public bool FogIsActive() => fogOnHex?.FogIsActive() == true;
 
-    void Awake()
+    private HexStructureType initHexStructureType;
+    private HexSurfaceType initHexSurfaceType;
+    private HexObjectOnTileType initHexObjectOnTileType;
+
+    new void Awake()
     {
+        base.Awake();
         this.hexSurfaceScript = gameObject.AddComponent<HexSurfaceScript>();
         this.hexStructureScript = gameObject.AddComponent<HexStructureScript>();
 
-        this.ComponentInject();
+        initHexStructureType = HexStructureType;
+        initHexSurfaceType = HexSurfaceType;
+        initHexObjectOnTileType = HexObjectOnTileType;
         OrigPosition = this.transform.position;
     }
 
@@ -114,6 +122,26 @@ public class Hex : MonoBehaviour
                 var structureGoModel = structureGo.GetComponentInChildren<StructureModel>(true)?.gameObject;
                 structureGoModel?.SetActive(changeToType != HexStructureType.None);
             }
+        }
+    }   
+
+    protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player)
+    {
+        if(HexStructureType != initHexStructureType)
+        {
+            ChangeHexStructureType(initHexStructureType);
+        }
+        if (HexSurfaceType != initHexSurfaceType)
+        {
+            ChangeHexSurfaceType(initHexSurfaceType);
+        }
+
+        var structureGo = Utils.GetChildGoByName(gameObject, "Props");
+        if (initHexObjectOnTileType.IsPickup() && Utils.GetChildGoByName(structureGo, initHexObjectOnTileType.ToString()) == null)      
+        {
+            var pickupPrefab = Rsc.GoEnemiesOrObjMap.First(x => x.Key == initHexObjectOnTileType.ToString()).Value;
+            var pickupGo = Instantiate(pickupPrefab, structureGo.transform);
+            pickupGo.transform.rotation = new Quaternion(0, 180, 0, 0);
         }
     }
 }

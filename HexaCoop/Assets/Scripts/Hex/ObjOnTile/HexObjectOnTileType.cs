@@ -26,3 +26,13 @@ public enum HexObjectOnTileType
     //Box,
     //Crystal
 }
+
+public static class HexObjectOnTileExt
+{
+    public static bool IsPickup(this HexObjectOnTileType type) => type switch
+    {
+        HexObjectOnTileType.Artillery_Pickup => true,
+        HexObjectOnTileType.MeteorStrike_Pickup => true,
+        _ => false
+    };
+}
