@@ -29,10 +29,5 @@ public enum HexObjectOnTileType
 
 public static class HexObjectOnTileExt
 {
-    public static bool IsPickup(this HexObjectOnTileType type) => type switch
-    {
-        HexObjectOnTileType.Artillery_Pickup => true,
-        HexObjectOnTileType.MeteorStrike_Pickup => true,
-        _ => false
-    };
+    public static bool IsPickup(this HexObjectOnTileType type) => type.ToString().ToUpper().Contains("PICKUP");
 }
