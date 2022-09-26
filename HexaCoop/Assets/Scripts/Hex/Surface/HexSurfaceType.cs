@@ -12,6 +12,7 @@ public enum HexSurfaceType
     Flowers,
     Grass,
     Ice,
+    Ice_Dark,
     Lava_Stones,
     Lava_Stones_Remains,
     Light_Grey_Stone,
