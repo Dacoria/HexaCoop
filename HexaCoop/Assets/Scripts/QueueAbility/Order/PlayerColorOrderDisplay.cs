@@ -5,10 +5,20 @@ using UnityEngine.UI;
 
 public class PlayerColorOrderDisplay : MonoBehaviour
 {
-    [SerializeField] private Image image;
+    [SerializeField] private Image imageCircle;
+    [SerializeField] private Image imageVink;
 
-    public void SetColor(Color color)
+    [HideInInspector] public PlayerScript player;
+
+    public void SetColor(PlayerScript player)
     {
-        image.color = color;
+        this.player = player;
+        imageCircle.color = player.Color;        
+        imageVink.gameObject.SetActive(false);
+    }
+
+    public void SetReady()
+    {
+        imageVink.gameObject.SetActive(true);
     }
 }

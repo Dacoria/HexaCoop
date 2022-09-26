@@ -1,23 +1,40 @@
 using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
 
 public class OrderOfPlayersDisplayScript : HexaEventCallback
 {
+    public GameObject OrderImage;
     public PlayerColorOrderDisplay PlayerColorOrderDisplayPrefab;
     public List<PlayerColorOrderDisplay> PlayerColorOrderDisplayGOs = new List<PlayerColorOrderDisplay>();
         
     protected override void OnNewSimTurnsPlayOrder(List<PlayerScript> players)
-    {       
-        DestroyOldOrderItems();
+    {
+        OrderImage.gameObject.SetActive(true);
+        DestroyOldOrderItems();        
 
         foreach (PlayerScript player in players)
         {
             var playerColorGo = Instantiate(PlayerColorOrderDisplayPrefab, transform);
-            playerColorGo.SetColor(player.Color);
+            playerColorGo.SetColor(player);
             PlayerColorOrderDisplayGOs.Add(playerColorGo);
         }
     }
 
-    protected override void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueue) => DestroyOldOrderItems();
+    protected override void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueue)
+    {
+        OrderImage.gameObject.SetActive(false);
+        DestroyOldOrderItems();
+    }
+
+    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
+    {
+        var relatedOrderGo = PlayerColorOrderDisplayGOs.FirstOrDefault(x => x.player == player);
+        if(relatedOrderGo != null)
+        {
+            relatedOrderGo.SetReady();
+        }
+    }
 
     private void DestroyOldOrderItems()
     {
