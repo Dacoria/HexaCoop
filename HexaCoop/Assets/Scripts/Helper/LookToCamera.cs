@@ -9,7 +9,6 @@ public class LookToCamera : MonoBehaviour
         m_Camera = Camera.main;
     }
 
-
     void Update()
     {        
         var lookDestination = new Vector3(m_Camera.transform.position.x, 0, m_Camera.transform.position.z);

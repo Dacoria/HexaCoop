@@ -13,6 +13,7 @@ public class HexEditorChangeType : Editor
     private HexStructureType previousHexStructureType;
     private HexSurfaceType previousHexSurfaceType;
     private HexObjectOnTileType previousHexObjectOnTileType;
+    private HexStartPlayerType previousHexStartPlayer;
 
     public override void OnInspectorGUI()
     {
@@ -44,11 +45,16 @@ public class HexEditorChangeType : Editor
             // voor nu: alleen enemies!
             hexes.ForEach(hex => HexEditorUtil.HexObjectOnTileTypeChanged(hex, firstHex.HexObjectOnTileType));
         }
+        if (previousSelectedHex == firstHex && previousHexStartPlayer != firstHex.HexStartPlayer)
+        {
+            hexes.ForEach(hex => HexEditorUtil.HexPlayerStartChanged(hex, firstHex.HexStartPlayer));
+        }
 
         previousSelectedHex = firstHex;
         previousHexStructureType = firstHex.HexStructureType;
         previousHexSurfaceType = firstHex.HexSurfaceType;
         previousHexObjectOnTileType = firstHex.HexObjectOnTileType;
+        previousHexStartPlayer = firstHex.HexStartPlayer;
     }
 }
 

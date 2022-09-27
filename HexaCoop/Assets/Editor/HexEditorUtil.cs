@@ -43,6 +43,25 @@ public static class HexEditorUtil
         EditorSceneManager.MarkSceneDirty(hex.gameObject.scene);
     }
 
+    public static void HexPlayerStartChanged(Hex hex, HexStartPlayerType startPlayerType)
+    {
+        var playerStartGo = GetPlayerStartGo(hex);
+        if(playerStartGo != null)
+        {
+            Object.DestroyImmediate(playerStartGo);
+        }
+        
+        if(startPlayerType != HexStartPlayerType.None)
+        {
+            var startPlayerPrefab = Rsc.GoGuiMap.First(x => x.Key == "PlayerSpawnVisualizer").Value;
+            var go = PrefabUtility.InstantiatePrefab(startPlayerPrefab, hex.transform) as GameObject;
+            go.GetComponentInChildren<TMPro.TMP_Text>().text = startPlayerType.GetText();
+        }
+
+        EditorUtility.SetDirty(hex);
+        EditorSceneManager.MarkSceneDirty(hex.gameObject.scene);
+    }
+
     public static void HexObjectOnTileTypeChanged(Hex hex, HexObjectOnTileType to)
     {
         var structureGo = GetStructuresGo(hex);
@@ -101,6 +120,7 @@ public static class HexEditorUtil
 
     private static GameObject GetMainGo(Hex hex) => Utils.GetChildGoByName(hex.gameObject, "Main");
     private static GameObject GetStructuresGo(Hex hex) => Utils.GetChildGoByName(hex.gameObject, "Props");
+    private static GameObject GetPlayerStartGo(Hex hex) => Utils.GetChildGoByName(hex.gameObject, "PlayerSpawnVisualizer");
 
     public static Hex GetHexRightUpperCorner()
     {

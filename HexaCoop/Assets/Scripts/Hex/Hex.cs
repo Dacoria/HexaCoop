@@ -31,6 +31,8 @@ public class Hex : HexaEventCallback
     private HexSurfaceType initHexSurfaceType;
     private HexObjectOnTileType initHexObjectOnTileType;
 
+    public HexStartPlayerType HexStartPlayer;
+
     new void Awake()
     {
         base.Awake();
