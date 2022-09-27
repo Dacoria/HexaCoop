@@ -1,29 +1,18 @@
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
 {
-    public bool DebugOffline = true;
+    public static SceneHandler instance;
 
     void Awake()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        instance = this;
         if (!PhotonNetwork.IsConnected)
         {
-            if (DebugOffline)
-            {
-                var myAppSettings = PhotonNetwork.PhotonServerSettings.AppSettings;
-                PhotonNetwork.ConnectUsingSettings(myAppSettings, true);
-                PhotonNetwork.JoinRandomOrCreateRoom(roomOptions: new RoomOptions
-                {
-                    MaxPlayers = 4,
-                });
-            }
-            else
-            {
-                GoToLoadingScene();
-            }
+            GoToLoadingScene();
         }
     }
 
@@ -31,5 +20,23 @@ public class SceneHandler : MonoBehaviour
     {
         Settings.DefaultLevelName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(Statics.SCENE_LOADING);
+    }
+
+    public void LoadNextScene()
+    {
+        var currentSceneName = SceneManager.GetActiveScene().name;
+        if (currentSceneName == Statics.SCENE_LEVEL1)
+        {
+            PhotonNetwork.LoadLevel(Statics.SCENE_LEVEL2);
+        }
+        else if (currentSceneName == Statics.SCENE_LEVEL2)
+        {
+            PhotonNetwork.LoadLevel(Statics.SCENE_LEVEL3);
+        }
+    }
+
+    public void LoadSameScene()
+    {
+        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
     }
 }

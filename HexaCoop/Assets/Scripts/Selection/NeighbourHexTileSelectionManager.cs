@@ -5,7 +5,7 @@ using System;
 
 public class NeighbourHexTileSelectionManager : MonoBehaviour
 {
-    public HexGrid HexGrid;
+    private HexGrid HexGrid;
     private List<Vector3Int> validNeighboursHightlighted = new List<Vector3Int>();
 
     public PlayerScript SelectedPlayer;
@@ -14,6 +14,7 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        HexGrid = FindObjectOfType<HexGrid>();
     }
 
     public void HighlightMovementOptionsAroundPlayer(PlayerScript player, bool excludeObstacles, bool onlyMoveInOneDirection, int range = 1, bool showOnlyFurthestRange = false)

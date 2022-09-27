@@ -120,6 +120,11 @@ public class ButtonEvents : HexaEventCallback
     {
         foreach (AbilityType abilityType in Utils.GetValues<AbilityType>().Where(x => x.IsAvailableInGame()))
         {
+            if (!abilityType.IsAvailableInCurrentLevel())
+            {
+                continue;
+            }
+
             if (setToUnselected)
             {
                 buttonUpdater.SetToUnselected(abilityType);

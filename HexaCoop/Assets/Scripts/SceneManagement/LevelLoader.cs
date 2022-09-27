@@ -60,3 +60,17 @@ public class LevelLoader : MonoBehaviour
         Callback();
     }
 }
+
+public static class LevelExt
+{
+    public static int GetLevelNr(this string levelName)
+    {
+        var numberValue = levelName.ToUpper().Replace("LEVEL", "");
+        if (int.TryParse(numberValue, out var numberOfLevel))
+        {
+            return numberOfLevel;
+        }
+
+        return -1;
+    }
+}

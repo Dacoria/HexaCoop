@@ -13,6 +13,11 @@ public class SpawnAbilityButtons : MonoBehaviour
     {
         foreach(var abilityType in Utils.GetValues<AbilityType>().Where(x => x.IsAvailableInGame()))
         {
+            if(!abilityType.IsAvailableInCurrentLevel())
+            {
+                continue;
+            }
+
             var abilityButton = Instantiate(AbilityButtonPrefab, transform);
 
             var abilityAction = AddAbilityActionComponent(abilityButton, abilityType);
