@@ -1,7 +1,7 @@
 
 public class NetwHandleArtilleryAbility : HexaEventCallback, IAbilityNetworkHandler
 {
-    public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
+    public void NetworkHandle(PlayerScript playerDoingAbility, Hex target, Hex target2)
     { 
         var direction = playerDoingAbility.CurrentHexTile.HexCoordinates.DeriveDirections(target.HexCoordinates)[0];
         var newTile = playerDoingAbility.CurrentHexTile;

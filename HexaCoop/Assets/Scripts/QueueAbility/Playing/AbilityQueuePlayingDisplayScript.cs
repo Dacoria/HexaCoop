@@ -21,7 +21,7 @@ public class AbilityQueuePlayingDisplayScript : HexaEventCallback
         canvasGroup.alpha = 1;
     }
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, Hex hex2, AbilityType abilityType, int queueId)
     {
         foreach (var queueItemDisplayGo in AbilityDisplayGOs)
         {
@@ -29,7 +29,7 @@ public class AbilityQueuePlayingDisplayScript : HexaEventCallback
         }
     }
 
-    protected override void OnPlayerAbilityNotExecuted(PlayerScript player, Hex hex, AbilityType abilityType, int queueId)
+    protected override void OnPlayerAbilityNotExecuted(PlayerScript player, Hex hex, Hex hex2, AbilityType abilityType, int queueId)
     {
         foreach (var queueItemDisplayGo in AbilityDisplayGOs)
         {

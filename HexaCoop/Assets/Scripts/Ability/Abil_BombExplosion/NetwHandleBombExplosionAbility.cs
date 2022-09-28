@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class NetwHandleBombExplosionAbility : HexaEventCallback, IAbilityNetworkHandler
 {
-    public bool CanDoAbility(PlayerScript playerDoingAbility, Hex target)
+    public bool CanDoAbility(PlayerScript playerDoingAbility, Hex target, Hex target2)
     {
         var allBombs = GameObject.FindObjectsOfType<BombScript>();
         return !target.IsObstacle() && !allBombs.Any(x => x.CurrentHexTile == target);
     }
 
-    public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
+    public void NetworkHandle(PlayerScript playerDoingAbility, Hex target, Hex target2)
     {
         var bombPrefab = Rsc.GoEnemiesOrObjMap.Single(x => x.Key == "Bomb").Value;
         var bombGo = Instantiate(bombPrefab);

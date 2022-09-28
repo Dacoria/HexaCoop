@@ -11,7 +11,7 @@ public class AbilityQueueSelectionDisplayScript : HexaEventCallback
     private List<AbilityQueueItemSelectionDisplayScript> AbilityDisplayGOs = new List<AbilityQueueItemSelectionDisplayScript>();
     private ClearQueueDisplayScript ClearQueueGo;
 
-    protected override void OnPlayerAbilityQueue(PlayerScript player, Hex hex, AbilityType abilityType) => StartCoroutine(UpdateQueue(player));
+    protected override void OnPlayerAbilityQueue(PlayerScript player, Hex hex, Hex hex2, AbilityType abilityType) => StartCoroutine(UpdateQueue(player));
     protected override void OnRemoveQueueItems(List<AbilityQueueItem> queueItems) => StartCoroutine(UpdateQueue(Netw.CurrPlayer()));
     protected override void OnNewPlayerTurn(PlayerScript player)
     {

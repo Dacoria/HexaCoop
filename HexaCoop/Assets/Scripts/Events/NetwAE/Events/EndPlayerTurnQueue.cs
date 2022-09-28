@@ -36,10 +36,13 @@ public partial class NetworkAE : MonoBehaviour
 
     private NetwPlayerAbilityQueueItem ConvertToNetworkAbilItem(AbilityQueueItem abilityQueueItem)
     {
+        var hexTile2V3 = abilityQueueItem.Hex2 != null ? (Vector3)abilityQueueItem.Hex2.HexCoordinates : Utils.DefaultEmptyVector;
+
         return new NetwPlayerAbilityQueueItem
         {
             PlayerId = abilityQueueItem.Player.Id,
             HexCoordinates = abilityQueueItem.Hex.HexCoordinates,
+            HexCoordinates2 = hexTile2V3,
             Ability = abilityQueueItem.AbilityType,
             Id = abilityQueueItem.Id,
         };
@@ -54,9 +57,12 @@ public partial class NetworkAE : MonoBehaviour
 
     private AbilityQueueItem ConvertToAbilQueueItem(NetwPlayerAbilityQueueItem netwQueueItem)
     {
+        var hex2Tile = netwQueueItem.HexCoordinates2.IsDefaultEmptyVector() ? null : netwQueueItem.HexCoordinates2.GetHex();
+
         return new AbilityQueueItem(
             netwQueueItem.PlayerId.GetPlayer(),
             netwQueueItem.HexCoordinates.GetHex(),
+            hex2Tile,
             netwQueueItem.Ability,
             netwQueueItem.Id);
     }
@@ -74,5 +80,6 @@ public class NetwPlayerAbilityQueueItem
     public int Id;
     public int PlayerId;
     public Vector3 HexCoordinates;
+    public Vector3 HexCoordinates2;
     public AbilityType Ability;    
 }

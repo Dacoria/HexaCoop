@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NetwHandleMeteorStrikeAbility : HexaEventCallback, IAbilityNetworkHandler
 {
-    public void NetworkHandle(PlayerScript playerDoingAbility, Hex selectedHex)
+    public void NetworkHandle(PlayerScript playerDoingAbility, Hex selectedHex, Hex target2)
     {
         var allTiles = HexGrid.instance.GetAllTiles();
         var allNonWaterTiles = allTiles.Where(x => !x.HexSurfaceType.IsObstacle()).ToList();

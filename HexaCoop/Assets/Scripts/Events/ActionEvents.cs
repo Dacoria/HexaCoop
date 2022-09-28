@@ -5,8 +5,8 @@ using UnityEngine;
 public static class ActionEvents
 {
     // network
-    public static Action<PlayerScript, Hex, AbilityType, int> PlayerAbility;
-    public static Action<PlayerScript, Hex, AbilityType, int> PlayerAbilityNotExecuted;
+    public static Action<PlayerScript, Hex, Hex, AbilityType, int> PlayerAbility;
+    public static Action<PlayerScript, Hex, Hex, AbilityType, int> PlayerAbilityNotExecuted;
 
 
     public static Action<List<PlayerScript>, PlayerScript> NewRoundStarted;
@@ -42,7 +42,7 @@ public static class ActionEvents
     public static Action<GameObject> AttackAnimationFinished;
 
     public static Action<List<AbilityQueueItem>> RemoveQueueItems;
-    public static Action<PlayerScript, Hex, AbilityType> PlayerAbilityQueue;
+    public static Action<PlayerScript, Hex, Hex, AbilityType> PlayerAbilityQueue;
 
 
     public static Action<PlayerScript, Hex, AbilityType> AbilityPickedUp;

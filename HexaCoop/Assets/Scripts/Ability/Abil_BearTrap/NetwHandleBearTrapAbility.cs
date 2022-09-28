@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class NetwHandleBearTrapAbility : HexaEventCallback, IAbilityNetworkHandler
 {
-    public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
+    public void NetworkHandle(PlayerScript playerDoingAbility, Hex target, Hex target2)
     {
         var beartrapPrefab = Rsc.GoEnemiesOrObjMap.Single(x => x.Key == AbilityType.BearTrap.ToString()).Value;
         Vector3 destination = target.transform.position;

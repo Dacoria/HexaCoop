@@ -155,7 +155,7 @@ public class MonoHelper : MonoBehaviour
         // deterministisch!
         var neighbourClosest = HexGrid.instance.GetNeighboursFor(target1, range: 3, withUnitOnTile: false)
             .OrderBy(neighbourTile => Vector3Int.Distance(target1, neighbourTile))
-            .ThenBy(neighbourTile => Vector3Int.Distance(referenceTarget2, neighbourTile))
+            .ThenByDescending(neighbourTile => Vector3Int.Distance(referenceTarget2, neighbourTile))
             .ThenBy(neighbourTile => neighbourTile.x)
             .ThenBy(neighbourTile => neighbourTile.z)
             .First();

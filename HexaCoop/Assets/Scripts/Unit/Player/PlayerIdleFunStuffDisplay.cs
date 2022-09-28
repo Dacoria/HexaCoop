@@ -18,7 +18,7 @@ public class PlayerIdleFunStuffDisplay : HexaEventCallback
         StartCoroutine(CheckEveryXSeconds(0));
     }
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex arg2, AbilityType type, int queueId)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, Hex hex2, AbilityType type, int queueId)
     {
         if(playerScript == player && type == AbilityType.Movement)
         {

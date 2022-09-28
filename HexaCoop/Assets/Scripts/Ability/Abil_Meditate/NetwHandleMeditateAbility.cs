@@ -1,7 +1,7 @@
 
 public class NetwHandleMeditateAbility : HexaEventCallback, IAbilityNetworkHandler
 {    
-    public void NetworkHandle(PlayerScript player, Hex hexNearMe)
+    public void NetworkHandle(PlayerScript player, Hex hexNearMe, Hex target2)
     {
         var extraApScript = player.gameObject.AddComponent<PlayerExtraAPScript>();
         extraApScript.AdditionalAP = 2;

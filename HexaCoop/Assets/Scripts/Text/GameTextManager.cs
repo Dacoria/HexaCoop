@@ -120,7 +120,7 @@ public class GameTextManager : HexaEventCallback
         }
     }
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType type, int queueId)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, Hex hex2, AbilityType type, int queueId)
     {
         if (GameHandler.instance.GameStatus != GameStatus.PlayerFase) { return; }
                 

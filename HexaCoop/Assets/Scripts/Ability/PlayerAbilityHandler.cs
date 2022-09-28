@@ -7,7 +7,7 @@ public partial class PlayerAbilityHandler : HexaEventCallback
 
     private Dictionary<AbilityType, IAbilityNetworkHandler> dictAbilityHandlers = new Dictionary<AbilityType,IAbilityNetworkHandler>();
 
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, Hex hex2, AbilityType abilityType, int queueId)
     {
         if (player == playerScript)
         {
@@ -16,7 +16,7 @@ public partial class PlayerAbilityHandler : HexaEventCallback
                 CreateAbilityHandler(abilityType);
             }
 
-            dictAbilityHandlers[abilityType].NetworkHandle(player, hex);
+            dictAbilityHandlers[abilityType].NetworkHandle(player, hex, hex2);
         }
     }
 
@@ -27,13 +27,13 @@ public partial class PlayerAbilityHandler : HexaEventCallback
         dictAbilityHandlers.Add(abilityType, newAbilHandler);
     }
 
-    public bool CanDoAbility(Hex hex, AbilityType abilityType)
+    public bool CanDoAbility(Hex hex, Hex hex2, AbilityType abilityType)
     {
         if (!dictAbilityHandlers.ContainsKey(abilityType))
         {
             CreateAbilityHandler(abilityType);
         }
 
-        return dictAbilityHandlers[abilityType].CanDoAbility(playerScript, hex);
+        return dictAbilityHandlers[abilityType].CanDoAbility(playerScript, hex, hex2);
     }
 }

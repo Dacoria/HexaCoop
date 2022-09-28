@@ -72,21 +72,21 @@ public partial class GameHandler : HexaEventCallback
         if(!abilityQueueItem.Player.IsAlive || GameStatus == GameStatus.RoundEnded)
         {
             // player kan dood zijn --> in dat geval, geen acties van hem meer
-            NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, abilityQueueItem.Hex, abilityQueueItem.AbilityType, abilityQueueItem.Id);
+            NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, abilityQueueItem.Hex, abilityQueueItem.Hex2, abilityQueueItem.AbilityType, abilityQueueItem.Id);
             yield break;
         }
 
 
         var hexForAbil = DetermineHexForAbil(abilityQueueItem.Player, abilityQueueItem.AbilityType, abilityQueueItem.Hex, hexCoorPlayerStartTurn);
 
-        if (hexForAbil != null && abilityQueueItem.Player.CanDoAbility(hexForAbil, abilityQueueItem.AbilityType))
+        if (hexForAbil != null && abilityQueueItem.Player.CanDoAbility(hexForAbil, abilityQueueItem.Hex2, abilityQueueItem.AbilityType))
         {
-            NetworkAE.instance.Invoker_PlayerAbility(abilityQueueItem.Player, hexForAbil, abilityQueueItem.AbilityType, abilityQueueItem.Id);
+            NetworkAE.instance.Invoker_PlayerAbility(abilityQueueItem.Player, hexForAbil, abilityQueueItem.Hex2, abilityQueueItem.AbilityType, abilityQueueItem.Id);
         }
         else
         {
             var hexToSend = hexForAbil ?? abilityQueueItem.Hex;
-            NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, hexToSend, abilityQueueItem.AbilityType, abilityQueueItem.Id);
+            NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, hexToSend, abilityQueueItem.Hex2, abilityQueueItem.AbilityType, abilityQueueItem.Id);
         }        
     }
 

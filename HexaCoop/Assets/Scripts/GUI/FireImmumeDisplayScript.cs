@@ -10,7 +10,7 @@ public class FireImmumeDisplayScript : HexaEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript player) => StartCoroutine(UpdateFireImmumeDisplay());
     protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue) => StartCoroutine(UpdateFireImmumeDisplay());
-    protected override void OnPlayerAbility(PlayerScript player, Hex hex, AbilityType abilityType, int queueId) => StartCoroutine(UpdateFireImmumeDisplay());
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, Hex hex2, AbilityType abilityType, int queueId) => StartCoroutine(UpdateFireImmumeDisplay());
 
     private void Start()
     {

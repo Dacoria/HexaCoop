@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class NetwHandleSummonMountainAbility : HexaEventCallback, IAbilityNetworkHandler
 {
-    public bool CanDoAbility(PlayerScript playerDoingAbility, Hex target)
+    public bool CanDoAbility(PlayerScript playerDoingAbility, Hex target, Hex target2)
     {
         return !target.IsObstacle();
     }
 
-    public void NetworkHandle(PlayerScript playerDoingAbility, Hex target)
+    public void NetworkHandle(PlayerScript playerDoingAbility, Hex target, Hex target2)
     {
         target.ChangeHexStructureType(HexStructureType.Mountain);        
         InitMountainAppearFromGround(playerDoingAbility, target);
@@ -23,8 +23,9 @@ public class NetwHandleSummonMountainAbility : HexaEventCallback, IAbilityNetwor
     private void MoveUnitFromMountain(PlayerScript playerDoingAbility, IUnit unit)
     {
         // deterministisch!
+        var hexWithCrystal = FindObjectOfType<CrystalScript>().Hex;
         unit.MoveToNewDestination(
-            MonoHelper.instance.GetClosestFreeNeighbour(unit.CurrentHexTile.HexCoordinates, playerDoingAbility.CurrentHexTile.HexCoordinates)
+            MonoHelper.instance.GetClosestFreeNeighbour(unit.CurrentHexTile.HexCoordinates, hexWithCrystal.HexCoordinates)
             .GetHex()
         );
     }
