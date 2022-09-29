@@ -18,7 +18,7 @@ public class PlayerHealth : HexaEventCallback
 
     protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hex, DamageObjectType doType)
     {
-        var playerOnTile = hex.GetPlayer();
+        var playerOnTile = hex.GetPlayer(isAlive: true);
         if (playerOnTile?.Id == player.Id)
         {
             // TODO Netter oplossen tzt
@@ -41,7 +41,7 @@ public class PlayerHealth : HexaEventCallback
 
     protected override void OnPlayerAttackHit(PlayerScript player, Hex hexWithTargetHit, int damage)
     {
-        if (!player != this.player && hexWithTargetHit.GetPlayer()?.Id == this.player.Id)
+        if (!player != this.player && hexWithTargetHit.GetPlayer(isAlive: true)?.Id == this.player.Id)
         {
             TakeDamage(damage);
         }
@@ -49,7 +49,7 @@ public class PlayerHealth : HexaEventCallback
 
     protected override void OnEnemyAttackHit(EnemyScript enemy, Hex hex, int damage)
     {       
-        if (hex.GetPlayer()?.Id == player.Id)
+        if (hex.GetPlayer(isAlive: true)?.Id == player.Id)
         {
             TakeDamage(damage);
         }

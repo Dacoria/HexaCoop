@@ -8,12 +8,13 @@ public class PlayerScript : HexaEventCallback, IPunInstantiateMagicCallback, IUn
     public string PlayerName;
 
     public UnitType UnitType => UnitType.Player;
-
+    public GameObject GameObject => gameObject;
 
     private int baseVisionRange = 1;
 
     public bool IsAlive => CurrentHP > 0;
     public int TurnCount => playerTurnCount?.TurnCount ?? 0;
+    public bool HasEndedTurn => playerTurnCount?.HasEndedTurnForPlayer ?? false;
     public int CurrentAP => playerActionPoints?.CurrentPlayerAP ?? 0;
     public int CurrentHP => playerHealth?.CurrentHitPoints ?? 0;
     public Color Color => playerColor.Color;

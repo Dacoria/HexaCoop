@@ -8,7 +8,6 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
     private HexGrid HexGrid;
     private List<Vector3Int> validNeighboursHightlighted = new List<Vector3Int>();
 
-    public PlayerScript SelectedPlayer;
     public static NeighbourHexTileSelectionManager instance;
 
     private void Awake()
@@ -17,46 +16,39 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         HexGrid = FindObjectOfType<HexGrid>();
     }
 
-    public void HighlightMovementOptionsAroundPlayer(PlayerScript player, bool excludeObstacles, bool onlyMoveInOneDirection, int range = 1, bool showOnlyFurthestRange = false)
+    public void HighlightMovementOptionsAroundTile(Hex hex, bool excludeObstacles, bool onlyMoveInOneDirection, int range = 1, bool showOnlyFurthestRange = false)
     {
-        SelectedPlayer = player;
         onlyHighlightColor = false;
-        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: excludeObstacles, onlyMoveInOneDirection: onlyMoveInOneDirection, range: range, showOnlyFurthestRange: showOnlyFurthestRange);
+        HightlightValidNeighbourTiles(hex, excludeObstacles: excludeObstacles, onlyMoveInOneDirection: onlyMoveInOneDirection, range: range, showOnlyFurthestRange: showOnlyFurthestRange);
     }
 
     private bool onlyHighlightColor = false;
 
-    public void HighlightNeighbourOptionsAroundPlayer(PlayerScript player, bool? withTargetOnTile = null)
+    public void HighlightNeighbourOptionsAroundTile(Hex hex)
     {
-        SelectedPlayer = player;
         onlyHighlightColor = true;
-        HightlightValidNeighbourTiles(player.CurrentHexTile, excludeObstacles: false, range: 1) ;
+        HightlightValidNeighbourTiles(hex, excludeObstacles: false, range: 1) ;
     }
 
-    public void HandleMouseClickForMove(Vector3 mousePosition, Action<PlayerScript, Hex> callback)
+    public void HandleMouseClickForMove(Vector3 mousePosition, Action<Hex> callback)
     {
         List<Hex> selectedHexes;
         if (MonoHelper.instance.FindTile(mousePosition, out selectedHexes))
         {
-            if (SelectedPlayer != null && Netw.CurrPlayer() == SelectedPlayer)
-            {
-                TryPlayerMoveAction(selectedHexes, callback);
-                return;
-            }
+            TrySelectAction(selectedHexes, callback);
+            return;
         }        
        
         StopHighlightingMovementAbility(); // niks meer highlighten bij een klik
-        SelectedPlayer = null;
     }   
 
-    private void TryPlayerMoveAction(List<Hex> selectedHexTiles, Action<PlayerScript, Hex> callback)
+    private void TrySelectAction(List<Hex> selectedHexTiles, Action<Hex> callback)
     {
         var validNeighboursClicked = selectedHexTiles.Where(x => validNeighboursHightlighted.Any(y => y == x.HexCoordinates)).ToList();
-        if (validNeighboursClicked.Count == 1 && SelectedPlayer != null)
+        if (validNeighboursClicked.Count == 1)
         {
             StopHighlightingMovementAbility();
-            callback(SelectedPlayer, validNeighboursClicked[0]);            
-            SelectedPlayer = null;
+            callback(validNeighboursClicked[0]);            
         }
 
         //laat highlighting aan bij dubbele of geen resultaten (maar wel een tile)
@@ -98,7 +90,7 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         }
         else
         {
-            if(neightbour.GetHex().HasUnit())
+            if(neightbour.GetHex().HasUnit(isAlive: true))
             {
                 HexGrid.GetTileAt(neightbour).EnableHighlight(HighlightActionType.EnemyOption.GetColor());
             }

@@ -10,8 +10,8 @@ public class GameTextManager : HexaEventCallback
 
     protected override void OnPlayerAttackHit(PlayerScript player, Hex hexWithTargetHit, int damage)
     {
-        var enemyOnHex = hexWithTargetHit.GetEnemy();
-        var playerOnHex = hexWithTargetHit.GetPlayer();
+        var enemyOnHex = hexWithTargetHit.GetEnemy(isAlive: true);
+        var playerOnHex = hexWithTargetHit.GetPlayer(isAlive: true);
 
         if (enemyOnHex != null)
         {
@@ -40,16 +40,16 @@ public class GameTextManager : HexaEventCallback
 
     protected override void OnPlayerDamageObjectHitTile(PlayerScript playerOwner, Hex hex, DamageObjectType doType)
     {
-        if (hex.HasUnit())
+        if (hex.HasUnit(isAlive: null))
         {
-            var playerOnHex = hex.GetPlayer();
-            var enemyOnHex = hex.GetEnemy();
+            var playerOnHex = hex.GetPlayer(isAlive: null);
+            var enemyOnHex = hex.GetEnemy(isAlive: null);
 
             if (playerOnHex != null)
             {
                 if(playerOnHex.IsOnMyNetwork() || playerOwner.IsOnMyNetwork())
                 {
-                    Textt.GameLocal("Projectile hit " + hex.GetPlayer().PlayerName + "! (1 dmg)");
+                    Textt.GameLocal("Projectile hit " + hex.GetPlayer(isAlive: null).PlayerName + "! (1 dmg)");
                 }
             }
             else if (enemyOnHex != null)

@@ -14,9 +14,9 @@ public class NetwHandleSummonMountainAbility : HexaEventCallback, IAbilityNetwor
         target.ChangeHexStructureType(HexStructureType.Mountain);        
         InitMountainAppearFromGround(playerDoingAbility, target);
 
-        if(target.HasUnit())
+        if(target.HasUnit(isAlive: true))
         {
-            MoveUnitFromMountain(playerDoingAbility, target.GetUnit());
+            MoveUnitFromMountain(playerDoingAbility, target.GetUnit(isAlive: true));
         }
     }
 

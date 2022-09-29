@@ -17,9 +17,9 @@ public class PortalScript : HexaEventCallback, IStructure
     private IEnumerator PortalToNewHex(PlayerScript player)
     {
         yield return Wait4Seconds.Get(0.05f);
-        if (ConnectedPortal.hex.HasUnit())
+        if (ConnectedPortal.hex.HasUnit(isAlive: true))
         {
-            MoveUnitAwayFromPortal(player, ConnectedPortal.hex.GetUnit());
+            MoveUnitAwayFromPortal(player, ConnectedPortal.hex.GetUnit(isAlive: true));
         }
 
         player.transform.position = ConnectedPortal.hex.transform.position;

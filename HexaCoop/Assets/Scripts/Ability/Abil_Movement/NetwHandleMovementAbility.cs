@@ -8,7 +8,7 @@ public class NetwHandleMovementAbility : HexaEventCallback, IAbilityNetworkHandl
 
     public void NetworkHandle(PlayerScript playerDoingAbility, Hex target, Hex target2)
     {
-        if (target.HasUnit())
+        if (target.HasUnit(isAlive: true))
         {
             gameObject.GetAdd<UnitAttack>().AttackUnitOnHex(target);
         }

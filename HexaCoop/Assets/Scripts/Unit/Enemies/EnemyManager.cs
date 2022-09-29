@@ -2,14 +2,24 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using System.Linq;
-using System;
 using System.Collections.Generic;
 
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
 
-    public List<EnemyScript> GetEnemies() => 
+    public List<EnemyScript> GetEnemies(bool? isAlive = null)
+    {
+        var enemies = GetEnemies();
+        if(isAlive.HasValue)
+        {
+            enemies = enemies.Where(x => x.IsAlive == isAlive.Value).ToList();
+        }
+
+        return enemies;
+    }
+
+    private List<EnemyScript> GetEnemies() => 
         ObjectNetworkInitManager.instance.SpawnedNetworkObjects
         .Select(x => x.Value)
         .Where(x => x.activeSelf)

@@ -10,6 +10,7 @@ public class EnemyScript : HexaEventCallback, IUnit
     private EnemyHealth enemyHealth;
 
     private GameObject modelGo;
+    public GameObject GameObject => gameObject;
 
     private new void Awake()
     {
@@ -31,7 +32,7 @@ public class EnemyScript : HexaEventCallback, IUnit
     public Hex CurrentHexTile { get; private set; }
     public UnitType UnitType => UnitType.Enemy;
     public bool IsAlive => enemyHealth.CurrentHitPoints > 0;
-
+        
     private Action callbackOnFinished;
     public void SetCurrentHexTile(Hex hex) => CurrentHexTile = hex;
 
@@ -49,7 +50,7 @@ public class EnemyScript : HexaEventCallback, IUnit
         else
         {
             var randomNumber = UnityEngine.Random.Range(0, 2);
-            if(randomNumber == 0 && !fastestPathToPlayer.First().GetHex().HasUnit())
+            if(randomNumber == 0 && !fastestPathToPlayer.First().GetHex().HasUnit(isAlive: true))
             {
                 NetworkAE.instance.EnemyMove(this, fastestPathToPlayer.First().GetHex());
             }

@@ -31,7 +31,7 @@ public class UnitAttack : HexaEventCallback
         if (gameObject == animatorGo.transform.parent.gameObject)
         {
             ActionEvents.UnitAttackHit?.Invoke(unit, hexAttackTarget, 1);
-            StartCoroutine(RetaliateIfTargetIsStillAlive(0.1f, hexAttackTarget.GetUnit()));            
+            StartCoroutine(RetaliateIfTargetIsStillAlive(0.1f, hexAttackTarget.GetUnit(isAlive: true)));            
         }
     }
 
@@ -40,7 +40,7 @@ public class UnitAttack : HexaEventCallback
         yield return Wait4Seconds.Get(waitTime);
         if (attackTarget?.IsAlive == true)
         {
-            ActionEvents.UnitAttackHit?.Invoke(hexAttackTarget.GetUnit(), unit.CurrentHexTile, 1);
+            ActionEvents.UnitAttackHit?.Invoke(hexAttackTarget.GetUnit(isAlive: true), unit.CurrentHexTile, 1);
         }
     }
 }

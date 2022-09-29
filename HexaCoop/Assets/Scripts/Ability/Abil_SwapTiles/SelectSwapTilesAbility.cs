@@ -4,38 +4,50 @@ public class SelectSwapTilesAbility : MonoBehaviour, IAbilityAction
 {
     public AbilityType AbilityType => AbilityType.SwapTiles;
 
+    private bool abilIsActive;
+    public void DeselectAbility()
+    {
+        NeighbourHexTileSelectionManager.instance.DeselectHighlightedNeighbours();
+        Utils.Destroy(GetComponents<HighlightOneTileDisplayScript>());
+        abilIsActive = false;
+    }
+
     public void InitAbilityAction()
     {
         Utils.Destroy(GetComponents<HighlightOneTileDisplayScript>());
 
         var highlightOneTileSelection = MonoHelper.instance.GetHighlightOneTileSelection(gameObject);
-        highlightOneTileSelection.CallbackOnTileSelection = OnTileSelection;
-        highlightOneTileSelection.CallbackOnTileSelectionConfirmed = OnTileSelectionConfirmed;
-
-        reselectMessageHasBeenShown = false;
+        highlightOneTileSelection.CallbackOnTileSelectionConfirmed = OnTileSelection;
     }
 
-    private bool reselectMessageHasBeenShown;
-
+    private Hex firstSwapHexTile;
     private void OnTileSelection(Hex hex)
     {
-        if (!reselectMessageHasBeenShown)
-        {
-            //Textt.GameLocal("Reselect tile to fire the rocket!");
-        }
-        reselectMessageHasBeenShown = true;
-    }
+        this.firstSwapHexTile = hex;
 
-    private void OnTileSelectionConfirmed(Hex hex)
-    {
-        Netw.CurrPlayer().Ability(hex, AbilityType);
-    }
-
-    public void DeselectAbility()
-    {
+        // 2e moet neighbour zijn
         Utils.Destroy(GetComponents<HighlightOneTileDisplayScript>());
+        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundTile(hex, excludeObstacles: false, onlyMoveInOneDirection: false);
+        abilIsActive = true;
+    }
+
+    private void Update()
+    {
+        if (!abilIsActive)
+        {
+            return;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {            
+            NeighbourHexTileSelectionManager.instance.HandleMouseClickForMove(Input.mousePosition, OnMovementTileSelected);
+        }
+    }
+
+    private void OnMovementTileSelected(Hex neighbourHexSelected)
+    {
+        Netw.CurrPlayer().Ability(this.firstSwapHexTile, neighbourHexSelected, AbilityType);
     }
 
     public bool CanDoAbility(PlayerScript player) => true;
-
 }

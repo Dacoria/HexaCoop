@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TurnCount: 0
+  HasEndedTurnForPlayer: 0
 --- !u!114 &5980369478371465905
 MonoBehaviour:
   m_ObjectHideFlags: 0

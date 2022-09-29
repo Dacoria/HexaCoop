@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class HexCoordinates : MonoBehaviour
@@ -7,6 +6,11 @@ public class HexCoordinates : MonoBehaviour
 
     private void Awake()
     {
+        SetOffSetCoordinates();
+    }
+
+    public void SetOffSetCoordinates()
+    {
         OffSetCoordinates = transform.position.ConvertPositionToCoordinates();
-    }    
+    }
 }

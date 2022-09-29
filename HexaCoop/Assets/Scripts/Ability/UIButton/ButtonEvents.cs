@@ -9,6 +9,7 @@ public class ButtonEvents : HexaEventCallback
     [ComponentInject] private EndTurnButtonScript endTurnButtonScript;
 
     private int MaxAbilsInQueuePerTurn = 6;
+    private bool myPlayerIsAlive => Netw.CurrPlayer()?.IsAlive == true;
     
     private void Start()
     {
@@ -29,6 +30,10 @@ public class ButtonEvents : HexaEventCallback
             endTurnButtonScript.GetComponent<CanvasGroup>().alpha = visible.Value ? 1 : 0;
         }
         if (onlyInteractableOnMyNetwork && !Netw.CurrPlayer().IsOnMyNetwork())
+        {
+            endTurnButtonScript.Button.interactable = false;
+        }
+        else if(!myPlayerIsAlive)
         {
             endTurnButtonScript.Button.interactable = false;
         }
@@ -129,6 +134,12 @@ public class ButtonEvents : HexaEventCallback
             {
                 buttonUpdater.SetToUnselected(abilityType);
             }
+            if(!myPlayerIsAlive)
+            {
+                buttonUpdater.SetToUnselected(abilityType);
+                buttonUpdater.SetAbilityInteractable(abilityType, false);
+                continue;
+            }
             if (interactable.HasValue)
             {
                 buttonUpdater.SetAbilityInteractable(abilityType, interactable.Value);
@@ -183,8 +194,8 @@ public class ButtonEvents : HexaEventCallback
 
         if (GameHandler.instance.GameStatus == GameStatus.PlayerFase) 
         {
-            UpdateEndTurnButton(visible: true, interactable: true, waitForSeconds: 0f);
-            UpdateAllAbilities(interactable: true, setToUnselected: true);
+            UpdateEndTurnButton(visible: true, interactable: myPlayerIsAlive, waitForSeconds: 0f);
+            UpdateAllAbilities(interactable: myPlayerIsAlive, setToUnselected: true);
         }
     }
 }

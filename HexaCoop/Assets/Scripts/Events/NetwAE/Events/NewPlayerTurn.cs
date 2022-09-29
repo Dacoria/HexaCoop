@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using System;
 using System.Linq;
 using UnityEngine;
 
@@ -19,13 +18,15 @@ public partial class NetworkAE : MonoBehaviour
     public void RPC_AE_NewPlayerTurn(int currentPlayerId)
     {
         // -1 betekent: Eigen netwerk speler
-        if(OwnPlayerIsDeadInSimTurns(currentPlayerId))
+        var activeAIOnNetworkWithoutTurn = GetActiveAIOnNetworkWithoutTurn();
+        if (OwnPlayerIsDeadInSimTurns(currentPlayerId) && activeAIOnNetworkWithoutTurn != null)
         {
-            TrySetTurnEventToAiOnNetwork();
-            return;
+            ActionEvents.NewPlayerTurn?.Invoke(activeAIOnNetworkWithoutTurn);
         }
-
-        ActionEvents.NewPlayerTurn?.Invoke(currentPlayerId == -1 ? Netw.MyPlayer() : currentPlayerId.GetPlayer());
+        else
+        {
+            ActionEvents.NewPlayerTurn?.Invoke(currentPlayerId == -1 ? Netw.MyPlayer() : currentPlayerId.GetPlayer());
+        }
     }
     
 
@@ -34,12 +35,9 @@ public partial class NetworkAE : MonoBehaviour
         return currentPlayerId == -1 && !Netw.MyPlayer().IsAlive;
     }
 
-    private void TrySetTurnEventToAiOnNetwork()
+    private PlayerScript GetActiveAIOnNetworkWithoutTurn()
     {
-        var aisOnMyNetwork = Netw.PlayersOnMyNetwork(isAlive: true, isAi: true);
-        if(aisOnMyNetwork.Any())
-        {
-            ActionEvents.NewPlayerTurn?.Invoke(aisOnMyNetwork.First());
-        }
+        var aisOnMyNetworkWithoutTurn = Netw.PlayersOnMyNetwork(isAlive: true, isAi: true).Where(x => x.TurnCount < GameHandler.instance.CurrentTurn);
+        return aisOnMyNetworkWithoutTurn.FirstOrDefault();
     }
 }

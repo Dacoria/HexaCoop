@@ -68,7 +68,7 @@ public class Hex : HexaEventCallback
     public void SetFogOnHex(bool fogEnabled)
     {
         fogOnHex.SetFog(fogEnabled);
-        var player = this.GetPlayer();
+        var player = this.GetPlayer(isAlive: true);
         if (player != null && player.IsAlive)
         {
             player.PlayerModel.gameObject.SetActive(!fogEnabled);

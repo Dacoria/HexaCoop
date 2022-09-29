@@ -8,7 +8,7 @@ public class BombScript : HexaEventCallback, IObjectOnTile
 
     public Hex CurrentHexTile => hexBombIsOn;
     public void SetCurrentHexTile(Hex hex) => hexBombIsOn = hex;
-
+    public GameObject GameObject => gameObject;
 
     private int neighbourRange = 1;
 

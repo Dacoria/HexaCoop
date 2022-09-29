@@ -11,6 +11,7 @@ public partial class GameHandler : HexaEventCallback
     private void EndPlayerTurnWithQueue(PlayerScript player, List<AbilityQueueItem> abilityQueue)
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
+        if(playersAbilityQueueDict.ContainsKey(player)) { return; }
 
         playersAbilityQueueDict.Add(player, abilityQueue);
 

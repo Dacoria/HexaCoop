@@ -16,7 +16,7 @@ public class SelectMovementAbility : MonoBehaviour, IAbilityAction
 
     public void InitAbilityAction()
     {
-        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundPlayer(Netw.CurrPlayer(), excludeObstacles: false, onlyMoveInOneDirection: false);
+        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundTile(Netw.CurrPlayer().CurrentHexTile, excludeObstacles: false, onlyMoveInOneDirection: false);
         movementAbilIsActive = true;
     }
 
@@ -28,20 +28,14 @@ public class SelectMovementAbility : MonoBehaviour, IAbilityAction
         }
 
         if (Input.GetMouseButtonDown(0))
-        {
-            if (NeighbourHexTileSelectionManager.instance.SelectedPlayer == null)
-            {
-                // movement aanzetten gaat eerst via knoppen
-                return;
-            }            
-
+        {            
             NeighbourHexTileSelectionManager.instance.HandleMouseClickForMove(Input.mousePosition, OnMovementTileSelected);
         }
     }
 
-    private void OnMovementTileSelected(PlayerScript selectedPlayer, Hex hexSelected)
+    private void OnMovementTileSelected(Hex hexSelected)
     {
-        selectedPlayer.Ability(hexSelected, AbilityType);
+        Netw.CurrPlayer().Ability(hexSelected, AbilityType);
     }
 
     public bool CanDoAbility(PlayerScript player) => player?.GetComponent<PlayerAbilityHistory>().HasDoneAbilityThisTurn(AbilityType.Meditate) == false;   

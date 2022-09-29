@@ -88,7 +88,7 @@ public class HexGrid : MonoBehaviour
         }
         if(withUnitOnTile.HasValue)
         {
-            neighbours = neighbours.Where(neighbour => neighbour.GetHex().HasUnit() == withUnitOnTile.Value).ToList();
+            neighbours = neighbours.Where(neighbour => neighbour.GetHex().HasUnit(isAlive: true) == withUnitOnTile.Value).ToList();
         }
         if(includeStartHex)
         {

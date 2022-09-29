@@ -8,7 +8,7 @@ public class PlayerActionPoints : HexaEventCallback
     [ComponentInject] private PlayerScript playerScript;
 
     //public int PlayerActionsPerTurn => 5 + GetComponents<PlayerExtraAPScript>().Sum(x => x.AdditionalAP);
-    public int ActionPointsLimit => SceneManager.GetActiveScene().name.GetLevelNr() <= 2 ? 5 : 6;
+    public int ActionPointsLimit => SceneManager.GetActiveScene().name.GetLevelNr() <= 2 ? 4 : 6;
     public int CurrentPlayerAP { get; private set; }
 
     public void IncreaseAP(int increaseAmount) => CurrentPlayerAP = Mathf.Min(CurrentPlayerAP + increaseAmount, ActionPointsLimit);
