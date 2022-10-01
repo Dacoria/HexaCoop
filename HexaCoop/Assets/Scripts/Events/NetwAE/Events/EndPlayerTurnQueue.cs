@@ -36,7 +36,7 @@ public partial class NetworkAE : MonoBehaviour
 
     private NetwPlayerAbilityQueueItem ConvertToNetworkAbilItem(AbilityQueueItem abilityQueueItem)
     {
-        var hexTile2V3 = abilityQueueItem.Hex2 != null ? (Vector3)abilityQueueItem.Hex2.HexCoordinates : Utils.DefaultEmptyVector;
+        var hexTile2V3 = abilityQueueItem.Hex2 != null ? (Vector3)abilityQueueItem.Hex2.HexCoordinates : Utils.DefaultEmptyV3;
 
         return new NetwPlayerAbilityQueueItem
         {

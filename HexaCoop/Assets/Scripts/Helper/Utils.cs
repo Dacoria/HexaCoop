@@ -203,7 +203,8 @@ public static class Utils
         return null;
     }
 
-    public static Vector3 DefaultEmptyVector = new Vector3(-1, -1, -1);
+    public static Vector3 DefaultEmptyV3 = new Vector3(-1, -1, -1);
+    public static Vector3Int DefaultEmptyV3Int = new Vector3Int(-1, -1, -1);
     public static bool IsDefaultEmptyVector(this Vector3 v3) => v3.x == -1 && v3.y == -1 && v3.z == -1;
 
 

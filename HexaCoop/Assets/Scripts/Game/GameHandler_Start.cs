@@ -13,7 +13,7 @@ public partial class GameHandler : HexaEventCallback
         var players = NetworkHelper.instance.GetAllPlayers().OrderBy(x => x.Id).Take(GetStartTilesCount()).ToList();
 
         NetworkAE.instance.NewRoundStarted_Simultanious(players);
-        SetNewPlayerOrderForSimultaniousTurns();
+        SetNewPlayerOrder();
     }    
 
     public void ResetGame()

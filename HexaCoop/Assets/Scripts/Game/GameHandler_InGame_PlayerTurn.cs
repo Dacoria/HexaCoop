@@ -1,22 +1,9 @@
 using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public partial class GameHandler : HexaEventCallback
-{
-    private PlayerScript _currentPlayer;
-
-    public void SetCurrentPlayer(PlayerScript player) => _currentPlayer = player;
-    public PlayerScript GetCurrentPlayer() => _currentPlayer;
-
-    protected override void OnEndPlayerTurn(PlayerScript player, List<AbilityQueueItem> abilityQueue)
-    {
-        if (!PhotonNetwork.IsMasterClient) { return; }
-        EndPlayerTurnWithQueue(player, abilityQueue);
-    }
-
+{    
     protected override void OnAllPlayersFinishedTurn()
     {
         CurrentTurn++; // Losse event call van maken? eigenlijk is de turn pas geeindigd na de enemy fase...
@@ -42,7 +29,7 @@ public partial class GameHandler : HexaEventCallback
 
     protected override void OnNewPlayerTurn(PlayerScript player)
     {
-        SetNewPlayerOrderForSimultaniousTurns();
+        SetNewPlayerOrder();
 
         if (player.IsOnMyNetwork())
         {

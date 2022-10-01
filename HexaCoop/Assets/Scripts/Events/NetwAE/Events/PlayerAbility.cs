@@ -5,7 +5,7 @@ public partial class NetworkAE : MonoBehaviour
 {
     public void Invoker_PlayerAbility(PlayerScript player, Hex hexTile, Hex hexTile2, AbilityType abilityType, int queueId = -1)
     {
-        var hexTile2V3 = hexTile2 != null ? (Vector3)hexTile2.HexCoordinates : Utils.DefaultEmptyVector;
+        var hexTile2V3 = hexTile2 != null ? (Vector3)hexTile2.HexCoordinates : Utils.DefaultEmptyV3;
         photonView.RPC("RPC_AE_PlayerAbility", RpcTarget.All, player.Id, (Vector3)hexTile.HexCoordinates, hexTile2V3, abilityType, queueId);
     }
 

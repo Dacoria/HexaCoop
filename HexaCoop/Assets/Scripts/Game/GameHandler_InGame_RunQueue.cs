@@ -1,55 +1,10 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public partial class GameHandler : HexaEventCallback
 {
-    private Dictionary<PlayerScript, List<AbilityQueueItem>> playersAbilityQueueDict = new Dictionary<PlayerScript, List<AbilityQueueItem>>();
-
-    private void EndPlayerTurnWithQueue(PlayerScript player, List<AbilityQueueItem> abilityQueue)
-    {
-        if (!PhotonNetwork.IsMasterClient) { return; }
-        if(playersAbilityQueueDict.ContainsKey(player)) { return; }
-
-        playersAbilityQueueDict.Add(player, abilityQueue);
-
-        if (playersAbilityQueueDict.Count == NetworkHelper.instance.GetAllPlayers(isAlive: true).Count())
-        {
-            // TODO -> CHANGE FASE?
-            var totalAbilitieQueue = GetTotalAbilitieQueue(playersAbilityQueueDict);
-            NetworkAE.instance.StartAbilityQueue(totalAbilitieQueue); // ook voor visueel maken van queue door andere spelers
-            playersAbilityQueueDict.Clear();
-        }
-        else if (player.IsOnMyNetwork() && Netw.PlayersOnMyNetwork(isAlive: true).Any(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork)))
-        {
-            // AI Speler + sim turns? dan AI speler pakken
-            var playerOnMyNetworkWithoutTurn = Netw.PlayersOnMyNetwork(isAlive: true).First(playerOnMyNetwork => !playersAbilityQueueDict.Keys.Contains(playerOnMyNetwork));
-            NetworkAE.instance.NewPlayerTurn_Sequential(playerOnMyNetworkWithoutTurn);
-        }
-    }
-
-    private List<AbilityQueueItem> GetTotalAbilitieQueue(Dictionary<PlayerScript, List<AbilityQueueItem>> playersAbilityQueueDict)
-    {
-        var result = new List<AbilityQueueItem>();
-        for (int i = 0; i < 10; i++)
-        {
-            foreach (var player in PlayerQueueOrder)
-            {
-                if (playersAbilityQueueDict.TryGetValue(player, out var playerQueue))
-                {
-                    if (i <= playerQueue.Count() - 1)
-                    {
-                        result.Add(playerQueue[i]);
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
     protected override void OnStartAbilityQueue(List<AbilityQueueItem> abilityQueueItems)
     {        
         if (!PhotonNetwork.IsMasterClient) { return; }
@@ -69,16 +24,16 @@ public partial class GameHandler : HexaEventCallback
         var hexCoorPlayerStartTurn = abilityQueueItem.Player.CurrentHexTile.HexCoordinates;
         if (!PhotonNetwork.IsMasterClient) { yield break; }
         yield return Wait4Seconds.Get(waitTime);
+        abilityQueueItem.UpdateHexByCoor(); // preventie voor tile swappen
 
-        if(!abilityQueueItem.Player.IsAlive || GameStatus == GameStatus.RoundEnded)
+        if (!abilityQueueItem.Player.IsAlive || GameStatus == GameStatus.RoundEnded)
         {
             // player kan dood zijn --> in dat geval, geen acties van hem meer
             NetworkAE.instance.PlayerAbilityNotExecuted(abilityQueueItem.Player, abilityQueueItem.Hex, abilityQueueItem.Hex2, abilityQueueItem.AbilityType, abilityQueueItem.Id);
             yield break;
         }
-
+        
         var hexForAbil = DetermineHexForAbil(abilityQueueItem.Player, abilityQueueItem.AbilityType, abilityQueueItem.Hex, hexCoorPlayerStartTurn);
-
         if (hexForAbil != null && abilityQueueItem.Player.CanDoAbility(hexForAbil, abilityQueueItem.Hex2, abilityQueueItem.AbilityType))
         {
             NetworkAE.instance.Invoker_PlayerAbility(abilityQueueItem.Player, hexForAbil, abilityQueueItem.Hex2, abilityQueueItem.AbilityType, abilityQueueItem.Id);
@@ -93,8 +48,7 @@ public partial class GameHandler : HexaEventCallback
     private Hex DetermineHexForAbil(PlayerScript player, AbilityType abilityType, Hex hexSubmitted, Vector3Int hexCoorPlayerStartTurn)
     {
         // voor movement --> directie ipv hex-resultaat --> hier bepalen (voor nu)
-
-        if(player.CurrentHexTile.HexCoordinates == hexCoorPlayerStartTurn)
+        if (player.CurrentHexTile.HexCoordinates == hexCoorPlayerStartTurn)
         {
             return hexSubmitted;
         }
@@ -117,24 +71,5 @@ public partial class GameHandler : HexaEventCallback
         yield return Wait4Seconds.Get(waitTime);
 
         NetworkAE.instance.AllPlayersFinishedTurn();
-    }
-
-    private int turnPlayerOrderUpdated;
-    public List<PlayerScript> PlayerQueueOrder;
-
-    private void SetNewPlayerOrderForSimultaniousTurns()
-    {
-        if(!PhotonNetwork.IsMasterClient) { return; }
-        if(CurrentTurn == turnPlayerOrderUpdated) { return; }
-
-        turnPlayerOrderUpdated = CurrentTurn; // reden: Local host + AI = meerdere calls.
-        var allAliveplayers = NetworkHelper.instance.GetAllPlayers(isAlive: true);
-        allAliveplayers.Shuffle();
-        NetworkAE.instance.NewSimTurnsPlayOrder(allAliveplayers);
-    }
-
-    protected override void OnNewSimTurnsPlayOrder(List<PlayerScript> players)
-    {
-        PlayerQueueOrder = players;
     }
 }

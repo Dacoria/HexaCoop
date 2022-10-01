@@ -24,7 +24,7 @@ public static class StaticHelper
     public static float xOffset = 2f, yOffset = 1f, zOffset = 1.73f;
     public static Vector3Int ConvertPositionToCoordinates(this Vector3 position)
     {
-        var x = Mathf.RoundToInt(position.x / xOffset);
+        var x = Mathf.CeilToInt (position.x / xOffset);
         var y = Mathf.RoundToInt(position.y / yOffset);
         var z = Mathf.RoundToInt(position.z / zOffset);
 
