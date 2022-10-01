@@ -13,7 +13,7 @@ public class SelectJumpAbility : MonoBehaviour, IAbilityAction
 
     public void InitAbilityAction()
     {
-        NeighbourHexTileSelectionManager.instance.HighlightMovementOptionsAroundTile(Netw.CurrPlayer().CurrentHexTile, excludeObstacles: false, onlyMoveInOneDirection: true, range: 2, showOnlyFurthestRange: true);
+        NeighbourHexTileSelectionManager.instance.HighlightNeighbourTilesPlayer(excludeObstacles: false, onlyMoveInOneDirection: true, range: 2, showOnlyFurthestRange: true);
         movementAbilIsActive = true;
     }
 

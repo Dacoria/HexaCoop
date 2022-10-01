@@ -25,8 +25,7 @@ public class SelectMeditateAbility : MonoBehaviour, IAbilityAction
        
     private void OnTileSelectionConfirmed(Hex hex)
     {
-        var radarTarget = MonoHelper.instance.GetRandomTileAroundThisTile(hex.HexCoordinates);
-        Netw.CurrPlayer().Ability(radarTarget, AbilityType);
+        Netw.CurrPlayer().Ability(hex, AbilityType);
     }
 
     public void DeselectAbility()

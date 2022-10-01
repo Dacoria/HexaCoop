@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 public static class StaticHelper
 {
@@ -25,7 +24,7 @@ public static class StaticHelper
     public static float xOffset = 2f, yOffset = 1f, zOffset = 1.73f;
     public static Vector3Int ConvertPositionToCoordinates(this Vector3 position)
     {
-        var x = Mathf.CeilToInt(position.x / xOffset);
+        var x = Mathf.RoundToInt(position.x / xOffset);
         var y = Mathf.RoundToInt(position.y / yOffset);
         var z = Mathf.RoundToInt(position.z / zOffset);
 
@@ -56,10 +55,7 @@ public static class StaticHelper
     public static Hex GetHex(this Vector3Int coordinates) => HexGrid.instance.GetTileAt(coordinates); 
     public static Hex GetHex(this Vector3 coordinates) => HexGrid.instance.GetTileAt(new Vector3Int((int)coordinates.x, (int)coordinates.y, (int)coordinates.z));
 
-    public static bool IsOnEdgeOfGrid(this Vector3Int vector) => HexGrid.instance.IsOnEdgeOfGrid(vector);
-    public static bool IsOnCornerOfGrid(this Vector3Int vector) => HexGrid.instance.IsOnCornerOfGrid(vector);
     public static bool IsEmpty(this Vector2 vector) => vector.x == 0 && vector.y == 0;
-    public static bool IsEmpty(this Vector3 vector) => vector.x == 0 && vector.y == 0 && vector.z == 0;
     public static Color SetAlpha(this Color color, float newAlpha) => new Color(color.r, color.g, color.b, newAlpha);
 
     public static Vector3 ToVector3(this string sVector)

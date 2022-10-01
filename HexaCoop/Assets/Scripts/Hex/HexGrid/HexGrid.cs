@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class HexGrid : MonoBehaviour
+public class HexGrid : HexaEventCallback
 {
     private Dictionary<Vector3Int, Hex> hexTileDict = new Dictionary<Vector3Int, Hex>();
 
-    // cache
-    private Dictionary<Vector3Int, List<Vector3Int>> hexTileNeightboursDict = new Dictionary<Vector3Int, List<Vector3Int>>();
 
     public static HexGrid instance;
 
     public FogOnHex FogPrefab;
 
-    private void Awake()
+    private HexNeighbours hexNeighbours = new HexNeighbours();
+
+    private new void Awake()
     {
+        base.Awake();
         instance = this;
     }
 
@@ -61,6 +62,23 @@ public class HexGrid : MonoBehaviour
 
     public bool IsLoaded() => HexGridLoaded;
 
+    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range = 1, bool excludeObstacles = true, bool? withUnitOnTile = null, bool onlyMoveInOneDirection = false, bool showOnlyFurthestRange = false, bool includeStartHex = false, bool excludeWater = false, bool excludeCrystals = false)
+    {
+        return hexNeighbours.GetNeighboursFor(
+            hexTileDict: hexTileDict,
+            hexCoordinates: hexCoordinates,
+            range: range,
+            excludeObstacles: excludeObstacles,
+            withUnitOnTile: withUnitOnTile,
+            onlyMoveInOneDirection: onlyMoveInOneDirection,
+            showOnlyFurthestRange: showOnlyFurthestRange,
+            includeStartHex: includeStartHex,
+            excludeWater: excludeWater,
+            excludeCrystals: excludeCrystals
+        );
+    }
+    
+
     // voor A*
     public float Cost(Vector3Int current, Vector3Int directNeighbor) => 1;
 
@@ -75,29 +93,6 @@ public class HexGrid : MonoBehaviour
         return result;
     }
 
-    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range = 1, bool excludeObstacles = true, bool? withUnitOnTile = null, bool onlyMoveInOneDirection = false, bool showOnlyFurthestRange = false, bool includeStartHex = false)
-    {
-        var neighbours = GetNeighboursFor(hexCoordinates, range, onlyMoveInOneDirection);
-        if (showOnlyFurthestRange)
-        {            
-            neighbours = neighbours.Where(neighbour => Direction.GetRangeFromCoordinates(hexCoordinates, neighbour) == range).ToList();
-        }
-        if(excludeObstacles)
-        {
-            neighbours = neighbours.Where(neighbour => !neighbour.GetHex().IsObstacle()).ToList();
-        }
-        if(withUnitOnTile.HasValue)
-        {
-            neighbours = neighbours.Where(neighbour => neighbour.GetHex().HasUnit(isAlive: true) == withUnitOnTile.Value).ToList();
-        }
-        if(includeStartHex)
-        {
-            neighbours.Add(hexCoordinates);
-        }
-
-        return neighbours;
-    }
-
     public Hex GetTileRightUpperCorner()
     {
         var hexRightUpperCornerCoordinate = hexTileDict.OrderByDescending(z => z.Key.z)
@@ -105,145 +100,14 @@ public class HexGrid : MonoBehaviour
             .First().Key;
 
         return hexTileDict[hexRightUpperCornerCoordinate];
-    }
+    }   
 
-    private List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates, int range, bool onlyMoveInOneDirection)
+    protected override void OnPlayerAbility(PlayerScript player, Hex hex, Hex hex2, AbilityType abilityType, int queueId)
     {
-        if(onlyMoveInOneDirection)
+        if(abilityType == AbilityType.SwapTiles)
         {
-            return GetNeighboursOneDirections(hexCoordinates, range);
+            hexTileDict[hex.HexCoordinates] = hex2;
+            hexTileDict[hex2.HexCoordinates] = hex;
         }
-        else
-        {
-            return GetNeighboursAllDirections(hexCoordinates, range);
-        }
-    }
-
-    private List<Vector3Int> GetNeighboursOneDirections(Vector3Int startHexCoor, int range)
-    {
-        if (range <= 0)
-        {
-            return new List<Vector3Int>();
-        }
-
-        var result = new List<Vector3Int>();
-
-        foreach (DirectionType direction in Enum.GetValues(typeof(DirectionType)))
-        {
-            for(int step = 1; step <= range; step++)
-            {
-                var newHexCoor = startHexCoor.GetNewHexCoorFromDirection(direction, step);
-                if (hexTileDict.ContainsKey(newHexCoor))
-                {
-                    result.Add(newHexCoor);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    private List<Vector3Int> GetNeighboursAllDirections(Vector3Int hexCoordinates, int range)
-    {
-        if (range <= 0)
-        {
-            return new List<Vector3Int>();
-        }
-
-        var neighboursRange1 = GetNeighboursFor(hexCoordinates);     
-
-        var totalProcessedUniqueList = neighboursRange1;
-        var previousRankUniqueList = neighboursRange1;
-
-        for (int currentRank = 2; currentRank <= range && currentRank <= 10; currentRank++)
-        {
-            var newUniqueList = GetUniqueNeighboursNotVisited(hexCoordinates, totalProcessedUniqueList, previousRankUniqueList);
-            totalProcessedUniqueList = totalProcessedUniqueList.Concat(newUniqueList).ToList();
-            previousRankUniqueList = newUniqueList.ToList();
-        }
-
-        return totalProcessedUniqueList;
-    }
-
-    private HashSet<Vector3Int> GetUniqueNeighboursNotVisited(Vector3Int startHexToExclude, List<Vector3Int> previouslyVisited, List<Vector3Int> previousRankUniqueList)
-    {
-        var newUniqueList = new HashSet<Vector3Int>();
-
-        foreach (var neightbourRange in previousRankUniqueList)
-        {
-            var neighboursOfPreviousRank = GetNeighboursFor(neightbourRange);
-            foreach (var neighbourOfNeighbor in neighboursOfPreviousRank)
-            {
-                if (!previouslyVisited.Any(x => x == neighbourOfNeighbor) && neighbourOfNeighbor != startHexToExclude)
-                {
-                    newUniqueList.Add(neighbourOfNeighbor);
-                }
-            }
-        }
-
-        return newUniqueList;
-    }
-
-    private List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates)
-    {
-        if(!hexTileDict.ContainsKey(hexCoordinates))
-        {
-            return new List<Vector3Int>();
-        }
-        if(hexTileNeightboursDict.ContainsKey(hexCoordinates))
-        {
-            return hexTileNeightboursDict[hexCoordinates];
-        }
-
-        hexTileNeightboursDict.Add(hexCoordinates, new List<Vector3Int>());
-        foreach(var direction in Direction.GetDirectionsList(hexCoordinates.z))
-        {
-            if(hexTileDict.ContainsKey(hexCoordinates + direction))
-            {
-                hexTileNeightboursDict[hexCoordinates].Add(hexCoordinates + direction);
-            }
-        }
-
-        return hexTileNeightboursDict[hexCoordinates];
-    }
-
-    public bool IsOnEdgeOfGrid(Vector3Int hexCoordinate)
-    {
-        if (!hexTileDict.ContainsKey(new Vector3Int(hexCoordinate.x + 1, hexCoordinate.y, hexCoordinate.z)))
-        {
-            return true;
-        }
-        if (!hexTileDict.ContainsKey(new Vector3Int(hexCoordinate.x - 1, hexCoordinate.y, hexCoordinate.z)))
-        {
-            return true;
-        }
-        if (!hexTileDict.ContainsKey(new Vector3Int(hexCoordinate.x, hexCoordinate.y, hexCoordinate.z + 1)))
-        {
-            return true;
-        }
-        if (!hexTileDict.ContainsKey(new Vector3Int(hexCoordinate.x, hexCoordinate.y, hexCoordinate.z - 1)))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool IsOnCornerOfGrid(Vector3Int hexCoordinate)
-    {
-        if (!hexTileDict.ContainsKey(new Vector3Int(hexCoordinate.x + 1, hexCoordinate.y, hexCoordinate.z))
-            &&
-            !hexTileDict.ContainsKey(new Vector3Int(hexCoordinate.x, hexCoordinate.y, hexCoordinate.z + 1)))
-        {
-            return true;
-        }
-        if (!hexTileDict.ContainsKey(new Vector3Int(hexCoordinate.x - 1, hexCoordinate.y, hexCoordinate.z))
-            &&
-            !hexTileDict.ContainsKey(new Vector3Int(hexCoordinate.x, hexCoordinate.y, hexCoordinate.z - 1)))
-        {
-            return true;
-        }
-
-        return false;
     }
 }

@@ -77,7 +77,6 @@ public partial class GameHandler : HexaEventCallback
             yield break;
         }
 
-
         var hexForAbil = DetermineHexForAbil(abilityQueueItem.Player, abilityQueueItem.AbilityType, abilityQueueItem.Hex, hexCoorPlayerStartTurn);
 
         if (hexForAbil != null && abilityQueueItem.Player.CanDoAbility(hexForAbil, abilityQueueItem.Hex2, abilityQueueItem.AbilityType))

@@ -35,7 +35,12 @@ public enum HexSurfaceType
 
 public static class HexSurfaceExt
 {
-    public static bool IsObstacle(this HexSurfaceType surfaceType) => surfaceType switch
+    public static bool IsObstacle(this HexSurfaceType surfaceType)
+    {
+        return surfaceType.IsWater();
+    }
+
+    public static bool IsWater(this HexSurfaceType surfaceType) => surfaceType switch
     {
         HexSurfaceType.Water_Deep => true,
         HexSurfaceType.Water_Moving => true,

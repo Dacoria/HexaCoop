@@ -122,33 +122,7 @@ public class MonoHelper : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-
-    public Hex GetRandomTileAroundThisTile(Vector3Int tileToRandomize, int range = 1)
-    {
-        var gridsAroundOtherPlayer = HexGrid.instance.GetNeighboursFor(tileToRandomize, range: range);
-        gridsAroundOtherPlayer.Add(tileToRandomize);
-
-        // niet op de edge; dan krijg je niet 7 opties, maar minder -> zo min mogelijk edge
-        gridsAroundOtherPlayer = gridsAroundOtherPlayer.Any(x => !x.IsOnEdgeOfGrid()) ?
-            gridsAroundOtherPlayer.Where(x => !x.IsOnEdgeOfGrid()).ToList() :
-            gridsAroundOtherPlayer.Where(x => !x.IsOnCornerOfGrid()).ToList();
-
-        gridsAroundOtherPlayer.Shuffle();
-        return gridsAroundOtherPlayer[0].GetHex();
-    }
-
-
-    public void SetHexLayoutBeforeGame(bool originalLayout)
-    {
-        var hexes = HexGrid.instance.GetAllTiles();
-        hexes.ForEach(hex =>
-        {
-            hex.ChangeHexSurfaceType(originalLayout ? hex.HexSurfaceType : HexSurfaceType.Simple_Plain, alsoChangeType: false);
-            hex.ChangeHexStructureType(originalLayout ? hex.HexStructureType : HexStructureType.None, alsoChangeType: false);
-        });
-        
-        EnemyManager.instance.GetEnemies().ForEach(enemy => enemy.SetVisible(originalLayout));
-    }
+    
 
     public Vector3Int GetClosestFreeNeighbour(Vector3Int target1, Vector3Int referenceTarget2)
     {
@@ -162,8 +136,6 @@ public class MonoHelper : MonoBehaviour
 
         return neighbourClosest;
     }
-
-
     public void SummonRocket(Hex target, PlayerScript playerWhoOwnsTheRocket) => StartCoroutine(SummonFallingDamageObject(0, target, playerWhoOwnsTheRocket, DamageObjectType.Rocket));
 
     public IEnumerator SummonFallingDamageObject(float waitTimeInSeconds, Hex target, PlayerScript playerWhoOwnsObject, DamageObjectType damageObjectType)

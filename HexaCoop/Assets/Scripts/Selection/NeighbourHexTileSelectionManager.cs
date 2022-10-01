@@ -16,18 +16,14 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         HexGrid = FindObjectOfType<HexGrid>();
     }
 
-    public void HighlightMovementOptionsAroundTile(Hex hex, bool excludeObstacles, bool onlyMoveInOneDirection, int range = 1, bool showOnlyFurthestRange = false)
+    public void HighlightNeighbourTilesPlayer(bool excludeObstacles, bool onlyMoveInOneDirection, int range = 1, bool showOnlyFurthestRange = false, bool excludeWater = false, bool excludeCrystals = false)
     {
-        onlyHighlightColor = false;
-        HightlightValidNeighbourTiles(hex, excludeObstacles: excludeObstacles, onlyMoveInOneDirection: onlyMoveInOneDirection, range: range, showOnlyFurthestRange: showOnlyFurthestRange);
+        HighlightNeighbourTiles(Netw.CurrPlayer().CurrentHexTile, excludeObstacles: excludeObstacles, onlyMoveInOneDirection: onlyMoveInOneDirection, range: range, showOnlyFurthestRange: showOnlyFurthestRange, excludeWater: excludeWater, excludeCrystals: excludeCrystals);
     }
 
-    private bool onlyHighlightColor = false;
-
-    public void HighlightNeighbourOptionsAroundTile(Hex hex)
+    public void HighlightNeighbourTiles(Hex hex, bool excludeObstacles, bool onlyMoveInOneDirection, int range, bool showOnlyFurthestRange, bool excludeWater, bool excludeCrystals)
     {
-        onlyHighlightColor = true;
-        HightlightValidNeighbourTiles(hex, excludeObstacles: false, range: 1) ;
+        HightlightValidNeighbourTiles(hex, excludeObstacles: excludeObstacles, onlyMoveInOneDirection: onlyMoveInOneDirection, range: range, showOnlyFurthestRange: showOnlyFurthestRange, excludeWater: excludeWater, excludeCrystals: excludeCrystals);
     }
 
     public void HandleMouseClickForMove(Vector3 mousePosition, Action<Hex> callback)
@@ -70,34 +66,15 @@ public class NeighbourHexTileSelectionManager : MonoBehaviour
         }
     }
 
-    private void HightlightValidNeighbourTiles(Hex selectedHex, bool excludeObstacles, int range, bool onlyMoveInOneDirection = false, bool showOnlyFurthestRange = false)
+    private void HightlightValidNeighbourTiles(Hex selectedHex, bool excludeObstacles, int range, bool onlyMoveInOneDirection, bool showOnlyFurthestRange, bool excludeWater, bool excludeCrystals)
     {
-        var neighboursToTryToHightlight = HexGrid.GetNeighboursFor(selectedHex.HexCoordinates, excludeObstacles: excludeObstacles, range: range, onlyMoveInOneDirection: onlyMoveInOneDirection, showOnlyFurthestRange: showOnlyFurthestRange);
+        var neighboursToTryToHightlight = HexGrid.GetNeighboursFor(selectedHex.HexCoordinates, excludeObstacles: excludeObstacles, range: range, onlyMoveInOneDirection: onlyMoveInOneDirection, showOnlyFurthestRange: showOnlyFurthestRange, excludeWater: excludeWater, excludeCrystals: excludeCrystals);
         validNeighboursHightlighted = new List<Vector3Int>();
 
         foreach (var neightbour in neighboursToTryToHightlight)
         {
             validNeighboursHightlighted.Add(neightbour);
-            SetHighlightColor(neightbour);
-        }
-    }
-
-    private void SetHighlightColor(Vector3Int neightbour)
-    {
-        if(onlyHighlightColor)
-        {
             HexGrid.GetTileAt(neightbour).EnableHighlight(HighlightActionType.SelectTile.GetColor());
-        }
-        else
-        {
-            if(neightbour.GetHex().HasUnit(isAlive: true))
-            {
-                HexGrid.GetTileAt(neightbour).EnableHighlight(HighlightActionType.EnemyOption.GetColor());
-            }
-            else
-            {
-                HexGrid.GetTileAt(neightbour).EnableHighlight(HighlightActionType.MoveOption.GetColor());
-            }
         }
     }
 }

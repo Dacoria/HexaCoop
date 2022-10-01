@@ -76,10 +76,9 @@ public class Hex : HexaEventCallback
 
         ChangeHexSurfaceType(Settings.ShowSurfacesInFog || !fogEnabled ? HexSurfaceType : HexSurfaceType.Simple_Plain, alsoChangeType: false);
         ChangeHexStructureType(Settings.ShowStructuresInFog || !fogEnabled ? HexStructureType : HexStructureType.None, alsoChangeType: false);
-    }   
-   
-    public bool IsObstacle() => HexSurfaceType.IsObstacle() || HexStructureType.IsObstacle();
+    }
 
+    public bool IsObstacle() => HexSurfaceType.IsObstacle() || HexStructureType.IsObstacle();
     public void ChangeHexSurfaceType(HexSurfaceType changeToType, bool alsoChangeType = true)
     {        
         hexSurfaceScript.HexSurfaceTypeChanged(changeToType);

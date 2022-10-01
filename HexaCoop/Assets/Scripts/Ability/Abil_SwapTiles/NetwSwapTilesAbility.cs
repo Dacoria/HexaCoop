@@ -15,8 +15,8 @@ public class NetwHandleSwapTilesAbility : HexaEventCallback, IAbilityNetworkHand
         var hexDestination = target2.transform.position;
         var hex2Destination = target.transform.position;
 
-        MoveTileToOtherLoc(target, hexDestination, 1f);
-        MoveTileToOtherLoc(target2, hex2Destination, 1f);
+        MoveTileToOtherLoc(target, hexDestination, 1.2f);
+        MoveTileToOtherLoc(target2, hex2Destination, 1.2f);
     }
 
     private void MoveTileToOtherLoc(Hex hexFrom, Vector3 destination, float duration)
