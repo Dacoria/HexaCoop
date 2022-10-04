@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,21 +15,23 @@ public class SpriteAbilityHeightCorrection : HexaEventCallback
 
     protected override void OnNewRoundStarted(List<PlayerScript> players, PlayerScript player)
     {
-        Init();
+        StartCoroutine(Init(0.1f));
     }
-    private void Init()
+    private IEnumerator Init(float waitTime)
     {
+        yield return Wait4Seconds.Get(waitTime);
+
         this.ComponentInject();
-        this.ImageButton = Button.GetComponent<Image>();
+        ImageButton = Button.GetComponent<Image>();
     }
 
     private void Update()
     {
         if(ImageButton == null)
         {
+            ImageButton = Button.GetComponent<Image>();
             return;
         }
-
         if (ImageButton.sprite.name.Contains("pressed"))
         {
             ImageAbility.transform.position = LoweredPosition.position;

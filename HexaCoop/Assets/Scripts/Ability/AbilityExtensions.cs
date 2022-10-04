@@ -8,12 +8,11 @@ public static class AbilityExtensions
     public static int GetAvailableFromTurn(this AbilityType abilityType) => abilityType == AbilityType.None ? 0 : AbilitySetup.AbilitySettings.Single(x => x.Type == abilityType).AvailableFromTurn;
     public static int GetAvailableFromQueuePlace(this AbilityType abilityType) => abilityType == AbilityType.None ? 0 : AbilitySetup.AbilitySettings.Single(x => x.Type == abilityType).AvailableFromQueuePlace;
     public static bool GetEventImmediatelyFinished(this AbilityType abilityType) => abilityType == AbilityType.None ? true : AbilitySetup.AbilitySettings.Single(x => x.Type == abilityType).EventImmediatelyFinished;
-    public static List<int> GetAvailableInLevels(this AbilityType abilityType) => abilityType == AbilityType.None ? new List<int>() : AbilitySetup.AbilitySettings.Single(x => x.Type == abilityType).AvailableInLevels;
     public static bool IsAvailableInGame(this AbilityType abilityType) => abilityType == AbilityType.None ? false : abilityType.GetAvailableFromTurn() <= 100;
     public static bool IsPickup(this AbilityType abilityType) => abilityType == AbilityType.None ? true : AbilitySetup.AbilitySettings.Single(x => x.Type == abilityType).IsPickup;
     public static bool GetTargetHexIsRelativeToPlayer(this AbilityType abilityType) => abilityType == AbilityType.None ? false : AbilitySetup.AbilitySettings.Single(x => x.Type == abilityType).TargetHexIsRelativeToPlayer;
     public static float GetDuration(this AbilityType abilityType) => abilityType == AbilityType.None ? 0f : AbilitySetup.AbilitySettings.Single(x => x.Type == abilityType).Duration;    
-    public static bool IsAvailableInCurrentLevel(this AbilityType abilityType) => abilityType == AbilityType.None ? false : abilityType.GetAvailableInLevels().Any(x => x == SceneManager.GetActiveScene().name.GetLevelNr());
+    public static bool IsAvailableInCurrentLevel(this AbilityType abilityType) => abilityType == AbilityType.None ? false : LevelSettings.IsAvailableInLevel(abilityType);
 
 
     public static bool IsAvailableThisTurn(this AbilityType abilityType, PlayerScript player) => 

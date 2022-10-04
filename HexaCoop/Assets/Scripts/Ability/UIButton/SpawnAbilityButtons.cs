@@ -4,13 +4,25 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpawnAbilityButtons : MonoBehaviour
+public class SpawnAbilityButtons : HexaEventCallback
 {
     public GameObject AbilityButtonPrefab;
     public ButtonUpdater ButtonUpdater;
 
-    void Awake()
+    private bool hasSpawnedButtons;
+
+    protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript player)
     {
+        Init();
+    }
+
+    private void Init()
+    {
+        if(hasSpawnedButtons)
+        {
+            return;
+        }
+
         foreach(var abilityType in Utils.GetValues<AbilityType>().Where(x => x.IsAvailableInGame()))
         {
             if(!abilityType.IsAvailableInCurrentLevel())
@@ -27,10 +39,10 @@ public class SpawnAbilityButtons : MonoBehaviour
             buttonAbilityDisplay.ImageAbility.sprite = Rsc.SpriteMap.Get(abilityType.ToString());
             buttonAbilityDisplay.buttonUpdater = ButtonUpdater;
             buttonAbilityDisplay.GetComponent<Button>().onClick.AddListener(() => buttonAbilityDisplay.OnButtonClick());
-
         }
 
         ButtonUpdater.Init();
+        hasSpawnedButtons = true;
     }
 
     private IAbilityAction AddAbilityActionComponent(GameObject abilityButton, AbilityType abilityType)

@@ -26,7 +26,8 @@ public class ButtonAbilityDisplay : HexaEventCallback
 
     private void Start()
     {
-        costText.text = Type.GetCost().ToString();        
+        costText.text = Type.GetCost().ToString();
+        canvasGroup.alpha = 0;
     }
 
     private Color UnselectedColor = new Color(81 / 255f, 216 / 255f, 255 / 255f); // blue (on grey)
@@ -55,7 +56,7 @@ public class ButtonAbilityDisplay : HexaEventCallback
 
     private void Update()
     {
-        if(!hasPickupAbility && Type.IsPickup() && !Button.interactable)
+        if(!hasPickupAbility && Type.IsPickup())
         {
             canvasGroup.alpha = 0;
             return;

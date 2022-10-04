@@ -24,21 +24,27 @@ public class ButtonUpdater : MonoBehaviour
     
     public void SetAbilityInteractable(AbilityType type, bool value)
     {
-        abilityScripts.Single(x => x.Type == type).Button.interactable = value;
-
-        if(!value) 
-        { 
-            AbilitySelectionInProgress = false; 
+        var abilityScript = abilityScripts.SingleOrDefault(x => x.Type == type);
+        if (abilityScript != null)
+        {
+            abilityScript.Button.interactable = value;
+            if (!value)
+            {
+                AbilitySelectionInProgress = false;
+            }
         }
     }
 
     public void SetToUnselected(AbilityType type)
     {
-        var abilityScript = abilityScripts.Single(x => x.Type == type);
-        abilityScript.AbilityIsActive = false;
-        abilityScript.GetComponent<IAbilityAction>().DeselectAbility();
+        var abilityScript = abilityScripts.SingleOrDefault(x => x.Type == type);
+        if (abilityScript != null)
+        {
+            abilityScript.AbilityIsActive = false;
+            abilityScript.GetComponent<IAbilityAction>().DeselectAbility();
 
-        AbilitySelectionInProgress = false;
+            AbilitySelectionInProgress = false;
+        }
     }
 
     public void OnAbilityButtonClick(ButtonAbilityDisplay caller)

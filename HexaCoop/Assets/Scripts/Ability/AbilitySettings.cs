@@ -6,7 +6,6 @@ public class AbilitySetting
     public AbilityType Type;
     public int AvailableFromTurn;
     public int AvailableFromQueuePlace;
-    public List<int> AvailableInLevels;
     public bool EventImmediatelyFinished;
     public bool IsPickup;
     public float Duration;

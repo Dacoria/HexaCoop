@@ -9,10 +9,11 @@ public class PlayerHealth : HexaEventCallback
     [ComponentInject] private PlayerScript player;
 
     public int CurrentHitPoints { get; private set; }
-    private int InitHitPoints => NetworkHelper.instance.GetAllPlayers().Count > 2 ? 1 : 2;
+    private int InitHitPoints;
 
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript currentPlayer)
     {
+        InitHitPoints = LevelSettings.GetHealthPointsForPlayer();
         CurrentHitPoints = InitHitPoints;        
     }
 

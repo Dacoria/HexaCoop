@@ -7,8 +7,7 @@ public class PlayerActionPoints : HexaEventCallback
 {
     [ComponentInject] private PlayerScript playerScript;
 
-    //public int PlayerActionsPerTurn => 5 + GetComponents<PlayerExtraAPScript>().Sum(x => x.AdditionalAP);
-    public int ActionPointsLimit => SceneManager.GetActiveScene().name.GetLevelNr() <= 2 ? 4 : 6;
+    public int ActionPointsLimit { get; private set; }
     public int CurrentPlayerAP { get; private set; }
 
     public void IncreaseAP(int increaseAmount) => CurrentPlayerAP = Mathf.Min(CurrentPlayerAP + increaseAmount, ActionPointsLimit);
@@ -48,6 +47,7 @@ public class PlayerActionPoints : HexaEventCallback
 
     protected override void OnNewRoundStarted(List<PlayerScript> allPlayers, PlayerScript currentPlayer)
     {
+        ActionPointsLimit = LevelSettings.GetActionPointsEachTurn();
         CurrentPlayerAP = 0;
         if (currentPlayer == playerScript)
         {
